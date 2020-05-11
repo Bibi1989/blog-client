@@ -81,7 +81,6 @@ const NavBar = () => {
       });
     }
   };
-  console.log(userDetails);
 
   const handleLogout = () => {
     sessionStorage.removeItem("blog");
@@ -103,7 +102,7 @@ const NavBar = () => {
               </Link>
             ) : (
               <Link
-                to='/login'
+                to='/'
                 className='links'
                 style={active.home ? activeBorder : {}}
               >

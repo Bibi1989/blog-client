@@ -69,6 +69,9 @@ const Comments = () => {
             onChange={handleInput}
           />
         </div>
+        <Button className='btn' type='submit' color='blue'>
+          <Icon name='comment' /> Comment
+        </Button>
       </Form>
       {post !== null &&
         post.comments.map((comment) => (

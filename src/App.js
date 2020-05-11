@@ -14,6 +14,8 @@ import Comments from "./components/home/Comments";
 import store from "./redux/store";
 import Post from "./components/home/Post";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+
 function App() {
   return (
     <Router>

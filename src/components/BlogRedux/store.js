@@ -6,6 +6,7 @@ import {
   likePostAction,
   singleAction,
   commentPostAction,
+  deleteAction,
 } from "./actions";
 
 const POST_URL = `https://bibiblog-api.herokuapp.com/api`;
@@ -109,4 +110,19 @@ export const likePost = async (dispatch, id) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const deletePost = async (dispatch, id) => {
+  const token = sessionStorage.getItem("blog");
+  dispatch({ type: LOADING, loading: true });
+  try {
+    const response = await axios.delete(`${POST_URL}/posts/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        auth: token,
+      },
+    });
+    dispatch({ type: LOADING, loading: false });
+    dispatch(deleteAction(response.data));
+  } catch (error) {}
 };

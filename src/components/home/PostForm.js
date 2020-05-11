@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { addPost } from "../BlogRedux/store";
-import { Icon } from "semantic-ui-react";
+import { Icon, Button } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
@@ -24,10 +24,12 @@ const PostForm = () => {
 
   const onsubmit = (e) => {
     e.preventDefault();
-    addPost(dispatch, form);
-    setForm({
-      body: "",
-    });
+    addPost(dispatch, form, setForm);
+    if (added_post) {
+      setForm({
+        body: "",
+      });
+    }
   };
 
   return (
@@ -39,8 +41,12 @@ const PostForm = () => {
           name='body'
           placeholder='What is on your mind!!!'
           onChange={handleInput}
+          value={form.body}
         />
       </div>
+      <Button className='btn' type='submit' color='blue'>
+        <Icon name='comment' /> Post
+      </Button>
     </Form>
   );
 };
@@ -51,6 +57,10 @@ export const Form = styled.form`
 
   @media (max-width: 769px) {
     padding: 1em;
+  }
+
+  .btn {
+    margin-top: 0.7em;
   }
 
   .input-group {

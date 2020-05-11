@@ -4,19 +4,29 @@ import styled from "styled-components";
 import { Button, Label, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { likePost } from "../BlogRedux/store";
+import { likePost, deletePost } from "../BlogRedux/store";
 
 const PostCard = ({ post }) => {
+  const token = sessionStorage.getItem("blog");
+  const user = JSON.parse(sessionStorage.getItem("user"));
   const dispatch = useDispatch();
   const handleLikes = () => {
     likePost(dispatch, post._id);
   };
+  const handleDelete = () => {
+    deletePost(dispatch, post._id);
+  };
   return (
     <Container>
       <Row>
-        <Flex>
-          <H1>{post.body}</H1>
-          <span>{moment(post.createdAt).fromNow(true)} </span>
+        <Flex paddingBottom='1em'>
+          <H1>Posted By @{post.username}</H1>
+        </Flex>
+        <Flex paddingBottom='1em'>
+          <H1 paddingRight='10%'>{post.body}</H1>
+        </Flex>
+        <Flex paddingBottom='1em'>
+          <p>Posted {moment(post.createdAt).fromNow(true)} </p>
         </Flex>
         <Buttons>
           <Button as='div' labelPosition='right' onClick={handleLikes}>
@@ -27,16 +37,27 @@ const PostCard = ({ post }) => {
               {post.likes.length}
             </Label>
           </Button>
-          <Link to={`/comments/${post._id}`}>
-            <Button as='div' labelPosition='left'>
-              <Label as='a' basic color='blue'>
-                {post.comments.length}
-              </Label>
-              <Button icon color='blue'>
-                <Icon name='comments' />
+          <div>
+            {token && post.username === user.username && (
+              <Icon
+                name='trash'
+                size='big'
+                color='red'
+                onClick={handleDelete}
+                style={{ marginRight: "1em", cursor: "pointer" }}
+              />
+            )}
+            <Link to={`/comments/${post._id}`}>
+              <Button as='div' labelPosition='left'>
+                <Label as='a' basic color='blue'>
+                  {post.comments.length}
+                </Label>
+                <Button icon color='blue'>
+                  <Icon name='comments' />
+                </Button>
               </Button>
-            </Button>
-          </Link>
+            </Link>
+          </div>
         </Buttons>
       </Row>
     </Container>
@@ -61,8 +82,14 @@ const Row = styled.div`
   box-shadow: 0 5px 25px #eee;
 `;
 const Flex = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 90% 10%;
+  padding-bottom: ${({ paddingBottom }) =>
+    paddingBottom ? paddingBottom : ""};
+
+  span {
+    text-align: right;
+  }
 `;
 
 export const H1 = styled.h1`

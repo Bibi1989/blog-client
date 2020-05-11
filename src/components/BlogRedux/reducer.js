@@ -1,4 +1,12 @@
-import { GET, ADD, LIKE_POST, GET_SINGLE, COMMENT_POST } from "./types";
+import {
+  GET,
+  ADD,
+  LIKE_POST,
+  GET_SINGLE,
+  COMMENT_POST,
+  LOADING,
+  DELETE,
+} from "./types";
 
 const initialState = {
   posts: [],
@@ -7,6 +15,7 @@ const initialState = {
   comments: [],
   added_post: null,
   updated_post: null,
+  deleted_post: null,
   added_comment: null,
   loading: false,
   error: null,
@@ -38,6 +47,16 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         likes: action.post,
+      };
+    case DELETE:
+      return {
+        ...state,
+        deleted_post: action.post,
+      };
+    case LOADING:
+      return {
+        ...state,
+        loading: action.loading,
       };
 
     default:

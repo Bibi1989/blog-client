@@ -103,6 +103,13 @@ export const Form = styled.form`
   box-shadow: 0 3px 15px #ccc;
   border-radius: 1em;
 
+  @media (max-width: 1000px) {
+    width: 90%;
+  }
+  @media (max-width: 769px) {
+    width: 96%;
+  }
+
   .error {
     color: red;
   }

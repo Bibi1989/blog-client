@@ -132,6 +132,13 @@ const Form = styled.div`
   border-radius: 1em;
   margin-top: 5%;
 
+  @media (max-width: 1000px) {
+    width: 90%;
+  }
+  @media (max-width: 769px) {
+    width: 96%;
+  }
+
   .error {
     color: red;
   }

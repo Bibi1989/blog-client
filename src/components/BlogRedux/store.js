@@ -8,7 +8,7 @@ import {
   commentPostAction,
 } from "./actions";
 
-const POST_URL = `http://localhost:5005/api`;
+const POST_URL = `https://bibiblog-api.herokuapp.com/api`;
 
 export const getAllPosts = async (dispatch) => {
   try {
@@ -28,7 +28,7 @@ export const getAPost = async (dispatch, id) => {
   const token = sessionStorage.getItem("blog");
   try {
     dispatch({ type: LOADING, loading: true });
-    const response = await axios.get(`http://localhost:5005/api/posts/${id}`, {
+    const response = await axios.get(`${POST_URL}/posts/${id}`, {
       headers: {
         "Content-Type": "application/json",
         auth: token,
@@ -58,7 +58,7 @@ export const getComments = async (dispatch, id) => {
   const token = sessionStorage.getItem("blog");
   dispatch({ type: LOADING, payload: true });
   try {
-    const response = await axios.get(`http://localhost:5005/api/posts/${id}`, {
+    const response = await axios.get(`${POST_URL}/posts/${id}`, {
       headers: {
         "Content-Type": "application/json",
         auth: token,
@@ -77,7 +77,7 @@ export const createComment = async (dispatch, body, id) => {
   console.log({ body });
   try {
     const response = await axios.post(
-      `http://localhost:5005/api/comments/${id}`,
+      `${POST_URL}/comments/${id}`,
       { body },
       {
         headers: {

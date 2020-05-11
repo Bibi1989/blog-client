@@ -1,0 +1,9 @@
+export const GET = "GET";
+export const ADD = "ADD";
+export const GET_SINGLE = "GET_SINGLE";
+export const DELETE = "DELETE";
+export const UPDATE = "UPDATE";
+export const LIKE_POST = "LIKE_POST";
+export const COMMENT_POST = "COMMENT_POST";
+export const LOADING = "LOADING";
+export const ERROR = "ERROR";

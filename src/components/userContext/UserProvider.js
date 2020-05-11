@@ -12,7 +12,7 @@ const initialState = {
   register_data: {},
   login_data: {},
   register_errors: {},
-  login_errors: {}
+  login_errors: {},
 };
 
 const reducer = (state, action) => {
@@ -20,22 +20,22 @@ const reducer = (state, action) => {
     case REGISTER:
       return {
         ...state,
-        register_data: action.payload
+        register_data: action.payload,
       };
     case LOGIN:
       return {
         ...state,
-        login_data: action.payload
+        login_data: action.payload,
       };
     case REGISTER_ERROR:
       return {
         ...state,
-        register_errors: action.payload
+        register_errors: action.payload,
       };
     case LOGIN_ERROR:
       return {
         ...state,
-        login_errors: action.payload
+        login_errors: action.payload,
       };
     default:
       return state;
@@ -44,15 +44,15 @@ const reducer = (state, action) => {
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const register = async body => {
+  const register = async (body) => {
     try {
       const response = await axios.post(
-        `http://localhost:5005/users/register`,
+        `https://bibiblog-api.herokuapp.com/users/register`,
         body,
         {
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
       sessionStorage.setItem("blog", response.data.token);
@@ -64,15 +64,15 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const login = async body => {
+  const login = async (body) => {
     try {
       const response = await axios.post(
-        `http://localhost:5005/users/login`,
+        `https://bibiblog-api.herokuapp.com/users/login`,
         body,
         {
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
       sessionStorage.setItem("blog", response.data.token);
@@ -89,7 +89,7 @@ export const UserProvider = ({ children }) => {
         register,
         login,
         register_errors: state.register_errors,
-        login_errors: state.login_errors
+        login_errors: state.login_errors,
       }}
     >
       {children}

@@ -29,14 +29,27 @@ const PostCard = ({ post }) => {
           <p>Posted {moment(post.createdAt).fromNow(true)} </p>
         </Flex>
         <Buttons>
-          <Button as='div' labelPosition='right' onClick={handleLikes}>
-            <Button icon color='red'>
-              <Icon name='heart' />
+          {token ? (
+            <Button as='div' labelPosition='right' onClick={handleLikes}>
+              <Button icon color='red'>
+                <Icon name='heart' />
+              </Button>
+              <Label as='a' basic pointing='left' color='red'>
+                {post.likes.length}
+              </Label>
             </Button>
-            <Label as='a' basic pointing='left' color='red'>
-              {post.likes.length}
-            </Label>
-          </Button>
+          ) : (
+            <Link to='/login'>
+              <Button as='div' labelPosition='right' onClick={handleLikes}>
+                <Button icon color='red'>
+                  <Icon name='heart' />
+                </Button>
+                <Label as='a' basic pointing='left' color='red'>
+                  {post.likes.length}
+                </Label>
+              </Button>
+            </Link>
+          )}
           <div>
             {token && post.username === user.username && (
               <Icon

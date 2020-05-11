@@ -93,7 +93,7 @@ export const Container = styled.div`
 
 export const Form = styled.form`
   width: 50%;
-  height: 40vh;
+  min-height: 40vh;
   padding: 1em;
   margin: auto;
   display: flex;

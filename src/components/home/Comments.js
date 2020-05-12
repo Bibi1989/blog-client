@@ -73,10 +73,12 @@ const Comments = () => {
           <Icon name='comment' /> Comment
         </Button>
       </Form>
-      {post !== null &&
-        post.comments.map((comment) => (
-          <Comment comment={comment !== null && comment} />
-        ))}
+      <Grid>
+        {post !== null &&
+          post.comments.map((comment) => (
+            <Comment comment={comment !== null && comment} />
+          ))}
+      </Grid>
     </Container>
   );
 };
@@ -107,6 +109,18 @@ export const Row = styled.div`
     border-radius: 0.8em;
   }
 `;
+export const Grid = styled.div`
+  height: 60vh;
+  padding-bottom: 3em;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: teal;
+  }
+`;
 // export const H1 = styled.h1``;
 
 export default Comments;
@@ -117,7 +131,7 @@ const Comment = ({ comment }) => (
       <div>
         <p>{comment.username}</p>
         <div className='body'>
-          <p>{comment.body}</p>
+          <p style={{ paddingBottom: "1em" }}>{comment.body}</p>
         </div>
         <p className='date'>
           <span>

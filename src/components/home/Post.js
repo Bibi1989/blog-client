@@ -42,7 +42,6 @@ const Post = () => {
 export default Post;
 
 export const Container = styled.div`
-  padding-bottom: 3em;
   .loading {
     width: 100px;
     height: 100px;
@@ -51,7 +50,18 @@ export const Container = styled.div`
     margin-top: 10%;
   }
 `;
-export const Grid = styled.div``;
+export const Grid = styled.div`
+  height: 80vh;
+  padding-bottom: 3em;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: teal;
+  }
+`;
 export const Loader = styled.div`
   display: flex;
   justify-content: center;

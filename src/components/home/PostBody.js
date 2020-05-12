@@ -78,7 +78,7 @@ const PostCard = ({ post }) => {
 };
 
 const Container = styled.div`
-  padding: 0.5rem 10% 0 10%;
+  padding: 0.5rem 1em 0 5em;
 
   @media (max-width: 769px) {
     padding: 1em;

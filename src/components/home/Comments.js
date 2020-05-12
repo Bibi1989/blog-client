@@ -7,6 +7,8 @@ import { Form } from "./PostForm";
 import { Icon, Button, Label } from "semantic-ui-react";
 import { getAPost, createComment } from "../BlogRedux/store";
 import { Buttons, H1 } from "./PostBody";
+import { Loader } from "./Post";
+import { Spinner } from "react-bootstrap";
 
 const Comments = () => {
   const { commentId } = useParams();
@@ -16,6 +18,7 @@ const Comments = () => {
   const added_comment = useSelector(
     ({ posts: { added_comment } }) => added_comment
   );
+  const loading = useSelector(({ posts: { loading } }) => loading);
   useEffect(() => {
     getAPost(dispatch, commentId);
   }, [added_comment]);
@@ -73,6 +76,9 @@ const Comments = () => {
           <Icon name='comment' /> Comment
         </Button>
       </Form>
+      <Loader>
+        {loading && <Spinner animation='border' className='loading' />}
+      </Loader>
       <Grid>
         {post !== null &&
           post.comments.map((comment) => (

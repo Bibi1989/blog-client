@@ -7,10 +7,12 @@ import PostCard from "./PostBody";
 import PostForm from "./PostForm";
 
 import { Spinner } from "react-bootstrap";
+import { useState } from "react";
 
 const Post = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [text, setText] = useState("");
   const token = sessionStorage.getItem("blog");
   const posts = useSelector(({ posts: { posts } }) => posts);
   const added_post = useSelector(({ posts: { added_post } }) => added_post);
@@ -24,7 +26,7 @@ const Post = () => {
   const loading = useSelector(({ posts: { loading } }) => loading);
 
   useEffect(() => {
-    getAllPosts(dispatch);
+    getAllPosts(dispatch, text);
   }, [added_post, likes, added_comment, deleted_post]);
 
   if (!token) {

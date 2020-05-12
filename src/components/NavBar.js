@@ -23,7 +23,7 @@ const NavBar = () => {
   console.log({ blog: posts });
 
   useEffect(() => {
-    getAllPosts(dispatch);
+    getAllPosts(dispatch, "");
   }, []);
 
   const [active, setActive] = useState({
@@ -95,6 +95,7 @@ const NavBar = () => {
             {token ? (
               <Link
                 to='/'
+                onClick={() => getAllPosts(dispatch, "")}
                 className='links'
                 style={active.home ? activeBorder : {}}
               >

@@ -11,7 +11,7 @@ import {
 
 const POST_URL = `https://bibiblog-api.herokuapp.com/api`;
 
-export const getAllPosts = async (dispatch) => {
+export const getAllPosts = async (dispatch, text) => {
   try {
     dispatch({ type: LOADING, loading: true });
     const response = await axios.get(`${POST_URL}/posts`, {
@@ -19,8 +19,14 @@ export const getAllPosts = async (dispatch) => {
         "Content-Type": "application/json",
       },
     });
+    let data = [...response.data.data];
+    if (text) {
+      data = data.filter((post) =>
+        post.username.toLowerCase().includes(text.toLowerCase())
+      );
+    }
     dispatch({ type: LOADING, loading: false });
-    dispatch(getAction(response.data.data));
+    dispatch(getAction(data));
   } catch (error) {
     console.log(error);
   }

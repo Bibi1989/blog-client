@@ -26,31 +26,29 @@ function App() {
     <Router>
       <Provider store={store}>
         <UserProvider>
-          <BlogProvider>
-            <NavBar />
-            <Layout>
-              <div className='sticky'>
-                {token ? <FirstLayout /> : <div></div>}
-              </div>
-              <Switch>
-                <Route exact path='/' component={Post} />
-                <PrivateRoute
-                  exact
-                  path='/comments/:commentId'
-                  component={Comments}
-                />
-                <Route exact path='/login'>
-                  <Login />
-                </Route>
-                <Route exact path='/register'>
-                  <Register />
-                </Route>
-                <Route to='/abc'>
-                  <NotFound />
-                </Route>
-              </Switch>
-            </Layout>
-          </BlogProvider>
+          <NavBar />
+          <Layout>
+            <div className='sticky'>
+              {token ? <FirstLayout /> : <div></div>}
+            </div>
+            <Switch>
+              <Route exact path='/' component={Post} />
+              <PrivateRoute
+                exact
+                path='/comments/:commentId'
+                component={Comments}
+              />
+              <Route exact path='/login'>
+                <Login />
+              </Route>
+              <Route exact path='/register'>
+                <Register />
+              </Route>
+              <Route to='/abc'>
+                <NotFound />
+              </Route>
+            </Switch>
+          </Layout>
         </UserProvider>
       </Provider>
     </Router>

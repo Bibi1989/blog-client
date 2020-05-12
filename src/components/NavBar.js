@@ -157,8 +157,7 @@ export default NavBar;
 
 const Nav = styled.div`
   padding: 1% 10%;
-  background: #f4f4f4;
-  margin-bottom: 3%;
+  background: #f9fbfc;
 
   @media (max-width: 769px) {
     padding: 1em;

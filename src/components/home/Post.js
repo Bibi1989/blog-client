@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getAllPosts } from "../BlogRedux/store";
 import PostCard from "./PostBody";
 import PostForm from "./PostForm";
@@ -9,6 +10,8 @@ import { Spinner } from "react-bootstrap";
 
 const Post = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const token = sessionStorage.getItem("blog");
   const posts = useSelector(({ posts: { posts } }) => posts);
   const added_post = useSelector(({ posts: { added_post } }) => added_post);
   const likes = useSelector(({ posts: { likes } }) => likes);
@@ -23,6 +26,10 @@ const Post = () => {
   useEffect(() => {
     getAllPosts(dispatch);
   }, [added_post, likes, added_comment, deleted_post]);
+
+  if (!token) {
+    history.push("/login");
+  }
 
   return (
     <Container>

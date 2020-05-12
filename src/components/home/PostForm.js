@@ -52,7 +52,7 @@ const PostForm = () => {
 };
 
 export const Form = styled.form`
-  padding: 2% 10%;
+  padding: 2% 1em 2% 5em;
   width: 100%;
 
   @media (max-width: 769px) {

@@ -30,9 +30,9 @@ const Login = () => {
     login(form, history);
   };
 
-  // if (sessionStorage.getItem("auth")) {
-  //   history.push("/");
-  // }
+  if (sessionStorage.getItem("blog")) {
+    history.push("/");
+  }
 
   return (
     <Container>

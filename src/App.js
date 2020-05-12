@@ -63,12 +63,13 @@ export const Layout = styled.div`
   display: grid;
   grid-template-columns: 80% 20%;
   padding-left: 20%;
+  background: #f9fbfc;
 
   .sticky {
     position: fixed;
     width: 20%;
     left: 1em;
-    top: 14vh;
+    top: 11vh;
   }
 
   @media (max-width: 769px) {

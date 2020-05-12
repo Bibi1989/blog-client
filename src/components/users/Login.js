@@ -27,8 +27,7 @@ const Login = () => {
   const handleLogin = (event) => {
     event.preventDefault();
     console.log(login_errors);
-    login(form);
-    return history.push("/");
+    login(form, history);
   };
 
   // if (sessionStorage.getItem("auth")) {

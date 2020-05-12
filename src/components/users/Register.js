@@ -27,8 +27,7 @@ const Register = () => {
     if (form.password !== form.confirmPassword) {
       return setErrors("Password do not match");
     }
-    register(form);
-    return history.push("/");
+    register(form, history);
     setForm({
       username: "",
       email: "",

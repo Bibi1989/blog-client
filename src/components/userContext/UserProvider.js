@@ -44,7 +44,7 @@ const reducer = (state, action) => {
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const register = async (body) => {
+  const register = async (body, history) => {
     try {
       const response = await axios.post(
         `https://bibiblog-api.herokuapp.com/users/register`,
@@ -57,14 +57,14 @@ export const UserProvider = ({ children }) => {
       );
       sessionStorage.setItem("blog", response.data.token);
       sessionStorage.setItem("user", JSON.stringify(response.data.data));
-
+      history.push("/login");
       dispatch({ type: REGISTER, payload: response.data.data });
     } catch (error) {
       dispatch({ type: REGISTER_ERROR, payload: error.response.data.error });
     }
   };
 
-  const login = async (body) => {
+  const login = async (body, history) => {
     try {
       const response = await axios.post(
         `https://bibiblog-api.herokuapp.com/users/login`,
@@ -77,6 +77,7 @@ export const UserProvider = ({ children }) => {
       );
       sessionStorage.setItem("blog", response.data.token);
       sessionStorage.setItem("user", JSON.stringify(response.data.data));
+      history.push("/");
       dispatch({ type: LOGIN, payload: response.data });
     } catch (error) {
       dispatch({ type: LOGIN_ERROR, payload: error.response.data.error });

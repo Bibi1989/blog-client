@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { Input } from "semantic-ui-react";
+import { Input, Menu, Dropdown } from "semantic-ui-react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getAllPosts } from "../BlogRedux/store";
@@ -12,39 +12,23 @@ const Users = () => {
   let new_posts = [...new Set([...posts].map((user) => user.username))].sort();
   const [values, setValues] = useState("");
   const handleSearch = ({ target: { value } }) => {
-    // posts = posts.filter((post) =>
-    //   post.toLowerCase().includes(value.toLowerCase())
-    // );
     setValues(value);
   };
-  // console.log(new_posts);
-  // let a = [];
-  // useEffect(() => {
-  //   console.log(values);
-  // }, [values]);
   new_posts = new_posts.filter((post) =>
     post.toLowerCase().includes(values.toLowerCase())
   );
-  // const onsubmit = (e) => {
-  //   e.preventDefault();
-  //   getAllPosts(dispatch, values);
-  // };
   return (
     <Container>
-      <h2>Users</h2>
-      <form onSubmit={onsubmit}>
-        <Input
-          onChange={handleSearch}
-          type='search'
-          placeholder='Search user...'
-          style={{ marginBottom: "0.8em", width: "100%" }}
+      <Menu secondary vertical>
+        <Menu.Item
+          name='Users'
+          onClick={() => getAllPosts(dispatch, "")}
+          style={{ background: "#2285D0", color: "#ffffff" }}
         />
-      </form>
-      <ul>
         {new_posts.map((post) => (
-          <li onClick={() => getAllPosts(dispatch, post)}>{post}</li>
+          <Menu.Item name={post} onClick={() => getAllPosts(dispatch, post)} />
         ))}
-      </ul>
+      </Menu>
     </Container>
   );
 };

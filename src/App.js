@@ -17,6 +17,7 @@ import Post from "./components/home/Post";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import FirstLayout from "./components/SideComponent/FirstLayout";
+import Users from "./components/SideComponent/Users";
 
 function App() {
   const token = sessionStorage.getItem("blog");
@@ -28,9 +29,7 @@ function App() {
         <UserProvider>
           <NavBar />
           <Layout>
-            <div className='sticky'>
-              {token ? <FirstLayout /> : <div></div>}
-            </div>
+            <div className='sticky'>{token ? <Users /> : <div></div>}</div>
             <Switch>
               <Route exact path='/' component={Post} />
               <PrivateRoute

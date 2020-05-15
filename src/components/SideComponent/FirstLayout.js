@@ -5,11 +5,7 @@ import Users from "./Users";
 const panes = [
   {
     menuItem: "Users",
-    render: () => (
-      <Tab.Pane>
-        <Users />
-      </Tab.Pane>
-    ),
+    render: () => <Tab.Pane></Tab.Pane>,
   },
 ];
 

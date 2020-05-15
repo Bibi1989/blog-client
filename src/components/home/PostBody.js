@@ -20,20 +20,28 @@ const PostCard = ({ post }) => {
     <Container>
       <Row>
         <Flex paddingBottom='1em'>
-          <H1>Posted By @{post.username}</H1>
+          <H2>Posted By @{post.username}</H2>
         </Flex>
         <Flex paddingBottom='1em'>
           <H1 paddingRight='10%'>{post.body}</H1>
         </Flex>
-        <Flex paddingBottom='1em'>
-          <p>Posted {moment(post.createdAt).fromNow(true)} </p>
+        <Flex paddingBottom='0em'>
+          <p style={{ color: "#bbbbbb" }}>
+            Posted {moment(post.createdAt).fromNow(true)}{" "}
+          </p>
         </Flex>
         <Buttons>
           {token ? (
-            <Button as='div' labelPosition='right' onClick={handleLikes}>
-              <Button icon color='red'>
-                <Icon name='heart' />
-              </Button>
+            <Button
+              as='div'
+              onClick={handleLikes}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                background: "#ffffff",
+              }}
+            >
+              <Icon name='heart' size='large' />
               <Label as='a' basic pointing='left' color='red'>
                 {post.likes.length}
               </Label>
@@ -50,25 +58,23 @@ const PostCard = ({ post }) => {
               </Button>
             </Link>
           )}
-          <div>
+          <div style={{ display: "flex", alignItems: "center" }}>
             {token && post.username === user.username && (
               <Icon
                 name='trash'
-                size='big'
+                size='large'
                 color='red'
                 onClick={handleDelete}
                 style={{ marginRight: "1em", cursor: "pointer" }}
               />
             )}
             <Link to={`/comments/${post._id}`}>
-              <Button as='div' labelPosition='left'>
-                <Label as='a' basic color='blue'>
+              <div>
+                <Icon name='comments' size='large' />
+                <Label as='a' basic pointing='left' color='blue'>
                   {post.comments.length}
                 </Label>
-                <Button icon color='blue'>
-                  <Icon name='comments' />
-                </Button>
-              </Button>
+              </div>
             </Link>
           </div>
         </Buttons>
@@ -106,7 +112,14 @@ const Flex = styled.div`
 `;
 
 export const H1 = styled.h1`
-  font-size: 1.5rem;
+  font-size: 1rem;
+  color: #777;
+  i {
+    color: teal;
+  }
+`;
+export const H2 = styled.h2`
+  font-size: 0.8rem;
   color: #777;
   i {
     color: teal;

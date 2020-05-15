@@ -6,8 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllPosts } from "./BlogRedux/store";
 
 const activeBorder = {
-  color: "teal",
-  borderBottom: "5px solid teal",
+  color: "#ccc",
 };
 
 const NavBar = () => {
@@ -57,111 +56,84 @@ const NavBar = () => {
     }
   };
 
-  const urlCheck = () => {
-    if (path.pathname === "/" || path.pathname === "") {
-      setActive({
-        home: true,
-        login: false,
-        register: false,
-        logouts: false,
-      });
-    } else if (path.pathname === "/login") {
-      setActive({
-        home: false,
-        login: true,
-        register: false,
-        logouts: false,
-      });
-    } else if (path.pathname === "/register") {
-      setActive({
-        home: false,
-        login: false,
-        register: true,
-        logouts: false,
-      });
-    }
-  };
-
   const handleLogout = () => {
     sessionStorage.removeItem("blog");
     sessionStorage.removeItem("user");
   };
 
   return (
-    <div>
-      <Nav>
-        <ul>
-          <li onClick={() => handleClick("home")}>
-            {token ? (
-              <Link
-                to='/'
-                onClick={() => getAllPosts(dispatch, "")}
-                className='links'
-                style={active.home ? activeBorder : {}}
-              >
-                {user.username[0].toUpperCase() + user.username.slice(1)}
-              </Link>
-            ) : (
-              <Link
-                to='/'
-                className='links'
-                style={active.home ? activeBorder : {}}
-              >
-                Home
-              </Link>
-            )}
-          </li>
+    <Nav>
+      <ul>
+        <li onClick={() => handleClick("home")}>
+          {token ? (
+            <Link
+              to='/'
+              onClick={() => getAllPosts(dispatch, "")}
+              className='links'
+              style={active.home ? activeBorder : {}}
+            >
+              {user.username[0].toUpperCase() + user.username.slice(1)}
+            </Link>
+          ) : (
+            <Link
+              to='/'
+              className='links'
+              style={active.home ? activeBorder : {}}
+            >
+              Home
+            </Link>
+          )}
+        </li>
 
-          <div>
-            {!token && (
-              <>
-                <li onClick={() => handleClick("login")}>
-                  <Link
-                    to='/login'
-                    className='links'
-                    style={active.login ? activeBorder : {}}
-                  >
-                    Login
-                  </Link>
-                </li>
-                <li onClick={() => handleClick("register")}>
-                  <Link
-                    to='/register'
-                    className='links'
-                    style={active.register ? activeBorder : {}}
-                  >
-                    Register
-                  </Link>
-                </li>
-              </>
-            )}
-
-            {token && (
-              <li onClick={handleLogout}>
+        <div>
+          {!token && (
+            <>
+              <li onClick={() => handleClick("login")}>
                 <Link
                   to='/login'
                   className='links'
-                  style={active.logouts ? activeBorder : {}}
+                  style={active.login ? activeBorder : {}}
                 >
-                  Logout
+                  Login
                 </Link>
               </li>
-            )}
-          </div>
-        </ul>
-      </Nav>
-    </div>
+              <li onClick={() => handleClick("register")}>
+                <Link
+                  to='/register'
+                  className='links'
+                  style={active.register ? activeBorder : {}}
+                >
+                  Register
+                </Link>
+              </li>
+            </>
+          )}
+
+          {token && (
+            <li onClick={handleLogout}>
+              <Link
+                to='/login'
+                className='links'
+                style={active.logouts ? activeBorder : {}}
+              >
+                Logout
+              </Link>
+            </li>
+          )}
+        </div>
+      </ul>
+    </Nav>
   );
 };
 
 export default NavBar;
 
 const Nav = styled.div`
-  padding: 1% 10%;
-  background: #f9fbfc;
+  padding: 0.7em 10%;
+  background: #2285d0;
 
   @media (max-width: 769px) {
-    padding: 1em;
+    padding: 0.7em;
   }
 
   ul {
@@ -174,7 +146,7 @@ const Nav = styled.div`
         padding: 0 1rem;
         .links {
           text-decoration: none;
-          color: #555;
+          color: #ffffff;
           font-size: 1.3rem;
           padding: 0.7rem 10px;
           transition: all 0.5s ease;
@@ -184,7 +156,7 @@ const Nav = styled.div`
     li:first-child {
       .links {
         text-decoration: none;
-        color: #555;
+        color: #ffffff;
         font-size: 1.3rem;
         padding: 0.7rem 10px;
         transition: all 0.5s ease;

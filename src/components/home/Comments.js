@@ -43,21 +43,17 @@ const Comments = () => {
         <div className='post'>
           <H1>{post !== null && post.body}</H1>
           <Buttons>
-            <Button as='div' labelPosition='right'>
-              <Button icon color='red'>
-                <Icon name='heart' />
-              </Button>
+            <Button as='div' style={{ background: "white" }}>
+              <Icon name='heart' size='large' />
               <Label as='a' basic pointing='left' color='red'>
                 {post !== null && post.likes.length}
               </Label>
             </Button>
-            <Button as='div' labelPosition='left'>
-              <Label as='a' basic color='blue'>
+            <Button as='div' style={{ background: "white" }}>
+              <Icon name='comments' size='large' />
+              <Label as='a' basic pointing='left' color='blue'>
                 {post !== null && post.comments.length}
               </Label>
-              <Button icon color='blue'>
-                <Icon name='comments' />
-              </Button>
             </Button>
           </Buttons>
         </div>

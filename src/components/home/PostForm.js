@@ -71,7 +71,7 @@ export const Form = styled.form`
     .icon {
       font-size: 2rem;
       position: absolute;
-      top: 25%;
+      top: 38%;
       left: 1%;
       color: #4267b2;
     }

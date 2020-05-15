@@ -6,7 +6,7 @@ import moment from "moment";
 import { Form } from "./PostForm";
 import { Icon, Button, Label } from "semantic-ui-react";
 import { getAPost, createComment } from "../BlogRedux/store";
-import { Buttons, H1 } from "./PostBody";
+import { Buttons, H1, Logo } from "./PostBody";
 import { Loader } from "./Post";
 import { Spinner } from "react-bootstrap";
 
@@ -41,6 +41,12 @@ const Comments = () => {
     <Container>
       <Row>
         <div className='post'>
+          <Flex justify='flex-start'>
+            <Logo>
+              {post !== null && post.username.slice(0, 2).toUpperCase()}
+            </Logo>
+            <H1>{post !== null && `Posted By @${post.username}`}</H1>
+          </Flex>
           <H1>{post !== null && post.body}</H1>
           <Buttons>
             <Button as='div' style={{ background: "white" }}>
@@ -122,6 +128,11 @@ export const Grid = styled.div`
   &::-webkit-scrollbar-thumb {
     background: teal;
   }
+`;
+const Flex = styled.div`
+  display: flex;
+  justify-content: ${(props) => (props.justify ? props.justify : "")};
+  align-items: center;
 `;
 // export const H1 = styled.h1``;
 

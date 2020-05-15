@@ -2,9 +2,9 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Input, Menu, Dropdown } from "semantic-ui-react";
-import { useEffect } from "react";
 import { useState } from "react";
 import { getAllPosts } from "../BlogRedux/store";
+import { Flex, Logo, H1 } from "../home/PostBody";
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const Users = () => {
     post.toLowerCase().includes(values.toLowerCase())
   );
   return (
-    <Container>
+    <Container className='layout'>
       <Menu secondary vertical>
         <Menu.Item
           name='Users'
@@ -26,12 +26,22 @@ const Users = () => {
           style={{ background: "#2285D0", color: "#ffffff" }}
         />
         {new_posts.map((post) => (
-          <Menu.Item name={post} onClick={() => getAllPosts(dispatch, post)} />
+          <Menu.Item onClick={() => getAllPosts(dispatch, post)}>
+            <Flex justify='flex-start'>
+              <Logo>{post.slice(0, 2).toUpperCase()}</Logo>
+              {/* <H1>{post !== null && `Posted By @${post}`}</H1> */}
+              <span>{post}</span>
+            </Flex>
+          </Menu.Item>
         ))}
       </Menu>
     </Container>
   );
 };
+
+{
+  /*  */
+}
 
 export default Users;
 

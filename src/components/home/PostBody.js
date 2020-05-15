@@ -19,17 +19,20 @@ const PostCard = ({ post }) => {
   return (
     <Container>
       <Row>
-        <Flex paddingBottom='1em'>
-          <H2>Posted By @{post.username}</H2>
-        </Flex>
-        <Flex paddingBottom='1em'>
+        <Grid paddingBottom='1em'>
+          <Flex justify='flex-start'>
+            <Logo>{post.username.slice(0, 2).toUpperCase()}</Logo>
+            <H2>Posted By @{post.username}</H2>
+          </Flex>
+        </Grid>
+        <Grid paddingBottom='1em'>
           <H1 paddingRight='10%'>{post.body}</H1>
-        </Flex>
-        <Flex paddingBottom='0em'>
+        </Grid>
+        <Grid paddingBottom='0em'>
           <p style={{ color: "#bbbbbb" }}>
             Posted {moment(post.createdAt).fromNow(true)}{" "}
           </p>
-        </Flex>
+        </Grid>
         <Buttons>
           {token ? (
             <Button
@@ -100,7 +103,12 @@ const Row = styled.div`
   background: #ffffff;
   box-shadow: 0 5px 25px #eee;
 `;
-const Flex = styled.div`
+export const Flex = styled.div`
+  display: flex;
+  justify-content: ${(props) => (props.justify ? props.justify : "")};
+  align-items: center;
+`;
+const Grid = styled.div`
   display: grid;
   grid-template-columns: 90% 10%;
   padding-bottom: ${({ paddingBottom }) =>
@@ -124,6 +132,18 @@ export const H2 = styled.h2`
   i {
     color: teal;
   }
+`;
+export const Logo = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+  margin-right: 1em;
+  background: #2285d0;
+  color: #fff;
 `;
 
 export default PostCard;

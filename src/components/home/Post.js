@@ -29,9 +29,9 @@ const Post = () => {
     getAllPosts(dispatch, text);
   }, [added_post, likes, added_comment, deleted_post]);
 
-  if (!token) {
-    history.push("/login");
-  }
+  // if (!token) {
+  //   history.push("/home");
+  // }
 
   return (
     <Container>

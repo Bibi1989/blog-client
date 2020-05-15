@@ -31,7 +31,8 @@ function App() {
           <Layout>
             <div className='sticky'>{token ? <Users /> : <div></div>}</div>
             <Switch>
-              <Route exact path='/' component={Post} />
+              <PrivateRoute exact path='/' component={Post} />
+              <Route exact path='/home' component={Post} />
               <PrivateRoute
                 exact
                 path='/comments/:commentId'

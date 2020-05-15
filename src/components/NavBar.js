@@ -76,7 +76,7 @@ const NavBar = () => {
             </Link>
           ) : (
             <Link
-              to='/'
+              to='/home'
               className='links'
               style={active.home ? activeBorder : {}}
             >

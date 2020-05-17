@@ -73,4 +73,5 @@ export const Grid = styled.div`
 export const Loader = styled.div`
   display: flex;
   justify-content: center;
+  padding-top: ${(props) => (props.padding ? props.padding : "")};
 `;

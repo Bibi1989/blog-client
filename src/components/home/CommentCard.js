@@ -2,11 +2,16 @@ import React from "react";
 import { Comment, Icon } from "semantic-ui-react";
 import moment from "moment";
 import { Logo } from "./PostBody";
+import { Loader } from "./Post";
+import { Spinner } from "react-bootstrap";
 
 const CommentCard = ({ comment }) => {
   console.log(comment);
   return (
     <Comment.Group style={{ width: "100%" }}>
+      <Loader padding='2em'>
+        {loading && <Spinner animation='border' variant='primary' />}
+      </Loader>
       <Comment
         style={{
           width: "100%",

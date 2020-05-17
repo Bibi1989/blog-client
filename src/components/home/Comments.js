@@ -8,6 +8,7 @@ import { getComments, createComment, getAPost } from "../BlogRedux/store";
 import { Logo } from "./PostBody";
 import { Spinner } from "react-bootstrap";
 import CommentCard from "./CommentCard";
+import { Loader } from "./Post";
 
 const Comments = () => {
   const token = sessionStorage.getItem("blog");
@@ -41,6 +42,9 @@ const Comments = () => {
 
   return (
     <Container>
+      <Loader padding='2em'>
+        {loading && <Spinner animation='border' variant='primary' />}
+      </Loader>
       <Flex>
         <Comment.Group style={{ width: "100%" }}>
           <Comment

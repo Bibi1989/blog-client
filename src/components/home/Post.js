@@ -54,7 +54,6 @@ export const Container = styled.div`
   .loading {
     width: 100px;
     height: 100px;
-
     text-align: center;
     margin-top: 10%;
   }

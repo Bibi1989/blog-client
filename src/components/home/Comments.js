@@ -1,158 +1,142 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
-import { Form } from "./PostForm";
-import { Icon, Button, Label } from "semantic-ui-react";
-import { getAPost, createComment } from "../BlogRedux/store";
-import { Buttons, H1, Logo } from "./PostBody";
-import { Loader } from "./Post";
+import { Icon, Comment, TextArea, Form, Button } from "semantic-ui-react";
+import { getComments, createComment, getAPost } from "../BlogRedux/store";
+import { Logo } from "./PostBody";
 import { Spinner } from "react-bootstrap";
+import CommentCard from "./CommentCard";
 
 const Comments = () => {
+  const token = sessionStorage.getItem("blog");
+  const user = JSON.parse(sessionStorage.getItem("user"));
   const { commentId } = useParams();
   const dispatch = useDispatch();
-  const [form, setForm] = useState("");
+  const [comment, setComment] = useState("");
   const post = useSelector(({ posts: { post } }) => post);
+  const comments = useSelector(({ posts: { comments } }) => comments);
   const added_comment = useSelector(
     ({ posts: { added_comment } }) => added_comment
   );
   const loading = useSelector(({ posts: { loading } }) => loading);
   useEffect(() => {
+    getComments(dispatch, commentId);
     getAPost(dispatch, commentId);
   }, [added_comment]);
-  const handleInput = (e) => {
-    const { value, name } = e.target;
-    console.log(value);
-    setForm(value);
+
+  const handleComment = ({ target: { value } }) => {
+    setComment(value);
   };
-  console.log({ post });
 
   const onsubmit = (e) => {
     e.preventDefault();
 
-    createComment(dispatch, form, commentId);
-    setForm({
-      body: "",
-    });
+    createComment(dispatch, comment, commentId);
+    setComment("");
   };
+
+  console.log({ comment });
+
   return (
     <Container>
-      <Row>
-        <div className='post'>
-          <Flex justify='flex-start'>
-            <Logo>
-              {post !== null && post.username.slice(0, 2).toUpperCase()}
-            </Logo>
-            <H1>{post !== null && `Posted By @${post.username}`}</H1>
-          </Flex>
-          <H1>{post !== null && post.body}</H1>
-          <Buttons>
-            <Button as='div' style={{ background: "white" }}>
-              <Icon name='heart' size='large' />
-              <Label as='a' basic pointing='left' color='red'>
-                {post !== null && post.likes.length}
-              </Label>
-            </Button>
-            <Button as='div' style={{ background: "white" }}>
-              <Icon name='comments' size='large' />
-              <Label as='a' basic pointing='left' color='blue'>
-                {post !== null && post.comments.length}
-              </Label>
-            </Button>
-          </Buttons>
-        </div>
-      </Row>
-      <Form onSubmit={onsubmit}>
-        <div className='input-group'>
-          <Icon name='comment' className='icon' size='big' />
-          <input
-            type='text'
-            name='body'
-            placeholder='Comment on this post!!!'
-            onChange={handleInput}
+      <Flex>
+        <Comment.Group style={{ width: "100%" }}>
+          <Comment
+            style={{
+              width: "100%",
+              display: "flex",
+              margin: "0 !important",
+              padding: "0 !important",
+            }}
+          >
+            <Comment.Content>
+              <Logo>
+                {post !== null && post.User.username.slice(0, 2).toUpperCase()}
+              </Logo>
+            </Comment.Content>
+            <Comment.Content>
+              <Comment.Author>
+                {post !== null && post.User.username}
+              </Comment.Author>
+              <Comment.Text
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  // justifyContent: "space-between",
+                }}
+              >
+                <h2 style={{ paddingBottom: "1em" }}>
+                  {post !== null && post.title}
+                </h2>
+                <span>{post !== null && post.message}</span>
+              </Comment.Text>
+              <Comment.Actions>
+                <Comment.Action>
+                  <span
+                    style={{
+                      padding: "0em 0.5em 0.2em 0.5em",
+                      background: "orangered",
+                      color: "white",
+                      borderRadius: "0.2em",
+                    }}
+                  >
+                    {post !== null && post.tags}
+                  </span>
+                </Comment.Action>
+                <Comment.Action>
+                  <Icon name='heart' />
+                  Like {post !== null && post.Likes.length}
+                </Comment.Action>
+                <Comment.Action>
+                  <Icon name='envelope open' />
+                  Comment {post !== null && post.Comments.length}
+                </Comment.Action>
+                <Comment.Action>
+                  {moment(post !== null && post.createdAt).fromNow(true)} ago
+                </Comment.Action>
+                {/* <Comment.Action>
+                  <Icon
+                    name='edit outline'
+                    onClick={() => getAPost(dispatch, post.id)}
+                  />{" "}
+                  Edit Post
+                </Comment.Action> */}
+              </Comment.Actions>
+            </Comment.Content>
+          </Comment>
+        </Comment.Group>
+      </Flex>
+
+      <Flex>
+        <Form onSubmit={onsubmit}>
+          <Form.Field
+            control={TextArea}
+            onChange={handleComment}
+            placeholder='Write your comment here!!!'
           />
-        </div>
-        <Button className='btn' type='submit' color='blue'>
-          <Icon name='comment' /> Comment
-        </Button>
-      </Form>
-      <Loader>
-        {loading && <Spinner animation='border' className='loading' />}
-      </Loader>
-      <Grid>
-        {post !== null &&
-          post.comments.map((comment) => (
-            <Comment comment={comment !== null && comment} />
+          <Button type='submit' color='blue'>
+            Comment
+          </Button>
+        </Form>
+      </Flex>
+      <Flex>
+        {comments !== null &&
+          comments.map((comment) => (
+            <CommentCard key={comment.id} comment={comment} />
           ))}
-      </Grid>
+      </Flex>
     </Container>
   );
 };
 
-export const Container = styled.div``;
-export const SubGrid = styled.div`
-  max-width: 80%;
-  background: #ffffff;
-  margin: auto;
-  padding: 1em;
-  border-radius: 0.8em;
-  margin-bottom: 0.8em;
-
-  @media (max-width: 768px) {
-    max-width: 96%;
-  }
-`;
-export const Row = styled.div`
-  padding: 2% 10%;
-
-  @media (max-width: 768px) {
-    padding: 1em;
-  }
-
-  .post {
-    background: #ffffff;
-    padding: 1em;
-    border-radius: 0.8em;
-  }
-`;
-export const Grid = styled.div`
-  height: 60vh;
-  padding-bottom: 3em;
-  overflow: auto;
-
-  &::-webkit-scrollbar {
-    width: 2px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: teal;
-  }
-`;
-const Flex = styled.div`
-  display: flex;
-  justify-content: ${(props) => (props.justify ? props.justify : "")};
-  align-items: center;
-`;
-// export const H1 = styled.h1``;
-
 export default Comments;
 
-const Comment = ({ comment }) => (
-  <SubGrid>
-    <div className='user'>
-      <div>
-        <p>{comment.username}</p>
-        <div className='body'>
-          <p style={{ paddingBottom: "1em" }}>{comment.body}</p>
-        </div>
-        <p className='date'>
-          <span>
-            {moment(comment.createdAt).fromNow(true)}{" "}
-            <i className='fas fa-users'></i>
-          </span>
-        </p>
-      </div>
-    </div>
-  </SubGrid>
-);
+const Container = styled.div`
+  min-height: 93vh;
+`;
+const Flex = styled.div`
+  padding-top: 1.5em;
+`;

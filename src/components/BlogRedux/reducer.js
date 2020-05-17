@@ -4,13 +4,16 @@ import {
   LIKE_POST,
   GET_SINGLE,
   COMMENT_POST,
+  COMMENTS,
   LOADING,
   DELETE,
+  UPDATE,
 } from "./types";
 
 const initialState = {
   posts: [],
   post: null,
+  update: null,
   likes: [],
   comments: [],
   added_post: null,
@@ -33,6 +36,11 @@ export const postReducer = (state = initialState, action) => {
         ...state,
         post: action.post,
       };
+    case COMMENTS:
+      return {
+        ...state,
+        comments: action.post,
+      };
     case COMMENT_POST:
       return {
         ...state,
@@ -42,6 +50,11 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         added_post: action.post,
+      };
+    case UPDATE:
+      return {
+        ...state,
+        update: action.post,
       };
     case LIKE_POST:
       return {

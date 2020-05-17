@@ -1,93 +1,107 @@
 import React from "react";
 import moment from "moment";
 import styled from "styled-components";
-import { Button, Label, Icon } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Icon, Comment } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { likePost, deletePost } from "../BlogRedux/store";
+import { likePost, deletePost, updatePost, getAPost } from "../BlogRedux/store";
 
 const PostCard = ({ post }) => {
   const token = sessionStorage.getItem("blog");
   const user = JSON.parse(sessionStorage.getItem("user"));
   const dispatch = useDispatch();
-  const handleLikes = () => {
-    likePost(dispatch, post._id);
+
+  const history = useHistory();
+
+  const handleLikes = (id) => {
+    likePost(dispatch, id);
+  };
+  const handleComment = () => {
+    history.push(`/comments/${post.id}`);
   };
   const handleDelete = () => {
-    deletePost(dispatch, post._id);
+    deletePost(dispatch, post.id);
   };
   return (
     <Container>
-      <Row>
-        <Grid paddingBottom='1em'>
-          <Flex justify='flex-start'>
-            <Logo>{post.username.slice(0, 2).toUpperCase()}</Logo>
-            <H2>Posted By @{post.username}</H2>
-          </Flex>
-        </Grid>
-        <Grid paddingBottom='1em'>
-          <H1 paddingRight='10%'>{post.body}</H1>
-        </Grid>
-        <Grid paddingBottom='0em'>
-          <p style={{ color: "#bbbbbb" }}>
-            Posted {moment(post.createdAt).fromNow(true)}{" "}
-          </p>
-        </Grid>
-        <Buttons>
-          {token ? (
-            <Button
-              as='div'
-              onClick={handleLikes}
+      <Comment.Group style={{ width: "100%" }}>
+        <Comment
+          style={{
+            width: "100%",
+            display: "flex",
+            margin: "0 !important",
+            padding: "0 !important",
+          }}
+        >
+          <Comment.Content>
+            <Logo>{post.User.username.slice(0, 2).toUpperCase()}</Logo>
+          </Comment.Content>
+          <Comment.Content>
+            <Comment.Author>{post.User.username}</Comment.Author>
+            <Comment.Text
+              onClick={handleComment}
               style={{
+                width: "100%",
                 display: "flex",
-                alignItems: "center",
-                background: "#ffffff",
+                justifyContent: "space-between",
+                cursor: "pointer",
               }}
             >
-              <Icon name='heart' size='large' />
-              <Label as='a' basic pointing='left' color='red'>
-                {post.likes.length}
-              </Label>
-            </Button>
-          ) : (
-            <Link to='/login'>
-              <Button as='div' labelPosition='right' onClick={handleLikes}>
-                <Button icon color='red'>
-                  <Icon name='heart' />
-                </Button>
-                <Label as='a' basic pointing='left' color='red'>
-                  {post.likes.length}
-                </Label>
-              </Button>
-            </Link>
-          )}
-          <div style={{ display: "flex", alignItems: "center" }}>
-            {token && post.username === user.username && (
-              <Icon
-                name='trash'
-                size='large'
-                color='red'
-                onClick={handleDelete}
-                style={{ marginRight: "1em", cursor: "pointer" }}
-              />
-            )}
-            <Link to={`/comments/${post._id}`}>
-              <div>
-                <Icon name='comments' size='large' />
-                <Label as='a' basic pointing='left' color='blue'>
-                  {post.comments.length}
-                </Label>
-              </div>
-            </Link>
-          </div>
-        </Buttons>
-      </Row>
+              <span>{post.title}</span>
+            </Comment.Text>
+            <Comment.Actions>
+              <Comment.Action>
+                <span
+                  style={{
+                    padding: "0em 0.5em 0.2em 0.5em",
+                    background: "orangered",
+                    color: "white",
+                    borderRadius: "0.2em",
+                  }}
+                >
+                  {post.tags}
+                </span>
+              </Comment.Action>
+              <Comment.Action onClick={() => handleLikes(post.id)}>
+                <Icon
+                  name='heart'
+                  color={
+                    user !== null &&
+                    user.email === post.User.email &&
+                    post.Likes.length
+                      ? "red"
+                      : "gray"
+                  }
+                />
+                Like {post.Likes.length}
+              </Comment.Action>
+              <Comment.Action onClick={handleComment}>
+                <Icon name='envelope open' />
+                Comment {post.Comments.length}
+              </Comment.Action>
+              <Comment.Action>
+                {moment(post.createdAt).fromNow(true)} ago
+              </Comment.Action>
+              <Comment.Action>
+                <Icon
+                  name='edit outline'
+                  onClick={() => getAPost(dispatch, post.id)}
+                />{" "}
+                Edit Post
+              </Comment.Action>
+            </Comment.Actions>
+          </Comment.Content>
+        </Comment>
+      </Comment.Group>
     </Container>
   );
 };
 
 const Container = styled.div`
-  padding: 0.5rem 1em 0 5em;
+  padding: 1em;
+  margin: 0;
+  /* background: #ffffff; */
+  /* margin-bottom: 0.3em; */
 
   @media (max-width: 769px) {
     padding: 1em;
@@ -99,9 +113,10 @@ export const Buttons = styled.div`
 `;
 const Row = styled.div`
   padding: 1em;
-  border-radius: 0.7em;
   background: #ffffff;
   box-shadow: 0 5px 25px #eee;
+  display: grid;
+  grid-template-columns: 10% 90%;
 `;
 export const Flex = styled.div`
   display: flex;
@@ -110,7 +125,7 @@ export const Flex = styled.div`
 `;
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 90% 10%;
+  grid-template-columns: 1fr;
   padding-bottom: ${({ paddingBottom }) =>
     paddingBottom ? paddingBottom : ""};
 
@@ -127,7 +142,10 @@ export const H1 = styled.h1`
   }
 `;
 export const H2 = styled.h2`
-  font-size: 0.8rem;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  line-height: 100%;
   color: #777;
   i {
     color: teal;

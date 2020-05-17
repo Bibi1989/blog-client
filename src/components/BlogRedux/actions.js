@@ -6,6 +6,7 @@ import {
   UPDATE,
   LIKE_POST,
   COMMENT_POST,
+  COMMENTS,
 } from "./types";
 
 export const getAction = (post) => {
@@ -41,6 +42,12 @@ export const updateAction = (post) => {
 export const likePostAction = (post) => {
   return {
     type: LIKE_POST,
+    post,
+  };
+};
+export const commentsAction = (post) => {
+  return {
+    type: COMMENTS,
     post,
   };
 };

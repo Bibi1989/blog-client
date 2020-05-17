@@ -48,6 +48,7 @@ function App() {
                 <NotFound />
               </Route>
             </Switch>
+            <div></div>
           </Layout>
         </UserProvider>
       </Provider>
@@ -60,14 +61,15 @@ export default App;
 export const Layout = styled.div`
   display: grid;
   grid-template-columns: 80% 20%;
-  padding-left: 20%;
+  padding-left: 25%;
+  padding-right: 7%;
   background: #f9fbfc;
 
   .sticky {
     position: fixed;
     width: 20%;
     left: 1em;
-    top: 11vh;
+    top: 9vh;
   }
 
   @media (max-width: 769px) {

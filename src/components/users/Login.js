@@ -26,9 +26,9 @@ const Login = () => {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    console.log(login_errors);
     login(form, history);
   };
+  console.log(login_errors);
 
   if (sessionStorage.getItem("blog")) {
     history.push("/");
@@ -38,21 +38,29 @@ const Login = () => {
     <Container>
       <Form onSubmit={handleLogin}>
         <h1>Login</h1>
+        <p style={{ color: "red" }}>
+          {(login_errors === "password is invalid" ||
+            login_errors === "Invalid email or your yet to register") &&
+            "Invalid email or password!!!"}
+        </p>
         <div>
           <i className='fa fa-envelope'></i>
           <input
+            className={login_errors === "Email is empty!!!" && "error"}
             style={
-              login_errors.email
+              login_errors === "Email is empty!!!"
                 ? {
                     border: "0.3px solid #ff00007a",
                     boxShadow: "0 2px 15px #ff00007a",
                   }
-                : {}
+                : { border: "none" }
             }
             type='text'
             name='email'
             placeholder={
-              login_errors.email ? login_errors.email : "Email Address..."
+              login_errors === "Email is empty!!!"
+                ? login_errors
+                : "Email Address..."
             }
             value={form.email}
             onChange={handleInput}
@@ -61,8 +69,9 @@ const Login = () => {
         <div>
           <i className='fa fa-unlock'></i>
           <input
+            className={login_errors === "Password is empty!!!" && "error"}
             style={
-              login_errors.password
+              login_errors === "Password is empty!!!"
                 ? {
                     border: "0.3px solid #ff00007a",
                     boxShadow: "0 2px 10px #ff00007a",
@@ -72,7 +81,9 @@ const Login = () => {
             type='text'
             name='password'
             placeholder={
-              login_errors.password ? login_errors.password : "Password..."
+              login_errors === "Password is empty!!!"
+                ? login_errors
+                : "Password..."
             }
             value={form.password}
             onChange={handleInput}
@@ -88,11 +99,11 @@ const Login = () => {
 
 export const Container = styled.div`
   padding-top: 10%;
+  min-height: 93vh;
 `;
 
 export const Form = styled.form`
-  width: 50%;
-  min-height: 40vh;
+  width: 70%;
   padding: 1em;
   margin: auto;
   display: flex;
@@ -102,6 +113,9 @@ export const Form = styled.form`
   box-shadow: 0 3px 15px #ccc;
   border-radius: 1em;
 
+  @media (max-width: 1400px) {
+    width: 90%;
+  }
   @media (max-width: 1000px) {
     width: 90%;
   }
@@ -110,7 +124,9 @@ export const Form = styled.form`
   }
 
   .error {
-    color: red;
+    &::placeholder {
+      color: red;
+    }
   }
 
   h1 {

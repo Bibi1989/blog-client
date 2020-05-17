@@ -87,7 +87,7 @@ const NavBar = () => {
 
         <div>
           {!token && (
-            <>
+            <ul>
               <li onClick={() => handleClick("login")}>
                 <Link
                   to='/login'
@@ -106,19 +106,21 @@ const NavBar = () => {
                   Register
                 </Link>
               </li>
-            </>
+            </ul>
           )}
 
           {token && (
-            <li onClick={handleLogout}>
-              <Link
-                to='/login'
-                className='links'
-                style={active.logouts ? activeBorder : {}}
-              >
-                Logout
-              </Link>
-            </li>
+            <ul>
+              <li onClick={handleLogout}>
+                <Link
+                  to='/login'
+                  className='links'
+                  style={active.logouts ? activeBorder : {}}
+                >
+                  Logout
+                </Link>
+              </li>
+            </ul>
           )}
         </div>
       </ul>
@@ -129,7 +131,7 @@ const NavBar = () => {
 export default NavBar;
 
 const Nav = styled.div`
-  padding: 0.7em 10%;
+  padding: 1em 20%;
   background: #2285d0;
 
   @media (max-width: 769px) {
@@ -140,6 +142,9 @@ const Nav = styled.div`
     list-style: none;
     display: flex;
     justify-content: space-between;
+    padding: 0;
+    margin: 0;
+
     div {
       display: flex;
       li {

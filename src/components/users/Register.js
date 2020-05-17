@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { publics } from "../utils/session";
 import { UserContext } from "../userContext/UserProvider";
+import { Container } from "./Login";
 
 const Register = () => {
   const history = useHistory();
@@ -35,94 +36,100 @@ const Register = () => {
       confirmPassword: "",
     });
   };
+  console.log(register_errors);
 
   return (
-    <Form>
-      <h1>Register</h1>
-      <form onSubmit={handleRegister}>
-        <div>
-          <i className='fa fa-user'></i>
-          <input
-            style={
-              register_errors.username
-                ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
-                : {}
-            }
-            type='text'
-            name='username'
-            placeholder={
-              register_errors.username
-                ? register_errors.username
-                : "Username..."
-            }
-            value={form.username}
-            onChange={handleInput}
-          />
-        </div>
-        <div>
-          <i className='fa fa-envelope'></i>
-          <input
-            style={
-              register_errors.email
-                ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
-                : {}
-            }
-            type='text'
-            name='email'
-            placeholder={
-              register_errors.email ? register_errors.email : "Email Address..."
-            }
-            value={form.email}
-            onChange={handleInput}
-          />
-        </div>
-        <div>
-          <i className='fa fa-unlock'></i>
-          <input
-            style={
-              register_errors.password
-                ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
-                : {}
-            }
-            type='text'
-            name='password'
-            placeholder={
-              register_errors.password
-                ? register_errors.password
-                : "Password..."
-            }
-            value={form.password}
-            onChange={handleInput}
-          />
-        </div>
-        <div>
-          <i className='fa fa-unlock'></i>
-          <input
-            style={
-              error
-                ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
-                : {}
-            }
-            type='text'
-            name='confirmPassword'
-            placeholder={
-              error ? "Password do not match" : "Confirm Password..."
-            }
-            value={error ? error : form.confirmPassword}
-            onChange={handleInput}
-          />
-        </div>
-        <button type='submit'>
-          <i className='fa fa-share-square'></i> Register
-        </button>
-      </form>
-    </Form>
+    <Container>
+      <Form>
+        <h1>Register</h1>
+        <form onSubmit={handleRegister}>
+          <div>
+            <i className='fa fa-user'></i>
+            <input
+              className={register_errors === "Username is empty!!!" && "error"}
+              style={
+                register_errors === "Username is empty!!!"
+                  ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
+                  : {}
+              }
+              type='text'
+              name='username'
+              placeholder={
+                register_errors === "Username is empty!!!"
+                  ? register_errors
+                  : "Username..."
+              }
+              value={form.username}
+              onChange={handleInput}
+            />
+          </div>
+          <div>
+            <i className='fa fa-envelope'></i>
+            <input
+              className={register_errors === "Email is empty!!!" && "error"}
+              style={
+                register_errors === "Email is empty!!!"
+                  ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
+                  : {}
+              }
+              type='text'
+              name='email'
+              placeholder={
+                register_errors === "Email is empty!!!"
+                  ? register_errors
+                  : "Email Address..."
+              }
+              value={form.email}
+              onChange={handleInput}
+            />
+          </div>
+          <div>
+            <i className='fa fa-unlock'></i>
+            <input
+              className={register_errors === "password is empty!!!" && "error"}
+              style={
+                register_errors === "Password is empty!!!"
+                  ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
+                  : {}
+              }
+              type='text'
+              name='password'
+              placeholder={
+                register_errors === "Password is empty!!!"
+                  ? register_errors
+                  : "Password..."
+              }
+              value={form.password}
+              onChange={handleInput}
+            />
+          </div>
+          <div>
+            <i className='fa fa-unlock'></i>
+            <input
+              style={
+                error
+                  ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
+                  : {}
+              }
+              type='text'
+              name='confirmPassword'
+              placeholder={
+                error ? "Password do not match" : "Confirm Password..."
+              }
+              onChange={handleInput}
+            />
+          </div>
+          <button type='submit'>
+            <i className='fa fa-share-square'></i> Register
+          </button>
+        </form>
+      </Form>
+    </Container>
   );
 };
 
 const Form = styled.div`
-  height: 70vh;
-  width: 50%;
+  width: 70%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -131,6 +138,9 @@ const Form = styled.div`
   border-radius: 1em;
   margin-top: 5%;
 
+  @media (max-width: 1400px) {
+    width: 90%;
+  }
   @media (max-width: 1000px) {
     width: 90%;
   }
@@ -139,7 +149,9 @@ const Form = styled.div`
   }
 
   .error {
-    color: red;
+    &::placeholder {
+      color: red;
+    }
   }
   h1 {
     font-size: 3rem;

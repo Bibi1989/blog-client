@@ -74,7 +74,8 @@ export const Layout = styled.div`
 
   @media (max-width: 769px) {
     grid-template-columns: 0% 100% 0%;
-    padding-left: 0em;
+    padding-left: 1em;
+    padding-right: 1em;
 
     .sticky {
       position: static;

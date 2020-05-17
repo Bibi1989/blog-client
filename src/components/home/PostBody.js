@@ -104,7 +104,7 @@ const Container = styled.div`
   /* margin-bottom: 0.3em; */
 
   @media (max-width: 769px) {
-    padding: 1em;
+    padding: 0em;
   }
 `;
 export const Buttons = styled.div`

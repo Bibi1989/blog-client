@@ -15,7 +15,7 @@ import { Logo } from "./PostBody";
 import { Spinner } from "react-bootstrap";
 import CommentCard from "./CommentCard";
 import { Loader } from "./Post";
-import { styleFunc } from "./tagStyle.ts";
+import { styleFunc } from "./tagStyle";
 
 const Comments = () => {
   // const token = sessionStorage.getItem("blog");

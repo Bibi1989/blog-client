@@ -5,7 +5,7 @@ import { Icon, Comment } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { likePost, getAPost } from "../BlogRedux/store";
-import { styleFunc } from "./tagStyle.ts";
+import { styleFunc } from "./tagStyle";
 
 const PostCard = ({ post }) => {
   // const token = sessionStorage.getItem("blog");

@@ -145,6 +145,7 @@ const Comments = () => {
 export default Comments;
 
 const Container = styled.div`
+  padding: 1em;
   min-height: 93vh;
 `;
 const Flex = styled.div`

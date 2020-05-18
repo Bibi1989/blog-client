@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon, Dropdown } from "semantic-ui-react";
+import { Dropdown } from "semantic-ui-react";
 import { Logo } from "../home/PostBody";
 
 export const Profile = ({ users, history, handleLogout }) => (

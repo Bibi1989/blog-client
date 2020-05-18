@@ -8,7 +8,21 @@ export const Notify = ({ notices }) => {
     <Dropdown
       icon='alarm'
       text={
-        <sup style={{ position: "absolute", right: "0", top: "0px" }}>
+        <sup
+          style={{
+            position: "absolute",
+            right: "-3px",
+            top: "0px",
+            width: "15px",
+            height: "15px",
+            fontSize: "0.6em",
+            borderRadius: "50%",
+            background: "orangered",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           {notices.length}
         </sup>
       }

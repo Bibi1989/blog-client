@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { Input, Menu, Dropdown } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 import { useState } from "react";
 import { getAllPosts } from "../BlogRedux/store";
-import { Flex, Logo, H1 } from "../home/PostBody";
+import { Flex, Logo } from "../home/PostBody";
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -19,10 +19,7 @@ const Users = () => {
     { tags: "article", color: "teal" },
     { tags: "question", color: "red" },
   ];
-  const [values, setValues] = useState("");
-  const handleSearch = ({ target: { value } }) => {
-    setValues(value);
-  };
+  const [values] = useState("");
   new_posts = new_posts.filter((post) =>
     post.toLowerCase().includes(values.toLowerCase())
   );
@@ -62,10 +59,6 @@ const Users = () => {
     </Container>
   );
 };
-
-{
-  /*  */
-}
 
 export default Users;
 

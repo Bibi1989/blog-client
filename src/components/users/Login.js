@@ -1,15 +1,13 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Button } from "semantic-ui-react";
 import { UserContext } from "../userContext/UserProvider";
 import { publics } from "../utils/session";
 
 const Login = () => {
   const history = useHistory();
-  const loc = useLocation();
   const port = window.location.port;
-  const path = loc;
   console.log(port);
   publics(history);
   const { login, login_errors } = useContext(UserContext);

@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { addPost } from "../BlogRedux/store";
-import {
-  Icon,
-  Button,
-  TextArea,
-  Input,
-  FormGroup,
-  Form,
-} from "semantic-ui-react";
+import { Icon, Button, TextArea, FormGroup, Form } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
@@ -16,8 +9,6 @@ import Popup from "reactjs-popup";
 
 import "froala-editor/css/froala_style.min.css";
 import "froala-editor/css/froala_editor.pkgd.min.css";
-
-import Editor from "react-froala-wysiwyg";
 import { Logo } from "./PostBody";
 
 const PostForm = () => {

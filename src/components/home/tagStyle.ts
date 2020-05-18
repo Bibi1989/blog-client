@@ -22,3 +22,15 @@ export const questionStyle = {
   color: "white",
   borderRadius: "0.2em",
 };
+
+export const styleFunc = (text) => {
+  if (text === "Post") {
+    return postStyle;
+  } else if (text === "Dev") {
+    return devStyle;
+  } else if (text === "Article") {
+    return articleStyle;
+  } else {
+    return questionStyle;
+  }
+};

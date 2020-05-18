@@ -3,10 +3,9 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import { Logo } from "../home/PostBody";
-import { Comment, Icon } from "semantic-ui-react";
 import { UserContext } from "../userContext/UserProvider";
 import ProfileCard from "./ProfileCard";
-import { setContext } from "apollo-link-context";
+import { Icon } from "semantic-ui-react";
 
 const Profile = () => {
   let { getUser, user } = useContext(UserContext);
@@ -14,6 +13,8 @@ const Profile = () => {
   const { userId } = useParams();
   useEffect(() => {
     getUser(Number(userId));
+
+    // eslint-disable-next-line
   }, []);
   return (
     <Container>

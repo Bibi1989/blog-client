@@ -1,44 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import styled from "styled-components";
 import { Icon, Comment } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { likePost, deletePost, updatePost, getAPost } from "../BlogRedux/store";
-import {
-  postStyle,
-  devStyle,
-  articleStyle,
-  questionStyle,
-} from "./tagStyle.ts";
+import { likePost, getAPost } from "../BlogRedux/store";
+import { styleFunc } from "./tagStyle.ts";
 
 const PostCard = ({ post }) => {
-  const token = sessionStorage.getItem("blog");
+  // const token = sessionStorage.getItem("blog");
   const user = JSON.parse(sessionStorage.getItem("user"));
   const dispatch = useDispatch();
 
   const history = useHistory();
 
-  const styleFunc = (text) => {
-    if (text === "Post") {
-      return postStyle;
-    } else if (text === "Dev") {
-      return devStyle;
-    } else if (text === "Article") {
-      return articleStyle;
-    } else {
-      return questionStyle;
-    }
-  };
+  const [render, setRender] = useState();
+
+  const likes = useSelector(({ posts }) => posts);
+
+  React.useEffect(() => {}, [likes]);
+
+  console.log(render);
 
   const handleLikes = (id) => {
     likePost(dispatch, id);
+    setRender(!render);
   };
   const handleComment = () => {
     history.push(`/comments/${post.id}`);
-  };
-  const handleDelete = () => {
-    deletePost(dispatch, post.id);
   };
   return (
     <Container>
@@ -126,27 +115,10 @@ export const Buttons = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const Row = styled.div`
-  padding: 1em;
-  background: #ffffff;
-  box-shadow: 0 5px 25px #eee;
-  display: grid;
-  grid-template-columns: 10% 90%;
-`;
 export const Flex = styled.div`
   display: flex;
   justify-content: ${(props) => (props.justify ? props.justify : "")};
   align-items: center;
-`;
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  padding-bottom: ${({ paddingBottom }) =>
-    paddingBottom ? paddingBottom : ""};
-
-  span {
-    text-align: right;
-  }
 `;
 
 export const H1 = styled.h1`

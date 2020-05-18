@@ -9,20 +9,18 @@ import Register from "./components/users/Register";
 import NotFound from "./components/users/NotFound";
 import NavBar from "./components/NavBar/NavBar";
 import PrivateRoute from "./components/privateRoute/privateRoute";
-import { BlogProvider } from "./components/blogContext/BlogProvider";
 import { UserProvider } from "./components/userContext/UserProvider";
 import Comments from "./components/home/Comments";
 import store from "./redux/store";
 import Post from "./components/home/Post";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import FirstLayout from "./components/SideComponent/FirstLayout";
 import Users from "./components/SideComponent/Users";
 import Profile from "./components/Profile/Profile";
 
 function App() {
   const token = sessionStorage.getItem("blog");
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  // const user = JSON.parse(sessionStorage.getItem("user"));
 
   return (
     <Router>

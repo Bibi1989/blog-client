@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { Icon, Dropdown } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllPosts, getNotifications } from "../BlogRedux/store";
-import { UserContext } from "../userContext/UserProvider";
 import { Profile } from "./NavProfile";
 import { Notify } from "./NavNotify";
 
@@ -13,7 +11,6 @@ const activeBorder = {
 };
 
 const NavBar = () => {
-  let { getUser } = useContext(UserContext);
   const history = useHistory();
   const token = sessionStorage.getItem("blog");
   const users = JSON.parse(sessionStorage.getItem("user"));
@@ -28,6 +25,8 @@ const NavBar = () => {
   useEffect(() => {
     getAllPosts(dispatch, "");
     getNotifications(dispatch);
+
+    // eslint-disable-next-line
   }, []);
 
   const [active, setActive] = useState({

@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { getAllPosts } from "../BlogRedux/store";
 import PostCard from "./PostBody";
 import PostForm from "./PostForm";
@@ -11,9 +10,9 @@ import { useState } from "react";
 
 const Post = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [text, setText] = useState("");
-  const token = sessionStorage.getItem("blog");
+  const [text] = useState("");
+  const [render, setRender] = useState(false);
+  // const token = sessionStorage.getItem("blog");
   const posts = useSelector(({ posts: { posts } }) => posts);
   const added_post = useSelector(({ posts: { added_post } }) => added_post);
   const likes = useSelector(({ posts: { likes } }) => likes);
@@ -27,18 +26,25 @@ const Post = () => {
 
   useEffect(() => {
     getAllPosts(dispatch, text);
+    setRender(!render);
+
+    // eslint-disable-next-line
   }, [added_post, likes, added_comment, deleted_post]);
 
   // if (!token) {
   //   history.push("/home");
   // }
 
+  console.log(render);
+
   return (
     <Container>
       <PostForm />
-      <Loader>
-        {loading && <Spinner animation='border' className='loading' />}
-      </Loader>
+      {loading && (
+        <Loader>
+          <Spinner animation='border' variant='success' />
+        </Loader>
+      )}
       <Grid>
         {posts.map((post) => (
           <PostCard key={post._id} post={post} />

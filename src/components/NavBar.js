@@ -154,7 +154,7 @@ const NavBar = () => {
                     <Dropdown.Divider />
                     <Dropdown.Item>Profile</Dropdown.Item>
                     <Dropdown.Divider />
-                    <Dropdown.Item>Logout</Dropdown.Item>
+                    <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </li>

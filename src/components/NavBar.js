@@ -1,26 +1,26 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Icon, Dropdown } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllPosts } from "./BlogRedux/store";
 import { Logo } from "./home/PostBody";
+import { UserContext } from "./userContext/UserProvider";
 
 const activeBorder = {
   color: "#fff",
 };
 
 const NavBar = () => {
-  const path = useLocation();
+  let { getUser } = useContext(UserContext);
+  const history = useHistory();
   const token = sessionStorage.getItem("blog");
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const users = JSON.parse(sessionStorage.getItem("user"));
   const userDetails = [];
-  userDetails.push(user);
+  userDetails.push(users);
 
   const dispatch = useDispatch();
   const posts = useSelector(({ posts: { posts } }) => posts);
-
-  console.log({ blog: posts });
 
   useEffect(() => {
     getAllPosts(dispatch, "");
@@ -113,15 +113,8 @@ const NavBar = () => {
           {token && (
             <ul>
               <li style={{ display: "flex", alignItems: "center" }}>
-                {/* <Link
-                  to='/login'
-                  className='links'
-                  style={active.logouts ? activeBorder : {}}
-                >
-                  Logout
-                </Link> */}
                 <span style={{ paddingRight: "0.7em", color: "white" }}>
-                  {user.username.toUpperCase()}
+                  {users.username.toUpperCase()}
                 </span>
 
                 <Dropdown
@@ -136,7 +129,7 @@ const NavBar = () => {
                         cursor: "pointer",
                       }}
                     >
-                      {user.username.toUpperCase().slice(0, 2)}
+                      {users.username.toUpperCase().slice(0, 2)}
                     </Logo>
                   }
                   icon=''
@@ -149,12 +142,23 @@ const NavBar = () => {
                   >
                     <Dropdown.Header
                       icon='tags'
-                      content={user.username.toUpperCase()}
+                      content={users.username.toUpperCase()}
                     />
                     <Dropdown.Divider />
-                    <Dropdown.Item>Profile</Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => history.push(`/profile/${users.id}`)}
+                    >
+                      Profile
+                    </Dropdown.Item>
                     <Dropdown.Divider />
-                    <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        handleLogout();
+                        history.push("/login");
+                      }}
+                    >
+                      Logout
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </li>

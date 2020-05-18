@@ -16,7 +16,7 @@ const PostForm = () => {
   user = JSON.parse(user);
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
-  const [select, setSelect] = useState("");
+  const [select, setSelect] = useState("Post");
 
   const dispatch = useDispatch();
   const added_post = useSelector(({ posts: { added_post } }) => added_post);

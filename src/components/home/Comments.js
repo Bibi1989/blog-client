@@ -49,10 +49,17 @@ const Comments = () => {
     likePost(dispatch, id);
   };
 
-  const notice = `${user.username} commented on your post`;
+  let notice = "";
+
+  console.log(post !== null && post.username);
 
   const onsubmit = (e) => {
     e.preventDefault();
+    if (post !== null && post.username === user.username) {
+      notice = `You commented on your own post`;
+    } else {
+      notice = `${user.username} commented on your post`;
+    }
 
     createComment(dispatch, comment, commentId);
     createNotification(dispatch, notice, Number(post !== null && post.User.id));

@@ -54,10 +54,8 @@ const PostForm = () => {
   const onsubmit = (e) => {
     e.preventDefault();
     addPost(dispatch, form);
-    if (added_post) {
-      setTitle("");
-      setMessage("");
-    }
+    setTitle("");
+    setMessage("");
   };
 
   return (
@@ -102,6 +100,7 @@ const PostForm = () => {
                   className='input'
                   placeholder='Your Post Title!!!'
                   onChange={handleInput}
+                  value={title}
                 />
               </FormGroup>
               {/* <Editor tag='textarea' onModelChange={setMessage} /> */}
@@ -110,6 +109,7 @@ const PostForm = () => {
                 control={TextArea}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder='Write your Post here!!!'
+                value={message}
               />
               <Button
                 className='btn'

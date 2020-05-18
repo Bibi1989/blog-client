@@ -73,7 +73,7 @@ const NavBar = () => {
               className='links'
               style={active.home ? activeBorder : {}}
             >
-              Bibi-Blog
+              <span className='bibi'>Bibi</span> <i>Blog</i>
             </Link>
           ) : (
             <Link
@@ -81,7 +81,7 @@ const NavBar = () => {
               className='links'
               style={active.home ? activeBorder : {}}
             >
-              Bibi-Blog
+              <span className='bibi'>Bibi</span> <i>Blog</i>
             </Link>
           )}
         </li>
@@ -218,6 +218,14 @@ const Nav = styled.div`
         font-size: 1.3rem;
         padding: 0.7rem 10px;
         transition: all 0.5s ease;
+
+        .bibi {
+          color: orange;
+        }
+
+        i {
+          color: tomato;
+        }
       }
     }
   }

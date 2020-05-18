@@ -120,6 +120,7 @@ const Comments = () => {
             control={TextArea}
             onChange={handleComment}
             placeholder='Write your comment here!!!'
+            value={comment}
           />
           <Button type='submit' color='blue'>
             Comment

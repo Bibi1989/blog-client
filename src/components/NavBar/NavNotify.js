@@ -17,7 +17,7 @@ export const Notify = ({ notices }) => {
       className='icon'
       style={{ marginRight: "0.7em", color: "white", fontSize: "1.3em" }}
     >
-      <Dropdown.Menu style={{ minWidth: "250px", marginLeft: "-220px" }}>
+      <Dropdown.Menu style={{ Width: "220px", marginLeft: "-140px" }}>
         {notices.map((notice) => (
           <>
             <Dropdown.Item>

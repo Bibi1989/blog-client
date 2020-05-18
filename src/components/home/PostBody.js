@@ -5,6 +5,12 @@ import { Icon, Comment } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { likePost, deletePost, updatePost, getAPost } from "../BlogRedux/store";
+import {
+  postStyle,
+  devStyle,
+  articleStyle,
+  questionStyle,
+} from "./tagStyle.ts";
 
 const PostCard = ({ post }) => {
   const token = sessionStorage.getItem("blog");
@@ -12,6 +18,18 @@ const PostCard = ({ post }) => {
   const dispatch = useDispatch();
 
   const history = useHistory();
+
+  const styleFunc = (text) => {
+    if (text === "Post") {
+      return postStyle;
+    } else if (text === "Dev") {
+      return devStyle;
+    } else if (text === "Article") {
+      return articleStyle;
+    } else {
+      return questionStyle;
+    }
+  };
 
   const handleLikes = (id) => {
     likePost(dispatch, id);
@@ -61,16 +79,7 @@ const PostCard = ({ post }) => {
             </Comment.Text>
             <Comment.Actions>
               <Comment.Action>
-                <span
-                  style={{
-                    padding: "0em 0.5em 0.2em 0.5em",
-                    background: "orangered",
-                    color: "white",
-                    borderRadius: "0.2em",
-                  }}
-                >
-                  {post.tags}
-                </span>
+                <span style={styleFunc(post.tags)}>{post.tags}</span>
               </Comment.Action>
               <Comment.Action onClick={() => handleLikes(post.id)}>
                 <Icon

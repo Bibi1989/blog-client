@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { Select } from "semantic-ui-react";
+import { Icon, Dropdown } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllPosts } from "./BlogRedux/store";
+import { Logo } from "./home/PostBody";
 
 const activeBorder = {
   color: "#fff",
@@ -72,7 +73,7 @@ const NavBar = () => {
               className='links'
               style={active.home ? activeBorder : {}}
             >
-              {user.username[0].toUpperCase() + user.username.slice(1)}
+              Bibi-Blog
             </Link>
           ) : (
             <Link
@@ -80,7 +81,7 @@ const NavBar = () => {
               className='links'
               style={active.home ? activeBorder : {}}
             >
-              Home
+              Bibi-Blog
             </Link>
           )}
         </li>
@@ -111,14 +112,51 @@ const NavBar = () => {
 
           {token && (
             <ul>
-              <li onClick={handleLogout}>
-                <Link
+              <li style={{ display: "flex", alignItems: "center" }}>
+                {/* <Link
                   to='/login'
                   className='links'
                   style={active.logouts ? activeBorder : {}}
                 >
                   Logout
-                </Link>
+                </Link> */}
+                <span style={{ paddingRight: "0.7em", color: "white" }}>
+                  {user.username.toUpperCase()}
+                </span>
+
+                <Dropdown
+                  text={
+                    <Logo
+                      width='30px'
+                      style={{
+                        background: "white",
+                        color: "#777",
+                        fontSize: "0.8em",
+                        margin: "0",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {user.username.toUpperCase().slice(0, 2)}
+                    </Logo>
+                  }
+                  icon=''
+                  floating
+                  labeled
+                  className='icon'
+                >
+                  <Dropdown.Menu
+                    style={{ minWidth: "250px", marginLeft: "-220px" }}
+                  >
+                    <Dropdown.Header
+                      icon='tags'
+                      content={user.username.toUpperCase()}
+                    />
+                    <Dropdown.Divider />
+                    <Dropdown.Item>Profile</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item>Logout</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </li>
             </ul>
           )}
@@ -131,8 +169,19 @@ const NavBar = () => {
 export default NavBar;
 
 const Nav = styled.div`
-  padding: 1em 20%;
+  padding: 1em 10%;
   background: #2285d0;
+
+  .icon {
+    margin: 0;
+    i {
+      display: none;
+    }
+  }
+
+  .menu {
+    margin-left: -100px;
+  }
 
   @media (max-width: 769px) {
     padding: 0.7em;

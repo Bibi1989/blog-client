@@ -51,8 +51,8 @@ const reducer = (state, action) => {
   }
 };
 
-// const USER_URL = "https://new-blog-api.herokuapp.com/auth/v1";
-const USER_URL = "http://localhost:7000/auth/v1";
+const USER_URL = "https://new-blog-api.herokuapp.com/auth/v1";
+// const USER_URL = "http://localhost:7000/auth/v1";
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);

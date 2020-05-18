@@ -108,7 +108,7 @@ const PostCard = ({ post }) => {
 };
 
 const Container = styled.div`
-  padding: 1em;
+  padding: 2em;
   margin: 0;
 
   @media (max-width: 769px) {

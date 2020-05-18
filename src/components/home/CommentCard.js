@@ -8,9 +8,11 @@ import { Spinner } from "react-bootstrap";
 const CommentCard = ({ comment, loading }) => {
   return (
     <Comment.Group style={{ width: "100%" }}>
-      <Loader padding='2em'>
-        {loading && <Spinner animation='border' variant='primary' />}
-      </Loader>
+      {loading && (
+        <Loader padding='2em'>
+          {loading && <Spinner animation='border' variant='primary' />}
+        </Loader>
+      )}
       <Comment
         style={{
           width: "100%",

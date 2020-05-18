@@ -170,5 +170,5 @@ const Container = styled.div`
   min-height: 93vh;
 `;
 const Flex = styled.div`
-  padding-top: 1.5em;
+  padding-top: 1em;
 `;

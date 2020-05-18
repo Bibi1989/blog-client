@@ -7,4 +7,5 @@ export const LIKE_POST = "LIKE_POST";
 export const COMMENTS = "COMMENTS";
 export const COMMENT_POST = "COMMENT_POST";
 export const LOADING = "LOADING";
+export const COMMENT_LOADING = "COMMENT_LOADING";
 export const ERROR = "ERROR";

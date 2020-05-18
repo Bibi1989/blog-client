@@ -18,6 +18,7 @@ import Post from "./components/home/Post";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FirstLayout from "./components/SideComponent/FirstLayout";
 import Users from "./components/SideComponent/Users";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   const token = sessionStorage.getItem("blog");
@@ -38,6 +39,7 @@ function App() {
                 path='/comments/:commentId'
                 component={Comments}
               />
+              <Route exact path='/profile/:userId' component={Profile} />
               <Route exact path='/login'>
                 <Login />
               </Route>
@@ -74,8 +76,8 @@ export const Layout = styled.div`
 
   @media (max-width: 769px) {
     grid-template-columns: 0% 100% 0%;
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: 0;
+    padding-right: 0;
 
     .sticky {
       position: static;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOADING, LIKE_POST } from "./types";
+import { LOADING, COMMENT_LOADING } from "./types";
 // import jwtJsDecode from "jwt-js-decode";
 import {
   getAction,
@@ -12,9 +12,9 @@ import {
   commentsAction,
 } from "./actions";
 
-// const POST_URL = `http://localhost:7000/api/v1`;
+const POST_URL = `http://localhost:7000/api/v1`;
 // const POST_URL = `https://bibiblog-api.herokuapp.com/api`;
-const POST_URL = `https://new-blog-api.herokuapp.com/api/v1`;
+// const POST_URL = `https://new-blog-api.herokuapp.com/api/v1`;
 
 export const getAllPosts = async (dispatch, text) => {
   try {
@@ -92,7 +92,7 @@ export const updatePost = async (dispatch, data) => {
 
 export const getComments = async (dispatch, id) => {
   const token = sessionStorage.getItem("blog");
-  dispatch({ type: LOADING, payload: true });
+  dispatch({ type: COMMENT_LOADING, payload: true });
   try {
     const response = await axios.get(`${POST_URL}/comments/${id}`, {
       headers: {
@@ -100,7 +100,7 @@ export const getComments = async (dispatch, id) => {
         auth: token,
       },
     });
-    dispatch({ type: LOADING, payload: false });
+    dispatch({ type: COMMENT_LOADING, payload: false });
     // const comments = response.data.data.data;
     const comments = response.data.data.comments;
     console.log(comments);

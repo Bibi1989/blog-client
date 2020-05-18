@@ -6,6 +6,7 @@ import {
   COMMENT_POST,
   COMMENTS,
   LOADING,
+  COMMENT_LOADING,
   DELETE,
   UPDATE,
 } from "./types";
@@ -70,6 +71,11 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: action.loading,
+      };
+    case COMMENT_LOADING:
+      return {
+        ...state,
+        comment_loading: action.loading,
       };
 
     default:

@@ -154,7 +154,7 @@ const Container = styled.div`
   }
 
   @media (max-width: 769px) {
-    padding: 1em 0;
+    padding: 1em;
     .popup-content {
       width: 100% !important;
       left: 0;

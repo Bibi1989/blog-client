@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllPosts } from "./BlogRedux/store";
 
 const activeBorder = {
-  color: "#ccc",
+  color: "#fff",
 };
 
 const NavBar = () => {

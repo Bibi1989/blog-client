@@ -34,10 +34,20 @@ const PostCard = ({ post }) => {
           }}
         >
           <Comment.Content>
-            <Logo>{post.User.username.slice(0, 2).toUpperCase()}</Logo>
+            <Logo
+              onClick={() => history.push(`/profile/${post.User.id}`)}
+              style={{ cursor: "pointer" }}
+            >
+              {post.User.username.slice(0, 2).toUpperCase()}
+            </Logo>
           </Comment.Content>
           <Comment.Content>
-            <Comment.Author>{post.User.username}</Comment.Author>
+            <Comment.Author
+              style={{ cursor: "pointer" }}
+              onClick={() => history.push(`/profile/${post.User.id}`)}
+            >
+              {post.User.username}
+            </Comment.Author>
             <Comment.Text
               onClick={handleComment}
               style={{
@@ -100,11 +110,9 @@ const PostCard = ({ post }) => {
 const Container = styled.div`
   padding: 1em;
   margin: 0;
-  /* background: #ffffff; */
-  /* margin-bottom: 0.3em; */
 
   @media (max-width: 769px) {
-    padding: 0em;
+    padding: 1em;
   }
 `;
 export const Buttons = styled.div`
@@ -152,13 +160,13 @@ export const H2 = styled.h2`
   }
 `;
 export const Logo = styled.div`
-  width: 40px;
-  height: 40px;
+  width: ${(props) => (props.width ? props.width : "40px")};
+  height: ${(props) => (props.width ? props.width : "40px")};
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1em;
+  font-size: ${(props) => (props.width ? "1.3em" : "1em")};
   margin-right: 1em;
   background: #2285d0;
   color: #fff;

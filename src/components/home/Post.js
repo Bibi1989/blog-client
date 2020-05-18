@@ -51,6 +51,7 @@ const Post = () => {
 export default Post;
 
 export const Container = styled.div`
+  min-height: 93vh;
   .loading {
     width: 100px;
     height: 100px;

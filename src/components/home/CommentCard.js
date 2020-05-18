@@ -5,7 +5,7 @@ import { Logo } from "./PostBody";
 import { Loader } from "./Post";
 import { Spinner } from "react-bootstrap";
 
-const CommentCard = ({ comment }) => {
+const CommentCard = ({ comment, loading }) => {
   console.log(comment);
   return (
     <Comment.Group style={{ width: "100%" }}>

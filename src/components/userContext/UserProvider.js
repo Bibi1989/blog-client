@@ -7,12 +7,16 @@ const REGISTER = "REGISTER";
 const LOGIN = "LOGIN";
 const REGISTER_ERROR = "REGISTER_ERROR";
 const LOGIN_ERROR = "LOGIN_ERROR";
+const LOADING = "LOADING";
+const USER = "USER";
 
 const initialState = {
   register_data: {},
   login_data: {},
   register_errors: {},
+  user: null,
   login_errors: {},
+  loading: null,
 };
 
 const reducer = (state, action) => {
@@ -32,6 +36,11 @@ const reducer = (state, action) => {
         ...state,
         register_errors: action.payload,
       };
+    case USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
     case LOGIN_ERROR:
       return {
         ...state,
@@ -42,8 +51,8 @@ const reducer = (state, action) => {
   }
 };
 
-const USER_URL = "https://new-blog-api.herokuapp.com/auth/v1";
-// const USER_URL = "https://bibiblog-api.herokuapp.com/users";
+// const USER_URL = "https://new-blog-api.herokuapp.com/auth/v1";
+const USER_URL = "http://localhost:7000/auth/v1";
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -99,11 +108,32 @@ export const UserProvider = ({ children }) => {
       console.log(error.response);
     }
   };
+
+  const getUser = async (id) => {
+    dispatch({ type: LOADING, payload: true });
+    try {
+      const response = await axios.get(`${USER_URL}/users/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = response.data.data.data;
+      console.log(data);
+      dispatch({ type: LOADING, payload: false });
+      dispatch({ type: USER, payload: data });
+    } catch (error) {
+      dispatch({ type: LOADING, payload: false });
+      console.log(error.response);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
         register,
         login,
+        getUser,
+        user: state.user,
         register_errors: state.register_errors,
         login_errors: state.login_errors,
       }}

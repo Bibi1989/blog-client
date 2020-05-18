@@ -76,9 +76,7 @@ const PostCard = ({ post }) => {
                 <Icon
                   name='heart'
                   color={
-                    user !== null &&
-                    user.email === post.User.email &&
-                    post.Likes.length
+                    user !== null && user.email && post.Likes.length
                       ? "red"
                       : "gray"
                   }

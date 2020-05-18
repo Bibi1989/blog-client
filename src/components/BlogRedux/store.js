@@ -10,6 +10,8 @@ import {
   commentPostAction,
   deleteAction,
   commentsAction,
+  notificationAction,
+  getNotificationAction,
 } from "./actions";
 
 // const POST_URL = `http://localhost:7000/api/v1`;
@@ -103,7 +105,6 @@ export const getComments = async (dispatch, id) => {
     dispatch({ type: COMMENT_LOADING, payload: false });
     // const comments = response.data.data.data;
     const comments = response.data.data.comments;
-    console.log(comments);
     // const likes = response.data.data.likes;
     dispatch(commentsAction(comments));
     // dispatch({ type: SINGLE_POST, payload: response.data.data });
@@ -161,5 +162,35 @@ export const deletePost = async (dispatch, id) => {
     });
     dispatch({ type: LOADING, loading: false });
     dispatch(deleteAction(response.data));
+  } catch (error) {}
+};
+export const createNotification = async (dispatch, message, userId) => {
+  const obj = {
+    message,
+    userId,
+  };
+  const token = sessionStorage.getItem("blog");
+  try {
+    const response = await axios.post(`${POST_URL}/notices`, obj, {
+      headers: {
+        "Content-Type": "application/json",
+        auth: token,
+      },
+    });
+    dispatch(notificationAction(response.data.data));
+  } catch (error) {}
+};
+
+export const getNotifications = async (dispatch) => {
+  const token = sessionStorage.getItem("blog");
+  try {
+    const response = await axios.get(`${POST_URL}/notices`, {
+      headers: {
+        "Content-Type": "application/json",
+        auth: token,
+      },
+    });
+    console.log({ notice: response.data.data });
+    dispatch(getNotificationAction(response.data.data.notices));
   } catch (error) {}
 };

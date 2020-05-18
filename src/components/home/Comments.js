@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import { Icon, Comment, TextArea, Form, Button } from "semantic-ui-react";
-import { getComments, createComment, getAPost } from "../BlogRedux/store";
+import {
+  getComments,
+  createComment,
+  getAPost,
+  createNotification,
+} from "../BlogRedux/store";
 import { Logo } from "./PostBody";
 import { Spinner } from "react-bootstrap";
 import CommentCard from "./CommentCard";
 import { Loader } from "./Post";
 
 const Comments = () => {
-  const token = sessionStorage.getItem("blog");
+  // const token = sessionStorage.getItem("blog");
   const user = JSON.parse(sessionStorage.getItem("user"));
   const { commentId } = useParams();
+  const history = useHistory();
   const dispatch = useDispatch();
   const [comment, setComment] = useState("");
+  // const [notice, setNotice] = useState("");
   const post = useSelector(({ posts: { post } }) => post);
   const comments = useSelector(({ posts: { comments } }) => comments);
   const added_comment = useSelector(
@@ -34,14 +41,15 @@ const Comments = () => {
     setComment(value);
   };
 
+  const notice = `${user.username} commented on your post`;
+
   const onsubmit = (e) => {
     e.preventDefault();
 
     createComment(dispatch, comment, commentId);
+    createNotification(dispatch, notice, Number(post !== null && post.User.id));
     setComment("");
   };
-
-  console.log({ comment });
 
   return (
     <Container>
@@ -60,14 +68,23 @@ const Comments = () => {
                 padding: "0 !important",
               }}
             >
-              <Comment.Content>
+              <Comment.Content
+                onClick={() =>
+                  history.push(`/profile/${post !== null && post.User.id}`)
+                }
+                style={{ cursor: "pointer" }}
+              >
                 <Logo>
                   {post !== null &&
                     post.User.username.slice(0, 2).toUpperCase()}
                 </Logo>
               </Comment.Content>
               <Comment.Content>
-                <Comment.Author>
+                <Comment.Author
+                  onClick={() =>
+                    history.push(`/profile/${post !== null && post.User.id}`)
+                  }
+                >
                   {post !== null && post.User.username}
                 </Comment.Author>
                 <Comment.Text

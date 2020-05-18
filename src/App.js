@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Login from "./components/users/Login";
 import Register from "./components/users/Register";
 import NotFound from "./components/users/NotFound";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/NavBar/NavBar";
 import PrivateRoute from "./components/privateRoute/privateRoute";
 import { BlogProvider } from "./components/blogContext/BlogProvider";
 import { UserProvider } from "./components/userContext/UserProvider";

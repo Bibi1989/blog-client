@@ -7,6 +7,8 @@ import {
   LIKE_POST,
   COMMENT_POST,
   COMMENTS,
+  ADD_NOTICE,
+  NOTICE,
 } from "./types";
 
 export const getAction = (post) => {
@@ -54,6 +56,18 @@ export const commentsAction = (post) => {
 export const commentPostAction = (post) => {
   return {
     type: COMMENT_POST,
+    post,
+  };
+};
+export const getNotificationAction = (post) => {
+  return {
+    type: NOTICE,
+    post,
+  };
+};
+export const notificationAction = (post) => {
+  return {
+    type: ADD_NOTICE,
     post,
   };
 };

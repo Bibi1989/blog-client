@@ -6,7 +6,6 @@ import { Loader } from "./Post";
 import { Spinner } from "react-bootstrap";
 
 const CommentCard = ({ comment, loading }) => {
-  console.log(comment);
   return (
     <Comment.Group style={{ width: "100%" }}>
       <Loader padding='2em'>

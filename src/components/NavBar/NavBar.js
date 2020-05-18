@@ -3,9 +3,10 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Icon, Dropdown } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllPosts } from "./BlogRedux/store";
-import { Logo } from "./home/PostBody";
-import { UserContext } from "./userContext/UserProvider";
+import { getAllPosts, getNotifications } from "../BlogRedux/store";
+import { UserContext } from "../userContext/UserProvider";
+import { Profile } from "./NavProfile";
+import { Notify } from "./NavNotify";
 
 const activeBorder = {
   color: "#fff",
@@ -20,10 +21,13 @@ const NavBar = () => {
   userDetails.push(users);
 
   const dispatch = useDispatch();
-  const posts = useSelector(({ posts: { posts } }) => posts);
+  let notices = useSelector(({ posts: { notices } }) => notices);
+
+  // notices = [...notices].filter((notice) => notice.userId === users.id);
 
   useEffect(() => {
     getAllPosts(dispatch, "");
+    getNotifications(dispatch);
   }, []);
 
   const [active, setActive] = useState({
@@ -113,54 +117,15 @@ const NavBar = () => {
           {token && (
             <ul>
               <li style={{ display: "flex", alignItems: "center" }}>
+                <Notify notices={notices} />
                 <span style={{ paddingRight: "0.7em", color: "white" }}>
                   {users.username.toUpperCase()}
                 </span>
-
-                <Dropdown
-                  text={
-                    <Logo
-                      width='30px'
-                      style={{
-                        background: "white",
-                        color: "#777",
-                        fontSize: "0.8em",
-                        margin: "0",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {users.username.toUpperCase().slice(0, 2)}
-                    </Logo>
-                  }
-                  icon=''
-                  floating
-                  labeled
-                  className='icon'
-                >
-                  <Dropdown.Menu
-                    style={{ minWidth: "250px", marginLeft: "-220px" }}
-                  >
-                    <Dropdown.Header
-                      icon='tags'
-                      content={users.username.toUpperCase()}
-                    />
-                    <Dropdown.Divider />
-                    <Dropdown.Item
-                      onClick={() => history.push(`/profile/${users.id}`)}
-                    >
-                      Profile
-                    </Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item
-                      onClick={() => {
-                        handleLogout();
-                        history.push("/login");
-                      }}
-                    >
-                      Logout
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <Profile
+                  users={users}
+                  history={history}
+                  handleLogout={handleLogout}
+                />
               </li>
             </ul>
           )}
@@ -179,7 +144,7 @@ const Nav = styled.div`
   .icon {
     margin: 0;
     i {
-      display: none;
+      /* display: none; */
     }
   }
 

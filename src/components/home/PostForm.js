@@ -6,9 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 import Popup from "reactjs-popup";
-
-import "froala-editor/css/froala_style.min.css";
-import "froala-editor/css/froala_editor.pkgd.min.css";
 import { Logo } from "./PostBody";
 
 const PostForm = () => {

@@ -6,6 +6,7 @@ import { Logo } from "../home/PostBody";
 import { UserContext } from "../userContext/UserProvider";
 import ProfileCard from "./ProfileCard";
 import { Icon } from "semantic-ui-react";
+import { Spinner } from "react-bootstrap";
 
 const Profile = () => {
   let { getUser, user } = useContext(UserContext);
@@ -23,9 +24,17 @@ const Profile = () => {
           {user !== null && user.username.slice(0, 2).toUpperCase()}
         </Logo>
         <Divide>
-          <Username>{user !== null && user.username}</Username>
-          <Date>{moment(user !== null && user.createdAt).fromNow(false)}</Date>
-          <p>online</p>
+          {user === null ? (
+            <Spinner animation='border' className='loading' />
+          ) : (
+            <>
+              <Username>{user !== null && user.username}</Username>
+              <Date>
+                {moment(user !== null && user.createdAt).fromNow(false)}
+              </Date>
+              <p>online</p>
+            </>
+          )}
         </Divide>
       </Flex>
       <ProfileNav>
@@ -53,11 +62,14 @@ const Profile = () => {
         </ul>
       </ProfileNav>
       <ListFlex>
-        {user !== null &&
+        {user === null ? (
+          <Spinner animation='border' className='loading_content' />
+        ) : (
           text === "post" &&
           user.Posts.map((post) => (
             <ProfileCard user={user} post={post.title} key={post.id} />
-          ))}
+          ))
+        )}
         {user !== null &&
           text === "comment" &&
           user.Comments.map((post) => (
@@ -70,6 +82,18 @@ const Profile = () => {
 
 const Container = styled.div`
   min-height: 93vh;
+
+  .loading,
+  .loading_content {
+    width: 2.5em;
+    height: 2.5em;
+    font-size: 0.5em;
+    margin-top: 2.5em;
+  }
+
+  .loading_content {
+    margin-left: 45%;
+  }
 `;
 const Flex = styled.div`
   padding: 2em;

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import moment from "moment";
 import styled from "styled-components";
 import { Icon, Comment } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { likePost, getAPost } from "../BlogRedux/store";
 import { styleFunc } from "./tagStyle";
+import LogoComponent from "./LogoComponent";
 
 const PostCard = ({ post }) => {
   // const token = sessionStorage.getItem("blog");
@@ -14,21 +15,14 @@ const PostCard = ({ post }) => {
 
   const history = useHistory();
 
-  const [render, setRender] = useState();
-
-  const likes = useSelector(({ posts }) => posts);
-
-  React.useEffect(() => {}, [likes]);
-
-  console.log(render);
-
   const handleLikes = (id) => {
     likePost(dispatch, id);
-    setRender(!render);
   };
   const handleComment = () => {
     history.push(`/comments/${post.id}`);
   };
+  // console.log({ user: JSON.parse(user.image_url)[0] });
+  let image = JSON.parse(user.image_url)[0];
   return (
     <Container>
       <Comment.Group style={{ width: "100%" }}>
@@ -45,7 +39,13 @@ const PostCard = ({ post }) => {
               onClick={() => history.push(`/profile/${post.User.id}`)}
               style={{ cursor: "pointer" }}
             >
-              {post.User.username.slice(0, 2).toUpperCase()}
+              {user.username === post.username && image ? (
+                <Image>
+                  <img src={image} />
+                </Image>
+              ) : (
+                post.User.username.slice(0, 2).toUpperCase()
+              )}
             </Logo>
           </Comment.Content>
           <Comment.Content>
@@ -114,6 +114,16 @@ const Container = styled.div`
 export const Buttons = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+export const Image = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+  }
 `;
 export const Flex = styled.div`
   display: flex;

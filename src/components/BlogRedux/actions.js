@@ -9,6 +9,7 @@ import {
   COMMENTS,
   ADD_NOTICE,
   NOTICE,
+  DELETE_NOTIFICATION,
 } from "./types";
 
 export const getAction = (post) => {
@@ -68,6 +69,12 @@ export const getNotificationAction = (post) => {
 export const notificationAction = (post) => {
   return {
     type: ADD_NOTICE,
+    post,
+  };
+};
+export const deleteNotificationAction = (post) => {
+  return {
+    type: DELETE_NOTIFICATION,
     post,
   };
 };

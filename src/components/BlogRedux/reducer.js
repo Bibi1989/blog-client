@@ -11,6 +11,7 @@ import {
   UPDATE,
   ADD_NOTICE,
   NOTICE,
+  DELETE_NOTIFICATION,
 } from "./types";
 
 const initialState = {
@@ -25,6 +26,7 @@ const initialState = {
   added_comment: null,
   added_notice: null,
   notices: [],
+  deleted_notices: null,
   loading: false,
   error: null,
 };
@@ -80,6 +82,11 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         added_notice: action.post,
+      };
+    case DELETE_NOTIFICATION:
+      return {
+        ...state,
+        deleted_notices: action.post,
       };
     case LOADING:
       return {

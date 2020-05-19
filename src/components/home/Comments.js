@@ -11,7 +11,7 @@ import {
   createNotification,
   likePost,
 } from "../BlogRedux/store";
-import { Logo } from "./PostBody";
+import { Logo, Image } from "./PostBody";
 import { Spinner } from "react-bootstrap";
 import CommentCard from "./CommentCard";
 import { Loader } from "./Post";
@@ -20,6 +20,7 @@ import { styleFunc } from "./tagStyle";
 const Comments = () => {
   // const token = sessionStorage.getItem("blog");
   const user = JSON.parse(sessionStorage.getItem("user"));
+  let image = JSON.parse(user.image_url)[0];
   const { commentId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -84,8 +85,19 @@ const Comments = () => {
               }
               style={{ cursor: "pointer" }}
             >
-              <Logo>
+              {/* <Logo>
                 {post !== null && post.User.username.slice(0, 2).toUpperCase()}
+              </Logo> */}
+
+              <Logo style={{ cursor: "pointer" }}>
+                {user.username === (post !== null && post.User.username) &&
+                image ? (
+                  <Image>
+                    <img src={image} />
+                  </Image>
+                ) : (
+                  post !== null && post.User.username.slice(0, 2).toUpperCase()
+                )}
               </Logo>
             </Comment.Content>
             <Comment.Content>

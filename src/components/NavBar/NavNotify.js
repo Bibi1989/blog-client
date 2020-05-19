@@ -2,8 +2,7 @@ import React from "react";
 import { Dropdown } from "semantic-ui-react";
 import moment from "moment";
 
-export const Notify = ({ notices }) => {
-  console.log(notices);
+export const Notify = ({ notices, deleteNotification, dispatch }) => {
   return (
     <Dropdown
       icon='alarm'
@@ -34,7 +33,9 @@ export const Notify = ({ notices }) => {
       <Dropdown.Menu style={{ Width: "220px", marginLeft: "-140px" }}>
         {notices.map((notice) => (
           <>
-            <Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => deleteNotification(dispatch, notice.id)}
+            >
               <p style={{ margin: "0" }}>{notice.message}</p>
               {/* <Dropdown.Item></Dropdown.Item> */}
               <span style={{ color: "#999", padding: "0", fontSize: "0.8em" }}>

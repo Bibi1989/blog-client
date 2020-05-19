@@ -12,6 +12,7 @@ import {
   commentsAction,
   notificationAction,
   getNotificationAction,
+  deleteNotificationAction,
 } from "./actions";
 
 // const POST_URL = `http://localhost:7000/api/v1`;
@@ -27,7 +28,6 @@ export const getAllPosts = async (dispatch, text) => {
       },
     });
     let data = [...response.data.data.data];
-    // console.log(data);
     if (text) {
       if (
         text === "post" ||
@@ -192,5 +192,18 @@ export const getNotifications = async (dispatch) => {
     });
     console.log({ notice: response.data.data });
     dispatch(getNotificationAction(response.data.data.notices));
+  } catch (error) {}
+};
+export const deleteNotification = async (dispatch, id) => {
+  const token = sessionStorage.getItem("blog");
+  try {
+    const response = await axios.delete(`${POST_URL}/notices/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        auth: token,
+      },
+    });
+    console.log({ notice: response.data.data });
+    dispatch(deleteNotificationAction(response.data.data.notices));
   } catch (error) {}
 };

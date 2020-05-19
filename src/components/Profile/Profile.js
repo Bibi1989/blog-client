@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import moment from "moment";
-import { Logo } from "../home/PostBody";
+import { Logo, Image } from "../home/PostBody";
 import { UserContext } from "../userContext/UserProvider";
 import ProfileCard from "./ProfileCard";
 import { Icon } from "semantic-ui-react";
@@ -10,6 +10,8 @@ import { Spinner } from "react-bootstrap";
 
 const Profile = () => {
   let { getUser, user } = useContext(UserContext);
+  const users = JSON.parse(sessionStorage.getItem("user"));
+  let image = JSON.parse(users.image_url)[0];
   const [text, setText] = useState("post");
   const { userId } = useParams();
   useEffect(() => {
@@ -17,11 +19,21 @@ const Profile = () => {
 
     // eslint-disable-next-line
   }, []);
+  console.log(user);
   return (
     <Container>
       <Flex>
-        <Logo width='60px'>
+        {/* <Logo width='60px'>
           {user !== null && user.username.slice(0, 2).toUpperCase()}
+        </Logo> */}
+        <Logo style={{ cursor: "pointer" }}>
+          {users.username === (user !== null && user.username) && image ? (
+            <Image>
+              <img src={image} />
+            </Image>
+          ) : (
+            user !== null && user.username.slice(0, 2).toUpperCase()
+          )}
         </Logo>
         <Divide>
           {user === null ? (

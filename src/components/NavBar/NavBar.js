@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllPosts, getNotifications } from "../BlogRedux/store";
+import {
+  getAllPosts,
+  getNotifications,
+  deleteNotification,
+} from "../BlogRedux/store";
 import { Profile } from "./NavProfile";
 import { Notify } from "./NavNotify";
 
@@ -19,6 +23,9 @@ const NavBar = () => {
 
   const dispatch = useDispatch();
   let notices = useSelector(({ posts: { notices } }) => notices);
+  let deleted_notices = useSelector(
+    ({ posts: { deleted_notices } }) => deleted_notices
+  );
 
   // notices = [...notices].filter((notice) => notice.userId === users.id);
 
@@ -116,7 +123,11 @@ const NavBar = () => {
           {token && (
             <ul>
               <li style={{ display: "flex", alignItems: "center" }}>
-                <Notify notices={notices} />
+                <Notify
+                  notices={notices}
+                  deleteNotification={deleteNotification}
+                  dispatch={dispatch}
+                />
                 <span style={{ paddingRight: "0.7em", color: "white" }}>
                   {users.username.toUpperCase()}
                 </span>

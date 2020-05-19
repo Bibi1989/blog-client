@@ -8,6 +8,7 @@ export const COMMENTS = "COMMENTS";
 export const COMMENT_POST = "COMMENT_POST";
 export const ADD_NOTICE = "ADD_NOTICE";
 export const NOTICE = "NOTICE";
+export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
 export const LOADING = "LOADING";
 export const COMMENT_LOADING = "COMMENT_LOADING";
 export const ERROR = "ERROR";

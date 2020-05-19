@@ -176,7 +176,7 @@ const Register = () => {
             />
           </div>
           <div>
-            <i className='fa fa-unlock'></i>
+            <i className='fa fa-folder-open'></i>
             <input type='file' name='file' onChange={handleFile} multiple />
           </div>
           <button type='submit'>

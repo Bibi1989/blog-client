@@ -18,9 +18,9 @@ import { Loader } from "./Post";
 import { styleFunc } from "./tagStyle";
 
 const Comments = () => {
-  // const token = sessionStorage.getItem("blog");
+  const token = sessionStorage.getItem("blog");
   const user = JSON.parse(sessionStorage.getItem("user"));
-  let image = JSON.parse(user.image_url)[0];
+  let image = token ? JSON.parse(user.image_url)[0] : "";
   const { commentId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();

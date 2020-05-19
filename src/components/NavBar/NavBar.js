@@ -18,6 +18,7 @@ const NavBar = () => {
   const history = useHistory();
   const token = sessionStorage.getItem("blog");
   const users = JSON.parse(sessionStorage.getItem("user"));
+  let image = token ? JSON.parse(users.image_url)[0] : "";
   const userDetails = [];
   userDetails.push(users);
 
@@ -132,6 +133,7 @@ const NavBar = () => {
                   {users.username.toUpperCase()}
                 </span>
                 <Profile
+                  image={image}
                   users={users}
                   history={history}
                   handleLogout={handleLogout}

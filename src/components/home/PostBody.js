@@ -9,8 +9,9 @@ import { styleFunc } from "./tagStyle";
 import LogoComponent from "./LogoComponent";
 
 const PostCard = ({ post }) => {
-  // const token = sessionStorage.getItem("blog");
+  const token = sessionStorage.getItem("blog");
   const user = JSON.parse(sessionStorage.getItem("user"));
+  let image = token ? JSON.parse(user.image_url)[0] : "";
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -22,7 +23,6 @@ const PostCard = ({ post }) => {
     history.push(`/comments/${post.id}`);
   };
   // console.log({ user: JSON.parse(user.image_url)[0] });
-  let image = JSON.parse(user.image_url)[0];
   return (
     <Container>
       <Comment.Group style={{ width: "100%" }}>
@@ -39,7 +39,7 @@ const PostCard = ({ post }) => {
               onClick={() => history.push(`/profile/${post.User.id}`)}
               style={{ cursor: "pointer" }}
             >
-              {user.username === post.username && image ? (
+              {token && user.username === post.username && image ? (
                 <Image>
                   <img src={image} />
                 </Image>
@@ -116,8 +116,8 @@ export const Buttons = styled.div`
   justify-content: space-between;
 `;
 export const Image = styled.div`
-  width: 40px;
-  height: 40px;
+  width: ${(props) => (props.width ? props.width : "40px")};
+  height: ${(props) => (props.width ? props.width : "40px")};
   border-radius: 50%;
   overflow: hidden;
 

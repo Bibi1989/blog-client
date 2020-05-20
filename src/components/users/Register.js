@@ -4,14 +4,7 @@ import { useHistory } from "react-router-dom";
 import { publics } from "../utils/session";
 import { UserContext } from "../userContext/UserProvider";
 import { Container } from "./Login";
-import axios from "axios";
-import dotenv from "dotenv";
-
-const upload_preset = process.env.REACT_APP_UPLOAD_PRESET;
-const cloud_base_name = process.env.REACT_APP_CLOUDINARY_BASE_URL;
-
-dotenv.config();
-// ey04oipg
+import { getFiles } from "./GetImageFile";
 
 const Register = () => {
   const history = useHistory();
@@ -32,48 +25,28 @@ const Register = () => {
     setForm({ ...form, [name]: value });
   };
 
-  let get_links = [];
-  // const handleFile = async ({ target: { files } }) => {
-  //   for (let file of files) {
-  //     try {
-  //       const Data = new FormData();
-  //       Data.append("file", file);
-  //       Data.append("Content", "");
-  //       Data.append("tags", form.email);
-  //       Data.append("upload_preset", upload_preset);
-
-  //       const response = await fetch(cloud_base_name, {
-  //         method: "POST",
-  //         body: Data,
-  //       });
-  //       const result = await response.json();
-  //       get_links.push(result.secure_url);
-  //       setImageUrl([...imageUrl, result.secure_url]);
-  //     } catch (error) {
-  //       console.log(error.message);
-  //       return;
-  //     }
-  //   }
-  // };
-
-  const handleFile = ({ target: { files } }) => {
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("Content", "");
-    data.append("tags", "items");
-    data.append("upload_preset", upload_preset);
-    axios
-      .post(cloud_base_name, data, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      })
-      .then((res) => {
-        get_links.push(res.data.secure_url);
-        setImageUrl([...imageUrl, res.data.secure_url]);
-      })
-      .catch((err) => console.log(err.response));
+  const handleFile = async ({ target: { files } }) => {
+    getFiles(files, setImageUrl, form);
   };
+
+  // const handleFile = ({ target: { files } }) => {
+  //   const data = new FormData();
+  //   data.append("file", files[0]);
+  //   data.append("Content", "");
+  //   data.append("tags", "items");
+  //   data.append("upload_preset", upload_preset);
+  //   axios
+  //     .post(cloud_base_name, data, {
+  //       headers: {
+  //         "Content-Type": "application/x-www-form-urlencoded",
+  //       },
+  //     })
+  //     .then((res) => {
+  //       get_links.push(res.data.secure_url);
+  //       setImageUrl([...imageUrl, res.data.secure_url]);
+  //     })
+  //     .catch((err) => console.log(err.response));
+  // };
 
   const handleRegister = (event) => {
     event.preventDefault();
@@ -92,7 +65,7 @@ const Register = () => {
       confirmPassword: "",
     });
   };
-  console.log(register_errors);
+  console.log({ imageUrl });
 
   return (
     <Container>

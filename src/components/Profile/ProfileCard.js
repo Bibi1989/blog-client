@@ -3,7 +3,8 @@ import moment from "moment";
 import { Logo, Image } from "../home/PostBody";
 import { Comment, Icon } from "semantic-ui-react";
 
-const ProfileCard = ({ user, post }) => {
+const ProfileCard = ({ user, post, allPost }) => {
+  console.log(allPost);
   return (
     <Comment.Group style={{ width: "100%" }} key={post.id}>
       <Comment
@@ -15,10 +16,6 @@ const ProfileCard = ({ user, post }) => {
         }}
       >
         <Comment.Content>
-          {/* <Logo>
-            {user !== null && user.username.slice(0, 2).toUpperCase()}
-          </Logo> */}
-
           <Logo style={{ cursor: "pointer" }}>
             {user !== null && user.image_url ? (
               <Image>
@@ -51,7 +48,7 @@ const ProfileCard = ({ user, post }) => {
                   borderRadius: "0.2em",
                 }}
               >
-                Dev
+                {allPost.tags}
               </span>
             </Comment.Action>
             <Comment.Action>

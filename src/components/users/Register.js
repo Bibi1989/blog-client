@@ -5,10 +5,12 @@ import { publics } from "../utils/session";
 import { UserContext } from "../userContext/UserProvider";
 import { Container } from "./Login";
 import { getFiles } from "./GetImageFile";
+import { Spinner } from "react-bootstrap";
 
 const Register = () => {
   const history = useHistory();
   const [imageUrl, setImageUrl] = useState([]);
+  const [showBtn, setShowBtn] = useState(true);
   publics(history);
   const { register, register_errors } = useContext(UserContext);
   const [error, setErrors] = useState("");
@@ -26,27 +28,10 @@ const Register = () => {
   };
 
   const handleFile = async ({ target: { files } }) => {
-    getFiles(files, setImageUrl, form);
+    setShowBtn(false);
+    await getFiles(files, setImageUrl, form);
+    setShowBtn(true);
   };
-
-  // const handleFile = ({ target: { files } }) => {
-  //   const data = new FormData();
-  //   data.append("file", files[0]);
-  //   data.append("Content", "");
-  //   data.append("tags", "items");
-  //   data.append("upload_preset", upload_preset);
-  //   axios
-  //     .post(cloud_base_name, data, {
-  //       headers: {
-  //         "Content-Type": "application/x-www-form-urlencoded",
-  //       },
-  //     })
-  //     .then((res) => {
-  //       get_links.push(res.data.secure_url);
-  //       setImageUrl([...imageUrl, res.data.secure_url]);
-  //     })
-  //     .catch((err) => console.log(err.response));
-  // };
 
   const handleRegister = (event) => {
     event.preventDefault();
@@ -65,7 +50,7 @@ const Register = () => {
       confirmPassword: "",
     });
   };
-  console.log({ imageUrl });
+  console.log({ imageUrl: imageUrl.length });
 
   return (
     <Container>
@@ -152,9 +137,19 @@ const Register = () => {
             <i className='fa fa-folder-open'></i>
             <input type='file' name='file' onChange={handleFile} multiple />
           </div>
-          <button type='submit'>
-            <i className='fa fa-share-square'></i> Register
-          </button>
+          {showBtn ? (
+            <button type='submit'>
+              <i className='fa fa-share-square'></i> Register
+            </button>
+          ) : (
+            <button disabled>
+              <Spinner
+                animation='border'
+                style={{ width: "1em", height: "1em" }}
+              />{" "}
+              Uploading...
+            </button>
+          )}
         </form>
       </Form>
     </Container>

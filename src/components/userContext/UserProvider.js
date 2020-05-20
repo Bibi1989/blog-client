@@ -82,7 +82,6 @@ export const UserProvider = ({ children }) => {
   };
 
   const login = async (body, history) => {
-    console.log(body);
     try {
       const response = await axios.post(`${USER_URL}/login`, body, {
         headers: {
@@ -90,7 +89,6 @@ export const UserProvider = ({ children }) => {
         },
       });
       const data = response.data.data;
-      console.log(data.status);
       if (data.status === "success") {
         sessionStorage.setItem("blog", response.data.data.token);
         sessionStorage.setItem("user", JSON.stringify(data.data));
@@ -118,7 +116,6 @@ export const UserProvider = ({ children }) => {
         },
       });
       const data = response.data.data.data;
-      console.log(data);
       dispatch({ type: LOADING, payload: false });
       dispatch({ type: USER, payload: data });
     } catch (error) {

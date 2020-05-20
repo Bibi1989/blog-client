@@ -10,8 +10,7 @@ import { Spinner } from "react-bootstrap";
 
 const Profile = () => {
   let { getUser, user } = useContext(UserContext);
-  const users = JSON.parse(sessionStorage.getItem("user"));
-  let image = JSON.parse(users.image_url)[0];
+  // const users = JSON.parse(sessionStorage.getItem("user"));
   const [text, setText] = useState("post");
   const { userId } = useParams();
   useEffect(() => {
@@ -19,7 +18,6 @@ const Profile = () => {
 
     // eslint-disable-next-line
   }, []);
-  console.log(user);
   return (
     <Container>
       <Flex>
@@ -27,9 +25,9 @@ const Profile = () => {
           {user !== null && user.username.slice(0, 2).toUpperCase()}
         </Logo> */}
         <Logo style={{ cursor: "pointer" }}>
-          {users.username === (user !== null && user.username) && image ? (
+          {user !== null && user.image_url ? (
             <Image>
-              <img src={image} />
+              <img src={JSON.parse(user.image_url)[0]} />
             </Image>
           ) : (
             user !== null && user.username.slice(0, 2).toUpperCase()

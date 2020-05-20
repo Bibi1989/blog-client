@@ -36,15 +36,15 @@ const PostCard = ({ post }) => {
         >
           <Comment.Content>
             <Logo
-              onClick={() => history.push(`/profile/${post.User.id}`)}
               style={{ cursor: "pointer" }}
+              onClick={() => history.push(`/profile/${post.User.id}`)}
             >
-              {token && user.username === post.username && image ? (
+              {post !== null && post.User.image_url ? (
                 <Image>
-                  <img src={image} />
+                  <img src={JSON.parse(post.User.image_url)[0]} />
                 </Image>
               ) : (
-                post.User.username.slice(0, 2).toUpperCase()
+                post !== null && post.User.username.slice(0, 2).toUpperCase()
               )}
             </Logo>
           </Comment.Content>

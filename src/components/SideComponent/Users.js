@@ -4,9 +4,11 @@ import styled from "styled-components";
 import { Menu } from "semantic-ui-react";
 import { useState } from "react";
 import { getAllPosts } from "../BlogRedux/store";
-import { Flex, Logo } from "../home/PostBody";
+import { Flex, Logo, Image } from "../home/PostBody";
+import { UserContext } from "../userContext/UserProvider";
 
 const Users = () => {
+  let { user } = React.useContext(UserContext);
   const dispatch = useDispatch();
   let posts = useSelector(({ posts: { posts } }) => posts);
   let new_posts = [
@@ -23,7 +25,7 @@ const Users = () => {
   new_posts = new_posts.filter((post) =>
     post.toLowerCase().includes(values.toLowerCase())
   );
-  console.log(tags);
+  // console.log({ User: post });
   return (
     <Container className='layout'>
       <Menu secondary vertical>

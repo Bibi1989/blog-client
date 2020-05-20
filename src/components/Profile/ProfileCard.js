@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import { Logo } from "../home/PostBody";
+import { Logo, Image } from "../home/PostBody";
 import { Comment, Icon } from "semantic-ui-react";
 
 const ProfileCard = ({ user, post }) => {
@@ -15,8 +15,18 @@ const ProfileCard = ({ user, post }) => {
         }}
       >
         <Comment.Content>
-          <Logo>
+          {/* <Logo>
             {user !== null && user.username.slice(0, 2).toUpperCase()}
+          </Logo> */}
+
+          <Logo style={{ cursor: "pointer" }}>
+            {user !== null && user.image_url ? (
+              <Image>
+                <img src={JSON.parse(user.image_url)[0]} />
+              </Image>
+            ) : (
+              post !== null && post.User.username.slice(0, 2).toUpperCase()
+            )}
           </Logo>
         </Comment.Content>
         <Comment.Content>

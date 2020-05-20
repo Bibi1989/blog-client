@@ -52,7 +52,7 @@ const Comments = () => {
 
   let notice = "";
 
-  console.log(post !== null && post.username);
+  console.log(post !== null && JSON.parse(post.User.image_url)[0]);
 
   const onsubmit = (e) => {
     e.preventDefault();
@@ -90,10 +90,9 @@ const Comments = () => {
               </Logo> */}
 
               <Logo style={{ cursor: "pointer" }}>
-                {user.username === (post !== null && post.User.username) &&
-                image ? (
+                {post !== null && post.User.image_url ? (
                   <Image>
-                    <img src={image} />
+                    <img src={JSON.parse(post.User.image_url)[0]} />
                   </Image>
                 ) : (
                   post !== null && post.User.username.slice(0, 2).toUpperCase()

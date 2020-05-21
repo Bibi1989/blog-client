@@ -1,7 +1,7 @@
 import React from "react";
 import { Comment, Icon } from "semantic-ui-react";
 import moment from "moment";
-import { Logo } from "./PostBody";
+import { Logo, Image } from "./PostBody";
 import { Loader } from "./Post";
 import { Spinner } from "react-bootstrap";
 
@@ -22,7 +22,16 @@ const CommentCard = ({ comment, loading }) => {
         }}
       >
         <Comment.Content>
-          <Logo>{comment.User.username.slice(0, 2).toUpperCase()}</Logo>
+          {/* <Logo>{comment.User.username.slice(0, 2).toUpperCase()}</Logo> */}
+          <Logo>
+            {comment.User.image_url ? (
+              <Image>
+                <img src={JSON.parse(comment.User.image_url)[0]} />
+              </Image>
+            ) : (
+              comment.User.username.slice(0, 2).toUpperCase()
+            )}
+          </Logo>
         </Comment.Content>
         <Comment.Content>
           <Comment.Author>{comment.User.username}</Comment.Author>

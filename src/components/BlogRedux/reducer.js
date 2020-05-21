@@ -14,6 +14,7 @@ import {
   DELETE_NOTIFICATION,
   CURRENT,
   USER_POSTS,
+  POST_ERROR,
 } from "./types";
 
 const initialState = {
@@ -33,6 +34,7 @@ const initialState = {
   loading: false,
   error: null,
   current: null,
+  post_error: null,
 };
 
 export const postReducer = (state = initialState, action) => {
@@ -65,7 +67,7 @@ export const postReducer = (state = initialState, action) => {
     case ADD:
       return {
         ...state,
-        added_post: action.post,
+        posts: [...state.posts, action.post],
       };
     case UPDATE:
       return {
@@ -111,6 +113,11 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         current: action.payload,
+      };
+    case POST_ERROR:
+      return {
+        ...state,
+        post_error: action.payload,
       };
 
     default:

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOADING, COMMENT_LOADING, CURRENT } from "./types";
+import { LOADING, COMMENT_LOADING, CURRENT, POST_ERROR } from "./types";
 // import jwtJsDecode from "jwt-js-decode";
 import {
   getAction,
@@ -83,7 +83,7 @@ export const getUsersPosts = async (dispatch) => {
     console.log(error);
   }
 };
-export const addPost = async (dispatch, data) => {
+export const addPost = async (dispatch, data, history) => {
   const token = sessionStorage.getItem("blog");
   try {
     const response = await axios.post(`${POST_URL}/posts`, data, {
@@ -92,8 +92,16 @@ export const addPost = async (dispatch, data) => {
         auth: token,
       },
     });
-    dispatch(addAction(response.data));
-  } catch (error) {}
+    if (response.data.status === "success") {
+      dispatch(addAction(response.data));
+    } else {
+      dispatch({ type: POST_ERROR, payload: response.data.error });
+    }
+  } catch (error) {
+    if (error.response.data) {
+      history.push("/login");
+    }
+  }
 };
 
 export const updatePost = async (dispatch, data) => {

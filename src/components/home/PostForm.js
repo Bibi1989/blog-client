@@ -3,10 +3,12 @@ import styled from "styled-components";
 import { addPost, updatePost, setCurrentValue } from "../BlogRedux/store";
 import { Icon, Button, TextArea, FormGroup, Form } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 
 import Popup from "reactjs-popup";
-import { Logo } from "./PostBody";
+import { Logo, Image } from "./PostBody";
+import { Alert } from "react-bootstrap";
 
 const PostForm = () => {
   let user = sessionStorage.getItem("user");
@@ -15,16 +17,19 @@ const PostForm = () => {
   const [message, setMessage] = useState("");
   const [select, setSelect] = useState("Post");
 
+  const history = useHistory();
   const dispatch = useDispatch();
   const added_post = useSelector(({ posts: { added_post } }) => added_post);
   const current = useSelector(({ posts: { current } }) => current);
   const update = useSelector(({ posts: { update } }) => update);
+  const post_error = useSelector(({ posts: { post_error } }) => post_error);
+  const [show, setShow] = useState(true);
   useEffect(() => {
     if (current !== null) {
       setTitle(current.title);
       setMessage(current.message);
     }
-  }, [added_post, current, update]);
+  }, [added_post, current, update, post_error]);
 
   const handleInput = (e) => {
     const { value } = e.target;
@@ -41,9 +46,19 @@ const PostForm = () => {
     tags: select,
   };
 
+  if (post_error && show) {
+    return (
+      <Alert variant='danger' onClose={() => setShow(false)} dismissible>
+        <Alert.Heading>Oh! You got an error!</Alert.Heading>
+        <p>{post_error}</p>
+      </Alert>
+    );
+  }
+
   const onsubmit = (e) => {
     e.preventDefault();
-    addPost(dispatch, form);
+    addPost(dispatch, form, history);
+    setShow(true);
     setTitle("");
     setMessage("");
   };
@@ -75,9 +90,20 @@ const PostForm = () => {
       >
         <Forms onSubmit={current ? onupdate : onsubmit}>
           <Grid>
-            <div>
-              <Logo>
+            <div style={{ paddingLeft: "0.5em" }}>
+              {/* <Logo>
                 {user !== null ? user.username.slice(0, 2).toUpperCase() : "OO"}
+              </Logo> */}
+              <Logo style={{ cursor: "pointer" }}>
+                {user !== null ? (
+                  <Image>
+                    <img src={JSON.parse(user.image_url)[0]} />
+                  </Image>
+                ) : user !== null ? (
+                  user.username.slice(0, 2).toUpperCase()
+                ) : (
+                  "OO"
+                )}
               </Logo>
             </div>
             <div>

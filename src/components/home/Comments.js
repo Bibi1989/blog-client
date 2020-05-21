@@ -52,8 +52,6 @@ const Comments = () => {
 
   let notice = "";
 
-  console.log(post !== null && JSON.parse(post.User.image_url)[0]);
-
   const onsubmit = (e) => {
     e.preventDefault();
     if (post !== null && post.username === user.username) {

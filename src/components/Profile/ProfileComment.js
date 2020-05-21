@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { Logo, Image } from "../home/PostBody";
-import { Comment, Icon } from "semantic-ui-react";
+import { Comment } from "semantic-ui-react";
 
 const ProfileComment = ({ user, post }) => {
   return (
@@ -18,7 +18,7 @@ const ProfileComment = ({ user, post }) => {
           <Logo style={{ cursor: "pointer" }}>
             {user !== null && user.image_url ? (
               <Image>
-                <img src={JSON.parse(user.image_url)[0]} />
+                <img src={JSON.parse(user.image_url)[0]} alt='logo image' />
               </Image>
             ) : (
               post !== null && post.User.username.slice(0, 2).toUpperCase()

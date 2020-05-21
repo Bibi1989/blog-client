@@ -2,17 +2,12 @@ import React from "react";
 import moment from "moment";
 import { Logo, Image } from "../home/PostBody";
 import { Comment, Icon, Button } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
-import { getAllPosts, deletePost } from "../BlogRedux/store";
-import { useDispatch, useSelector } from "react-redux";
+import { deletePost } from "../BlogRedux/store";
+import { useDispatch } from "react-redux";
 import { Alert } from "react-bootstrap";
 
 const ProfileCard = ({ user, post, allPost }) => {
-  const history = useHistory();
   const dispatch = useDispatch();
-  // const deleted_post = useSelector(
-  //   ({ posts: { deleted_post } }) => deleted_post
-  // );
   const [show, setShow] = React.useState(false);
   if (show) {
     return (

@@ -147,7 +147,7 @@ export const UserProvider = ({ children }) => {
       console.log(error.response);
     }
   };
-  const getAllUsers = async () => {
+  const getAllUsers = async (text) => {
     dispatch({ type: LOADING, payload: true });
     try {
       const response = await axios.get(`${USER_URL}/users`, {
@@ -156,7 +156,8 @@ export const UserProvider = ({ children }) => {
         },
       });
 
-      const data = response.data.data.data;
+      let data = response.data.data.data;
+      data = data.filter((d) => d.username.toLowerCase().includes(text));
       dispatch({ type: LOADING, payload: false });
       dispatch({ type: USERS, payload: data });
     } catch (error) {

@@ -166,6 +166,7 @@ const PostForm = () => {
         size='big'
         color='grey'
         title='Reload page'
+        style={{ cursor: "pointer" }}
         onClick={() => window.location.reload()}
       />
     </Container>

@@ -1,32 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { Menu } from "semantic-ui-react";
-import { useState } from "react";
+import { Menu, Input } from "semantic-ui-react";
 import { getAllPosts } from "../BlogRedux/store";
 import { Flex, Logo, Image } from "../home/PostBody";
 import { UserContext } from "../userContext/UserProvider";
+import { Loader } from "../home/Post";
+import { Spinner } from "react-bootstrap";
 
 const Users = () => {
-  let { user, getUser, getAllUsers, allUsers } = React.useContext(UserContext);
+  let { getUser, getAllUsers, allUsers } = React.useContext(UserContext);
   let users = JSON.parse(sessionStorage.getItem("user"));
-  let image = user !== null && JSON.parse(user.image_url)[0];
   const dispatch = useDispatch();
+  const loading = useSelector(({ posts: { loading } }) => loading);
   const available_tags = [
     { tags: "post", color: "orangered" },
     { tags: "dev", color: "lime" },
     { tags: "article", color: "teal" },
     { tags: "question", color: "red" },
   ];
-  const [values] = useState("");
-  // new_posts = new_posts.filter((post) =>
-  //   post.toLowerCase().includes(values.toLowerCase())
-  // );
+
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     getUser(Number(users.id));
-    getAllUsers();
-  }, []);
+    getAllUsers(search);
+  }, [search]);
+
+  const handleSearch = ({ target: { value } }) => {
+    setSearch(value);
+  };
+
+  console.log({ search, allUsers });
 
   return (
     <Container className='layout'>
@@ -37,32 +42,41 @@ const Users = () => {
           style={{ background: "#2285D0", color: "#ffffff" }}
           title='All users'
         />
+        <Loader>
+          {loading && <Spinner animation='border' variant='info' />}
+        </Loader>
+        <Input
+          type='search'
+          placeholder='Search for a user'
+          loading
+          onChange={handleSearch}
+        />
         {allUsers !== null &&
-          allUsers.map((post) => (
-            <Menu.Item
-              onClick={() => getAllPosts(dispatch, post.username.toLowerCase())}
-              title={`View ${post.username} posts`}
-            >
-              <Flex justify='flex-start'>
-                <Logo>
-                  {post !== null && (
-                    <Image>
-                      <img src={JSON.parse(post.image_url)[0]} />
-                    </Image>
-                  )}
-                </Logo>
-                <Flex flexDirection='column'>
-                  <span>{post.username}</span>
-                  <p className='user_post'>
-                    Post{" "}
-                    <span className='num'>
-                      {post !== undefined && post.Posts.length}
-                    </span>
-                  </p>
+          [...allUsers]
+            .slice(0, 10)
+            .map(({ email, username, image_url, Posts }) => (
+              <Menu.Item
+                key={email}
+                onClick={() => getAllPosts(dispatch, username.toLowerCase())}
+                title={`View ${username} posts`}
+              >
+                <Flex justify='flex-start'>
+                  <Logo>
+                    {
+                      <Image>
+                        <img src={JSON.parse(image_url)[0]} />
+                      </Image>
+                    }
+                  </Logo>
+                  <Flex flexDirection='column'>
+                    <span>{username}</span>
+                    <p className='user_post'>
+                      Post <span className='num'>{Posts.length}</span>
+                    </p>
+                  </Flex>
                 </Flex>
-              </Flex>
-            </Menu.Item>
-          ))}
+              </Menu.Item>
+            ))}
       </Menu>
       <Menu secondary vertical>
         <Menu.Item

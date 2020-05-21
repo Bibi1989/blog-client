@@ -6,6 +6,7 @@ export const Notify = ({ notices, deleteNotification, dispatch }) => {
   return (
     <Dropdown
       icon='alarm'
+      // eslint-disable-next-line
       text={
         <sup
           style={{

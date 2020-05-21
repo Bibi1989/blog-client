@@ -2,13 +2,11 @@ import React, { useEffect } from "react";
 import moment from "moment";
 import styled from "styled-components";
 import { Icon, Comment } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsersPosts } from "../BlogRedux/store";
 import { styleFunc } from "../home/tagStyle";
 
 const ProfilePosts = () => {
-  const token = sessionStorage.getItem("blog");
   const dispatch = useDispatch();
   const userPosts = useSelector(({ posts: { user_post } }) => user_post);
   useEffect(() => {
@@ -28,21 +26,7 @@ const ProfilePosts = () => {
                 padding: "0 !important",
               }}
             >
-              <Comment.Content>
-                {/* <Logo
-                  style={{ cursor: "pointer" }}
-                  title={`View ${post.User.username} Profile`}
-                >
-                  {post !== null && post.User.image_url ? (
-                    <Image>
-                      <img src={JSON.parse(post.User.image_url)[0]} />
-                    </Image>
-                  ) : (
-                    post !== null &&
-                    post.User.username.slice(0, 2).toUpperCase()
-                  )}
-                </Logo> */}
-              </Comment.Content>
+              <Comment.Content></Comment.Content>
               <Comment.Content>
                 <Comment.Author
                   style={{ cursor: "pointer" }}

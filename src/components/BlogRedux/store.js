@@ -92,7 +92,6 @@ export const addPost = async (dispatch, data, history) => {
         auth: token,
       },
     });
-    console.log(response.data.data);
     if (response.data.data.status === "success") {
       dispatch(addAction(response.data));
     } else {

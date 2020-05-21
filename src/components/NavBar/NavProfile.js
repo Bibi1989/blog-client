@@ -43,6 +43,7 @@ export const Profile = ({ users, history, handleLogout, image }) => (
   >
     <Dropdown.Menu style={{ minWidth: "250px", marginLeft: "-220px" }}>
       <Dropdown.Item
+        // eslint-disable-next-line
         icon='address card outline'
         onClick={() => history.push(`/profile/${users.id}`)}
       >

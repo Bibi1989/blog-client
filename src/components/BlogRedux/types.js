@@ -12,3 +12,4 @@ export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
 export const LOADING = "LOADING";
 export const COMMENT_LOADING = "COMMENT_LOADING";
 export const ERROR = "ERROR";
+export const CURRENT = "CURRENT";

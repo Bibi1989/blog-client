@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Icon, Comment } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { likePost, getAPost } from "../BlogRedux/store";
+import { likePost, getAPost, setCurrentValue } from "../BlogRedux/store";
 import { styleFunc } from "./tagStyle";
 import LogoComponent from "./LogoComponent";
 
@@ -38,6 +38,7 @@ const PostCard = ({ post }) => {
             <Logo
               style={{ cursor: "pointer" }}
               onClick={() => history.push(`/profile/${post.User.id}`)}
+              title={`View ${post.User.username} Profile`}
             >
               {post !== null && post.User.image_url ? (
                 <Image>
@@ -52,6 +53,7 @@ const PostCard = ({ post }) => {
             <Comment.Author
               style={{ cursor: "pointer" }}
               onClick={() => history.push(`/profile/${post.User.id}`)}
+              title={`View ${post.User.username} Profile`}
             >
               {post.User.username}
             </Comment.Author>
@@ -63,6 +65,7 @@ const PostCard = ({ post }) => {
                 justifyContent: "space-between",
                 cursor: "pointer",
               }}
+              title={`View ${post.User.username} Comments`}
             >
               <span>{post.title}</span>
             </Comment.Text>
@@ -70,7 +73,10 @@ const PostCard = ({ post }) => {
               <Comment.Action>
                 <span style={styleFunc(post.tags)}>{post.tags}</span>
               </Comment.Action>
-              <Comment.Action onClick={() => handleLikes(post.id)}>
+              <Comment.Action
+                onClick={() => handleLikes(post.id)}
+                title={`Like ${post.User.username} Post`}
+              >
                 <Icon
                   name='heart'
                   color={
@@ -81,20 +87,24 @@ const PostCard = ({ post }) => {
                 />
                 Like {post.Likes.length}
               </Comment.Action>
-              <Comment.Action onClick={handleComment}>
+              <Comment.Action
+                onClick={handleComment}
+                title={`View ${post.User.username} Comments`}
+              >
                 <Icon name='envelope open' />
                 Comment {post.Comments.length}
               </Comment.Action>
               <Comment.Action>
                 {moment(post.createdAt).fromNow(true)} ago
               </Comment.Action>
-              <Comment.Action>
-                <Icon
-                  name='edit outline'
-                  onClick={() => getAPost(dispatch, post.id)}
-                />{" "}
-                Edit Post
-              </Comment.Action>
+              {user.id === post.User.id && (
+                <Comment.Action
+                  onClick={() => setCurrentValue(dispatch, post)}
+                  title={`Edit Your Post`}
+                >
+                  <Icon name='edit outline' /> Edit Post
+                </Comment.Action>
+              )}
             </Comment.Actions>
           </Comment.Content>
         </Comment>
@@ -127,8 +137,27 @@ export const Image = styled.div`
 `;
 export const Flex = styled.div`
   display: flex;
+  flex-direction: ${(props) =>
+    props.flexDirection ? props.flexDirection : "row"};
   justify-content: ${(props) => (props.justify ? props.justify : "")};
-  align-items: center;
+  align-items: ${(props) => (props.flexDirection ? "flex-start" : "center")};
+
+  .user_post {
+    padding-top: 0.5em;
+    line-height: 100%;
+
+    .num {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 15px;
+      color: white;
+      font-size: 0.7em;
+      background: orangered;
+    }
+  }
 `;
 
 export const H1 = styled.h1`

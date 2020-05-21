@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOADING, COMMENT_LOADING } from "./types";
+import { LOADING, COMMENT_LOADING, CURRENT } from "./types";
 // import jwtJsDecode from "jwt-js-decode";
 import {
   getAction,
@@ -206,4 +206,8 @@ export const deleteNotification = async (dispatch, id) => {
     console.log({ notice: response.data.data });
     dispatch(deleteNotificationAction(response.data.data.notices));
   } catch (error) {}
+};
+
+export const setCurrentValue = (dispatch, post) => {
+  dispatch({ type: CURRENT, payload: post });
 };

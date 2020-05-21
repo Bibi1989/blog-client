@@ -12,6 +12,7 @@ import {
   ADD_NOTICE,
   NOTICE,
   DELETE_NOTIFICATION,
+  CURRENT,
 } from "./types";
 
 const initialState = {
@@ -29,6 +30,7 @@ const initialState = {
   deleted_notices: null,
   loading: false,
   error: null,
+  current: null,
 };
 
 export const postReducer = (state = initialState, action) => {
@@ -97,6 +99,11 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         comment_loading: action.loading,
+      };
+    case CURRENT:
+      return {
+        ...state,
+        current: action.payload,
       };
 
     default:

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { addPost } from "../BlogRedux/store";
+import { addPost, updatePost, setCurrentValue } from "../BlogRedux/store";
 import { Icon, Button, TextArea, FormGroup, Form } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -17,11 +17,14 @@ const PostForm = () => {
 
   const dispatch = useDispatch();
   const added_post = useSelector(({ posts: { added_post } }) => added_post);
-  useEffect(() => {}, [added_post]);
-
-  const singlePost = useSelector(({ posts: { post } }) => post);
-
-  console.log({ singlePost });
+  const current = useSelector(({ posts: { current } }) => current);
+  const update = useSelector(({ posts: { update } }) => update);
+  useEffect(() => {
+    if (current !== null) {
+      setTitle(current.title);
+      setMessage(current.message);
+    }
+  }, [added_post, current, update]);
 
   const handleInput = (e) => {
     const { value } = e.target;
@@ -37,11 +40,18 @@ const PostForm = () => {
     message,
     tags: select,
   };
-  console.log(message);
 
   const onsubmit = (e) => {
     e.preventDefault();
     addPost(dispatch, form);
+    setTitle("");
+    setMessage("");
+  };
+  const onupdate = (e) => {
+    e.preventDefault();
+    const data = { ...current, title, message };
+    updatePost(dispatch, data);
+    setCurrentValue(dispatch, null);
     setTitle("");
     setMessage("");
   };
@@ -50,9 +60,12 @@ const PostForm = () => {
     <Container>
       <StyledPopup
         trigger={
-          <button className='btn' title='Click to add post'>
+          <button
+            className={current ? "update" : "btn"}
+            title='Click to add post'
+          >
             {" "}
-            Add What is on your mind!!!
+            {current ? `Update your post` : "Add What is on your mind!!!"}
           </button>
         }
         position='bottom'
@@ -60,7 +73,7 @@ const PostForm = () => {
         closeOnDocumentClick
         style={{ width: "96%" }}
       >
-        <Forms onSubmit={onsubmit}>
+        <Forms onSubmit={current ? onupdate : onsubmit}>
           <Grid>
             <div>
               <Logo>
@@ -105,8 +118,19 @@ const PostForm = () => {
                 color='blue'
                 style={{ marginTop: "0.8em" }}
               >
-                <Icon name='comment' /> Post
+                <Icon name='comment' /> {current ? "Update Post" : "Post"}
               </Button>
+              {current && (
+                <Button
+                  onClick={() => {
+                    setCurrentValue(dispatch, null);
+                    setTitle("");
+                    setMessage("");
+                  }}
+                >
+                  Clear Fields
+                </Button>
+              )}
             </div>
           </Grid>
         </Forms>
@@ -139,6 +163,13 @@ const Container = styled.div`
     padding: 0.6em 1.5em;
     background: dodgerblue;
     color: white;
+  }
+  .update {
+    padding: 0.6em 1.5em;
+    background: teal;
+    color: white;
+    border: none;
+    border-radius: 0.2em;
   }
 
   @media (max-width: 769px) {

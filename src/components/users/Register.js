@@ -50,7 +50,6 @@ const Register = () => {
       confirmPassword: "",
     });
   };
-  console.log({ imageUrl: imageUrl.length });
 
   return (
     <Container>

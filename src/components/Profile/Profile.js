@@ -5,6 +5,7 @@ import moment from "moment";
 import { Logo, Image } from "../home/PostBody";
 import { UserContext } from "../userContext/UserProvider";
 import ProfileCard from "./ProfileCard";
+import ProfileComment from "./ProfileComment";
 import { Icon } from "semantic-ui-react";
 import { Spinner } from "react-bootstrap";
 
@@ -18,6 +19,7 @@ const Profile = () => {
 
     // eslint-disable-next-line
   }, []);
+
   return (
     <Container>
       <Flex>
@@ -88,7 +90,7 @@ const Profile = () => {
         {user !== null &&
           text === "comment" &&
           user.Comments.map((post) => (
-            <ProfileCard user={user} post={post.message} key={post.id} />
+            <ProfileComment user={user} post={post} key={post.id} />
           ))}
       </ListFlex>
     </Container>

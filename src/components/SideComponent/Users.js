@@ -28,8 +28,6 @@ const Users = () => {
     getAllUsers();
   }, []);
 
-  console.log(allUsers);
-
   return (
     <Container className='layout'>
       <Menu secondary vertical>

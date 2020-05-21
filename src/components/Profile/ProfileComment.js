@@ -3,7 +3,7 @@ import moment from "moment";
 import { Logo, Image } from "../home/PostBody";
 import { Comment, Icon } from "semantic-ui-react";
 
-const ProfileCard = ({ user, post, allPost }) => {
+const ProfileComment = ({ user, post, allPost }) => {
   console.log(post);
   return (
     <Comment.Group style={{ width: "100%" }} key={post.id}>
@@ -36,7 +36,7 @@ const ProfileCard = ({ user, post, allPost }) => {
               cursor: "pointer",
             }}
           >
-            <span>{post}</span>
+            <span>{post.message}</span>
           </Comment.Text>
           <Comment.Actions>
             <Comment.Action>
@@ -52,16 +52,7 @@ const ProfileCard = ({ user, post, allPost }) => {
               </span>
             </Comment.Action>
             <Comment.Action>
-              <Icon name='heart' />
-              Like {user !== null && user.Likes.length}
-            </Comment.Action>
-            <Comment.Action>
-              <Icon name='envelope open' />
-              Comment {user !== null && user.Comments.length}
-            </Comment.Action>
-            <Comment.Action>
-              {moment(allPost !== undefined && allPost.createdAt).fromNow(true)}{" "}
-              ago
+              {moment(post.createdAt).fromNow(true)} ago
             </Comment.Action>
           </Comment.Actions>
         </Comment.Content>
@@ -70,4 +61,4 @@ const ProfileCard = ({ user, post, allPost }) => {
   );
 };
 
-export default ProfileCard;
+export default ProfileComment;

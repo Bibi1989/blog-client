@@ -37,7 +37,7 @@ const Users = () => {
           name='Users'
           onClick={() => getAllPosts(dispatch, "")}
           style={{ background: "#2285D0", color: "#ffffff" }}
-          title='All posts'
+          title='All users'
         />
         {allUsers !== null &&
           allUsers.map((post) => (
@@ -71,6 +71,7 @@ const Users = () => {
           name='Filter By Tags'
           onClick={() => getAllPosts(dispatch, "")}
           style={{ background: "#2285D0", color: "#ffffff" }}
+          title='All tags'
         />
         {available_tags.map((tag) => (
           <Menu.Item

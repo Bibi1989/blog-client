@@ -97,7 +97,7 @@ const PostCard = ({ post }) => {
               <Comment.Action>
                 {moment(post.createdAt).fromNow(true)} ago
               </Comment.Action>
-              {user.id === post.User.id && (
+              {token && user.id === post.User.id && (
                 <Comment.Action
                   onClick={() => setCurrentValue(dispatch, post)}
                   title={`Edit Your Post`}

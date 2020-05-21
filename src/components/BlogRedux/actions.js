@@ -2,6 +2,7 @@ import {
   GET,
   ADD,
   GET_SINGLE,
+  USER_POSTS,
   DELETE,
   UPDATE,
   LIKE_POST,
@@ -27,6 +28,12 @@ export const addAction = (post) => {
 export const singleAction = (post) => {
   return {
     type: GET_SINGLE,
+    post,
+  };
+};
+export const usersPostAction = (post) => {
+  return {
+    type: USER_POSTS,
     post,
   };
 };

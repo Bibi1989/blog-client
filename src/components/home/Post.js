@@ -10,7 +10,6 @@ import { useState } from "react";
 import { UserContext } from "../userContext/UserProvider";
 
 const Post = () => {
-  let { getUser } = React.useContext(UserContext);
   const dispatch = useDispatch();
   const [text] = useState("");
   const [render, setRender] = useState(false);

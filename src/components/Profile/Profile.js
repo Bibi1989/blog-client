@@ -79,12 +79,7 @@ const Profile = () => {
         ) : (
           text === "post" &&
           user.Posts.map((post) => (
-            <ProfileCard
-              user={user}
-              post={post.title}
-              allPost={post}
-              key={post.id}
-            />
+            <ProfileCard user={user} post={post} allPost={post} key={post.id} />
           ))
         )}
         {user !== null &&

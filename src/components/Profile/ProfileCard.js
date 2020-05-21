@@ -2,9 +2,13 @@ import React from "react";
 import moment from "moment";
 import { Logo, Image } from "../home/PostBody";
 import { Comment, Icon } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
+import { getAllPosts } from "../BlogRedux/store";
+import { useDispatch } from "react-redux";
 
 const ProfileCard = ({ user, post, allPost }) => {
-  console.log(post);
+  const history = useHistory();
+  const dispatch = useDispatch();
   return (
     <Comment.Group style={{ width: "100%" }} key={post.id}>
       <Comment
@@ -36,7 +40,7 @@ const ProfileCard = ({ user, post, allPost }) => {
               cursor: "pointer",
             }}
           >
-            <span>{post}</span>
+            <span>{post.title}</span>
           </Comment.Text>
           <Comment.Actions>
             <Comment.Action>

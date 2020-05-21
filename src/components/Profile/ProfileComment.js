@@ -3,8 +3,7 @@ import moment from "moment";
 import { Logo, Image } from "../home/PostBody";
 import { Comment, Icon } from "semantic-ui-react";
 
-const ProfileComment = ({ user, post, allPost }) => {
-  console.log(post);
+const ProfileComment = ({ user, post }) => {
   return (
     <Comment.Group style={{ width: "100%" }} key={post.id}>
       <Comment
@@ -39,18 +38,6 @@ const ProfileComment = ({ user, post, allPost }) => {
             <span>{post.message}</span>
           </Comment.Text>
           <Comment.Actions>
-            <Comment.Action>
-              <span
-                style={{
-                  padding: "0em 0.5em 0.2em 0.5em",
-                  background: "orangered",
-                  color: "white",
-                  borderRadius: "0.2em",
-                }}
-              >
-                {allPost !== undefined && allPost.tags}
-              </span>
-            </Comment.Action>
             <Comment.Action>
               {moment(post.createdAt).fromNow(true)} ago
             </Comment.Action>

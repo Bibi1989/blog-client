@@ -7,6 +7,7 @@ import {
   updateAction,
   likePostAction,
   singleAction,
+  usersPostAction,
   commentPostAction,
   deleteAction,
   commentsAction,
@@ -62,6 +63,22 @@ export const getAPost = async (dispatch, id) => {
     });
     dispatch({ type: LOADING, loading: false });
     dispatch(singleAction(response.data.data.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getUsersPosts = async (dispatch) => {
+  const token = sessionStorage.getItem("blog");
+  try {
+    dispatch({ type: LOADING, loading: true });
+    const response = await axios.get(`${POST_URL}/posts/post/users`, {
+      headers: {
+        "Content-Type": "application/json",
+        auth: token,
+      },
+    });
+    dispatch({ type: LOADING, loading: false });
+    dispatch(usersPostAction(response.data.data.data));
   } catch (error) {
     console.log(error);
   }

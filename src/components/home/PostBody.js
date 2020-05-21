@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { likePost, getAPost, setCurrentValue } from "../BlogRedux/store";
 import { styleFunc } from "./tagStyle";
-import LogoComponent from "./LogoComponent";
 
 const PostCard = ({ post }) => {
   const token = sessionStorage.getItem("blog");

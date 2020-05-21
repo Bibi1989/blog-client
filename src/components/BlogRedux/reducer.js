@@ -13,11 +13,13 @@ import {
   NOTICE,
   DELETE_NOTIFICATION,
   CURRENT,
+  USER_POSTS,
 } from "./types";
 
 const initialState = {
   posts: [],
   post: null,
+  user_post: null,
   update: null,
   likes: [],
   comments: [],
@@ -44,6 +46,11 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         post: action.post,
+      };
+    case USER_POSTS:
+      return {
+        ...state,
+        user_post: action.post,
       };
     case COMMENTS:
       return {

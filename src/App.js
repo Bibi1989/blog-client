@@ -13,6 +13,7 @@ import { UserProvider } from "./components/userContext/UserProvider";
 import Comments from "./components/home/Comments";
 import store from "./redux/store";
 import Post from "./components/home/Post";
+import ProfilePosts from "./components/ProfilePosts/ProfilePosts";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Users from "./components/SideComponent/Users";
@@ -38,6 +39,7 @@ function App() {
                 component={Comments}
               />
               <Route exact path='/profile/:userId' component={Profile} />
+              {/* <Route exact path='/profile/post/post' component={ProfilePosts} /> */}
               <Route exact path='/login'>
                 <Login />
               </Route>

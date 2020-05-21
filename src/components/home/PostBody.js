@@ -4,7 +4,11 @@ import styled from "styled-components";
 import { Icon, Comment } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { likePost, getAPost, setCurrentValue } from "../BlogRedux/store";
+import {
+  likePost,
+  createNotification,
+  setCurrentValue,
+} from "../BlogRedux/store";
 import { styleFunc } from "./tagStyle";
 
 const PostCard = ({ post }) => {
@@ -14,9 +18,17 @@ const PostCard = ({ post }) => {
   const dispatch = useDispatch();
 
   const history = useHistory();
+  let notice = "";
 
   const handleLikes = (id) => {
     likePost(dispatch, id);
+    if (post !== null && post.username === user.username) {
+      notice = `You commented on your own post`;
+    } else {
+      notice = `${user.username} commented on your post`;
+    }
+
+    createNotification(dispatch, notice, Number(post !== null && post.User.id));
   };
   const handleComment = () => {
     history.push(`/comments/${post.id}`);

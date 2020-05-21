@@ -24,6 +24,7 @@ const NavBar = () => {
 
   const dispatch = useDispatch();
   let notices = useSelector(({ posts: { notices } }) => notices);
+  let added_notice = useSelector(({ posts: { added_notice } }) => added_notice);
   let deleted_notices = useSelector(
     ({ posts: { deleted_notices } }) => deleted_notices
   );
@@ -35,7 +36,7 @@ const NavBar = () => {
     getNotifications(dispatch);
 
     // eslint-disable-next-line
-  }, []);
+  }, [added_notice]);
 
   const [active, setActive] = useState({
     home: true,

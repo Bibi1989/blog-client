@@ -67,7 +67,7 @@ export const postReducer = (state = initialState, action) => {
     case ADD:
       return {
         ...state,
-        posts: [...state.posts, action.post],
+        added_post: action.post,
       };
     case UPDATE:
       return {

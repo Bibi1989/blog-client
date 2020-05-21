@@ -7,18 +7,35 @@ import { UserContext } from "../userContext/UserProvider";
 import ProfileCard from "./ProfileCard";
 import ProfileComment from "./ProfileComment";
 import { Icon } from "semantic-ui-react";
-import { Spinner } from "react-bootstrap";
+import { Spinner, Alert } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { createNotification } from "../BlogRedux/store";
 
 const Profile = () => {
   let { getUser, user } = useContext(UserContext);
   // const users = JSON.parse(sessionStorage.getItem("user"));
+  const dispatch = useDispatch();
   const [text, setText] = useState("post");
+  const [show, setShow] = useState(true);
   const { userId } = useParams();
+  const deleted_post = useSelector(
+    ({ posts: { deleted_post } }) => deleted_post
+  );
   useEffect(() => {
     getUser(Number(userId));
 
     // eslint-disable-next-line
-  }, []);
+  }, [deleted_post]);
+
+  if (show && deleted_post) {
+    createNotification(dispatch, "You deleted a post!!!", Number(userId));
+    return (
+      <Alert variant='danger' onClose={() => setShow(false)} dismissible>
+        <Alert.Heading>Success message!!!</Alert.Heading>
+        <p>Post Deleted</p>
+      </Alert>
+    );
+  }
 
   return (
     <Container>

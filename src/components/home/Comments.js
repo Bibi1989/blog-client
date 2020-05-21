@@ -41,6 +41,7 @@ const Comments = () => {
 
     // eslint-disable-next-line
   }, [added_comment, likes]);
+  let notice = "";
 
   const handleComment = ({ target: { value } }) => {
     setComment(value);
@@ -48,9 +49,14 @@ const Comments = () => {
 
   const handleLikes = (id) => {
     likePost(dispatch, id);
-  };
+    if (post !== null && post.username === user.username) {
+      notice = `You Liked on your own post`;
+    } else {
+      notice = `${user.username} Liked your post`;
+    }
 
-  let notice = "";
+    createNotification(dispatch, notice, Number(post !== null && post.User.id));
+  };
 
   const onsubmit = (e) => {
     e.preventDefault();

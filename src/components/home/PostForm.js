@@ -29,7 +29,7 @@ const PostForm = () => {
       setTitle(current.title);
       setMessage(current.message);
     }
-  }, [added_post, current, update, post_error]);
+  }, [current, update, post_error]);
 
   const handleInput = (e) => {
     const { value } = e.target;

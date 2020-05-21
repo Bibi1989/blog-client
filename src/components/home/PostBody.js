@@ -33,7 +33,6 @@ const PostCard = ({ post }) => {
   const handleComment = () => {
     history.push(`/comments/${post.id}`);
   };
-  // console.log({ user: JSON.parse(user.image_url)[0] });
   return (
     <Container>
       <Comment.Group style={{ width: "100%" }}>
@@ -51,12 +50,12 @@ const PostCard = ({ post }) => {
               onClick={() => history.push(`/profile/${post.User.id}`)}
               title={`View ${post.User.username} Profile`}
             >
-              {post !== null && post.User.image_url ? (
+              {post.User.image_url ? (
                 <Image>
                   <img src={JSON.parse(post.User.image_url)[0]} />
                 </Image>
               ) : (
-                post !== null && post.User.username.slice(0, 2).toUpperCase()
+                post.User.username.slice(0, 2).toUpperCase()
               )}
             </Logo>
           </Comment.Content>
@@ -127,6 +126,7 @@ const PostCard = ({ post }) => {
 const Container = styled.div`
   padding: 2em;
   margin: 0;
+  border-bottom: 0.5px solid #eee;
 
   @media (max-width: 769px) {
     padding: 1em;

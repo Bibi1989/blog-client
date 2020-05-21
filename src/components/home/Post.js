@@ -32,8 +32,6 @@ const Post = () => {
     // eslint-disable-next-line
   }, [added_post, likes, added_comment, deleted_post]);
 
-  console.log(render);
-
   return (
     <Container>
       <PostForm />

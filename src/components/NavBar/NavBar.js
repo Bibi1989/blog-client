@@ -36,7 +36,7 @@ const NavBar = () => {
     getNotifications(dispatch);
 
     // eslint-disable-next-line
-  }, [added_notice]);
+  }, [added_notice, deleted_notices]);
 
   const [active, setActive] = useState({
     home: true,

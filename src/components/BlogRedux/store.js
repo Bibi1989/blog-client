@@ -92,7 +92,8 @@ export const addPost = async (dispatch, data, history) => {
         auth: token,
       },
     });
-    if (response.data.status === "success") {
+    console.log(response.data.data);
+    if (response.data.data.status === "success") {
       dispatch(addAction(response.data));
     } else {
       dispatch({ type: POST_ERROR, payload: response.data.error });
@@ -215,7 +216,6 @@ export const getNotifications = async (dispatch) => {
         auth: token,
       },
     });
-    console.log({ notice: response.data.data });
     dispatch(getNotificationAction(response.data.data.notices));
   } catch (error) {}
 };

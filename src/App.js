@@ -36,7 +36,7 @@ function App() {
                 path='/comments/:commentId'
                 component={Comments}
               />
-              <Route exact path='/profile/:userId' component={Profile} />
+              <PrivateRoute exact path='/profile/:userId' component={Profile} />
               <Route exact path='/login'>
                 <Login />
               </Route>

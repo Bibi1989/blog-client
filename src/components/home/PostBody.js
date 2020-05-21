@@ -20,17 +20,25 @@ const PostCard = ({ post }) => {
   let notice = "";
 
   const handleLikes = (id) => {
-    likePost(dispatch, id);
-    if (post !== null && post.username === user.username) {
-      notice = `You commented on your own post`;
+    if (!token) {
+      history.push("/login");
     } else {
-      notice = `${user.username} commented on your post`;
+      likePost(dispatch, id);
+      if (post !== null && post.username === user.username) {
+        notice = `You commented on your own post`;
+      } else {
+        notice = `${user.username} commented on your post`;
+      }
     }
 
     createNotification(dispatch, notice, Number(post !== null && post.User.id));
   };
   const handleComment = () => {
-    history.push(`/comments/${post.id}`);
+    if (!token) {
+      history.push("/login");
+    } else {
+      history.push(`/comments/${post.id}`);
+    }
   };
   return (
     <Container>

@@ -38,7 +38,10 @@ const Users = () => {
       <Menu secondary vertical>
         <Menu.Item
           name='Users'
-          onClick={() => getAllPosts(dispatch, "")}
+          onClick={() => {
+            getAllPosts(dispatch, "");
+            setSearch("");
+          }}
           style={{ background: "#2285D0", color: "#ffffff" }}
           title='All users'
         />
@@ -49,6 +52,7 @@ const Users = () => {
           type='search'
           placeholder='Search for a user'
           loading
+          value={search}
           onChange={handleSearch}
         />
         {allUsers !== null &&
@@ -81,7 +85,10 @@ const Users = () => {
       <Menu secondary vertical>
         <Menu.Item
           name='Filter By Tags'
-          onClick={() => getAllPosts(dispatch, "")}
+          onClick={() => {
+            getAllPosts(dispatch, "");
+            setSearch("");
+          }}
           style={{ background: "#2285D0", color: "#ffffff" }}
           title='All tags'
         />

@@ -26,7 +26,7 @@ const CommentCard = ({ comment, loading }) => {
           <Logo>
             {comment.User.image_url ? (
               <Image>
-                <img src={JSON.parse(comment.User.image_url)[0]} />
+                <img src={JSON.parse(comment.User.image_url)[0]} alt='logo' />
               </Image>
             ) : (
               comment.User.username.slice(0, 2).toUpperCase()

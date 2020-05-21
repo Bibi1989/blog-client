@@ -18,9 +18,7 @@ import { Loader } from "./Post";
 import { styleFunc } from "./tagStyle";
 
 const Comments = () => {
-  const token = sessionStorage.getItem("blog");
   const user = JSON.parse(sessionStorage.getItem("user"));
-  let image = token ? JSON.parse(user.image_url)[0] : "";
   const { commentId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -96,7 +94,7 @@ const Comments = () => {
               <Logo style={{ cursor: "pointer" }}>
                 {post !== null && post.User.image_url ? (
                   <Image>
-                    <img src={JSON.parse(post.User.image_url)[0]} />
+                    <img src={JSON.parse(post.User.image_url)[0]} alt='logo' />
                   </Image>
                 ) : (
                   post !== null && post.User.username.slice(0, 2).toUpperCase()

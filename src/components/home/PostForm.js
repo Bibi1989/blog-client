@@ -19,7 +19,6 @@ const PostForm = () => {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const added_post = useSelector(({ posts: { added_post } }) => added_post);
   const current = useSelector(({ posts: { current } }) => current);
   const update = useSelector(({ posts: { update } }) => update);
   const post_error = useSelector(({ posts: { post_error } }) => post_error);
@@ -97,7 +96,7 @@ const PostForm = () => {
               <Logo style={{ cursor: "pointer" }}>
                 {user !== null ? (
                   <Image>
-                    <img src={JSON.parse(user.image_url)[0]} />
+                    <img src={JSON.parse(user.image_url)[0]} alt='logo' />
                   </Image>
                 ) : user !== null ? (
                   user.username.slice(0, 2).toUpperCase()

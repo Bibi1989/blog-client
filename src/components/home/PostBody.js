@@ -14,7 +14,6 @@ import { styleFunc } from "./tagStyle";
 const PostCard = ({ post }) => {
   const token = sessionStorage.getItem("blog");
   const user = JSON.parse(sessionStorage.getItem("user"));
-  let image = token ? JSON.parse(user.image_url)[0] : "";
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -52,7 +51,7 @@ const PostCard = ({ post }) => {
             >
               {post.User.image_url ? (
                 <Image>
-                  <img src={JSON.parse(post.User.image_url)[0]} />
+                  <img src={JSON.parse(post.User.image_url)[0]} alt='logo' />
                 </Image>
               ) : (
                 post.User.username.slice(0, 2).toUpperCase()

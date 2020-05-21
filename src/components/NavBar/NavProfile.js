@@ -29,7 +29,7 @@ export const Profile = ({ users, history, handleLogout, image }) => (
       >
         {image ? (
           <Image width='30px'>
-            <img src={image} />
+            <img src={image} alt='logo' />
           </Image>
         ) : (
           users.username.toUpperCase().slice(0, 2)

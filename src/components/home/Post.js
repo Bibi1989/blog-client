@@ -7,13 +7,11 @@ import PostForm from "./PostForm";
 
 import { Spinner } from "react-bootstrap";
 import { useState } from "react";
-import { UserContext } from "../userContext/UserProvider";
 
 const Post = () => {
   const dispatch = useDispatch();
   const [text] = useState("");
   const [render, setRender] = useState(false);
-  const token = sessionStorage.getItem("blog");
   const posts = useSelector(({ posts: { posts } }) => posts);
   const added_post = useSelector(({ posts: { added_post } }) => added_post);
   const likes = useSelector(({ posts: { likes } }) => likes);

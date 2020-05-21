@@ -25,13 +25,13 @@ const Users = () => {
   useEffect(() => {
     getUser(Number(users.id));
     getAllUsers(search);
+
+    // eslint-disable-next-line
   }, [search]);
 
   const handleSearch = ({ target: { value } }) => {
-    setSearch(value);
+    setSearch(value.toLowerCase());
   };
-
-  console.log({ search, allUsers });
 
   return (
     <Container className='layout'>
@@ -64,7 +64,7 @@ const Users = () => {
                   <Logo>
                     {
                       <Image>
-                        <img src={JSON.parse(image_url)[0]} />
+                        <img src={JSON.parse(image_url)[0]} alt='logo' />
                       </Image>
                     }
                   </Logo>

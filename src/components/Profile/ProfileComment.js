@@ -18,7 +18,7 @@ const ProfileComment = ({ user, post }) => {
           <Logo style={{ cursor: "pointer" }}>
             {user !== null && user.image_url ? (
               <Image>
-                <img src={JSON.parse(user.image_url)[0]} alt='logo image' />
+                <img src={JSON.parse(user.image_url)[0]} alt='logo' />
               </Image>
             ) : (
               post !== null && post.User.username.slice(0, 2).toUpperCase()

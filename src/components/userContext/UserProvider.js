@@ -11,8 +11,6 @@ const LOADING = "LOADING";
 const USERS = "USERS";
 const USER = "USER";
 
-let token = localStorage.getItem("blog");
-
 const initialState = {
   token: localStorage.getItem("blog"),
   register_data: {},

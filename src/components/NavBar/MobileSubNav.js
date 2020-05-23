@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { getAllPosts } from "../BlogRedux/store";
 import { UserContext } from "../userContext/UserProvider";
 import { Dropdown } from "semantic-ui-react";
 
@@ -28,12 +29,22 @@ const MobileSubNav = () => {
           <Dropdown.Menu>
             {allUsers !== null &&
               allUsers.map((all) => (
-                <Dropdown.Item>{all.username}</Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() =>
+                    getAllPosts(dispatch, all.username.toLowerCase())
+                  }
+                >
+                  {all.username}
+                </Dropdown.Item>
               ))}
           </Dropdown.Menu>
         </Drop>
       </User>
-      <Tags>
+      <Tag onClick={() => getAllPosts(dispatch, "post")}>Post</Tag>
+      <Tag onClick={() => getAllPosts(dispatch, "dev")}>Dev</Tag>
+      <Tag onClick={() => getAllPosts(dispatch, "article")}>Article</Tag>
+      <Tag onClick={() => getAllPosts(dispatch, "question")}>Question</Tag>
+      {/* <Tags>
         <Drop icon='' text='Tags' floating labeled className='icon'>
           <Dropdown.Menu>
             {available_tags.map((tag) => (
@@ -41,7 +52,7 @@ const MobileSubNav = () => {
             ))}
           </Dropdown.Menu>
         </Drop>
-      </Tags>
+      </Tags> */}
     </Nav>
   );
 };
@@ -52,7 +63,7 @@ const Nav = styled.nav`
   width: 100vw;
   display: flex;
   padding: 0.3em 1em;
-  background: tomato;
+  background: #1e90aa;
   color: white;
 `;
 const User = styled.div`
@@ -62,7 +73,9 @@ const User = styled.div`
     }
   }
 `;
-const Tags = styled.div``;
+const Tag = styled.div`
+  padding-left: 0.7em;
+`;
 const Drop = styled(Dropdown)`
   margin-right: 1em;
 `;

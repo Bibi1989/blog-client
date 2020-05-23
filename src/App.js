@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import styled from "styled-components";
+// import { Container, Button, Link } from "react-floating-action-button";
 
 import Login from "./components/users/Login";
 import Register from "./components/users/Register";
@@ -47,7 +48,27 @@ function App() {
                 <NotFound />
               </Route>
             </Switch>
-            <div></div>
+            <div>
+              {/* <Container>
+                <Link
+                  href='#'
+                  tooltip='Create note link'
+                  icon='far fa-sticky-note'
+                />
+                <Link
+                  href='#'
+                  tooltip='Add user link'
+                  icon='fas fa-user-plus'
+                />
+                <Button
+                  tooltip='The big plus button!'
+                  icon='fas fa-plus'
+                  rotate={true}
+                  onClick={() => alert("FAB Rocks!")}
+                />
+              </Container> */}
+              )
+            </div>
           </Layout>
         </UserProvider>
       </Provider>

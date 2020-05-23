@@ -45,7 +45,7 @@ const Users = () => {
           style={{ background: "#2285D0", color: "#ffffff" }}
           title='All users'
         />
-        <Loader>
+        <Loader padding='1em'>
           {loading && <Spinner animation='border' variant='info' />}
         </Loader>
         <Input

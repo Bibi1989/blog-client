@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
 import styled from "styled-components";
 import { Icon, Comment } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   likePost,
   createNotification,
@@ -18,6 +18,10 @@ const PostCard = ({ post }) => {
 
   const history = useHistory();
   let notice = "";
+
+  const likes = useSelector(({ posts: { likes } }) => likes);
+
+  useEffect(() => {}, [likes]);
 
   const handleLikes = (id) => {
     if (!token) {

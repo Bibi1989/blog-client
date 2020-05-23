@@ -59,7 +59,10 @@ const Profile = () => {
             <>
               <Username>{user !== null && user.username}</Username>
               <Date>
-                {moment(user !== null && user.createdAt).fromNow(false)}
+                Joined{" "}
+                {moment(user !== null && user.createdAt).format(
+                  "MMMM Do YYYY h:mm a"
+                )}
               </Date>
               <p>online</p>
             </>

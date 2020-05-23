@@ -7,12 +7,13 @@ import PostForm from "./PostForm";
 
 import { Spinner } from "react-bootstrap";
 import { useState } from "react";
+import MobileSubNav from "../NavBar/MobileSubNav";
 
 const Post = () => {
   const dispatch = useDispatch();
   const [text] = useState("");
   const [render, setRender] = useState(false);
-  const posts = useSelector(({ posts: { posts } }) => posts);
+  const posts = useSelector(({ posts: { posts } }) => posts) || [];
   const added_post = useSelector(({ posts: { added_post } }) => added_post);
   const likes = useSelector(({ posts: { likes } }) => likes);
   const deleted_post = useSelector(
@@ -28,13 +29,26 @@ const Post = () => {
     setRender(!render);
 
     // eslint-disable-next-line
-  }, [added_post, likes, added_comment, deleted_post]);
+  }, [added_post, added_comment, deleted_post]);
+
+  if (posts === null && loading) {
+    return (
+      <>
+        <Loader padding='5em'>
+          <Spinner animation='border' variant='success' />
+        </Loader>
+      </>
+    );
+  }
 
   return (
     <Container>
+      <div className='mobile'>
+        <MobileSubNav />
+      </div>
       <PostForm />
       {loading && (
-        <Loader>
+        <Loader padding='5em'>
           <Spinner animation='border' variant='success' />
         </Loader>
       )}
@@ -57,6 +71,16 @@ export const Container = styled.div`
     text-align: center;
     margin-top: 10%;
   }
+
+  .mobile {
+    display: none;
+  }
+
+  @media (max-width: 769px) {
+    .mobile {
+      display: inline-block;
+    }
+  }
 `;
 export const Grid = styled.div`
   height: 80vh;
@@ -74,4 +98,5 @@ export const Loader = styled.div`
   display: flex;
   justify-content: center;
   padding-top: ${(props) => (props.padding ? props.padding : "")};
+  padding-bottom: ${(props) => (props.padding ? props.padding : "")};
 `;

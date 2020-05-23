@@ -93,7 +93,7 @@ export const addPost = async (dispatch, data, history) => {
       },
     });
     if (response.data.data.status === "success") {
-      dispatch(addAction(response.data));
+      dispatch(addAction(response.data.data.data));
     } else {
       dispatch({ type: POST_ERROR, payload: response.data.error });
     }
@@ -169,7 +169,7 @@ export const likePost = async (dispatch, id) => {
         },
       }
     );
-    dispatch(likePostAction(response.data));
+    dispatch(likePostAction(response.data.data));
   } catch (error) {
     console.log(error);
   }

@@ -18,7 +18,7 @@ import {
 } from "./types";
 
 const initialState = {
-  posts: [],
+  posts: null,
   post: null,
   user_post: null,
   update: null,
@@ -42,12 +42,12 @@ export const postReducer = (state = initialState, action) => {
     case GET:
       return {
         ...state,
-        posts: action.post,
+        posts: [...action.post],
       };
     case GET_SINGLE:
       return {
         ...state,
-        post: action.post,
+        post: { ...action.post },
       };
     case USER_POSTS:
       return {
@@ -67,7 +67,7 @@ export const postReducer = (state = initialState, action) => {
     case ADD:
       return {
         ...state,
-        added_post: action.post,
+        posts: [action.post, ...state.posts],
       };
     case UPDATE:
       return {

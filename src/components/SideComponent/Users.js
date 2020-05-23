@@ -59,6 +59,7 @@ const Users = () => {
           [...allUsers]
             .slice(0, 10)
             .map(({ email, username, image_url, Posts }) => {
+              console.log(username);
               return (
                 <Menu.Item
                   key={email}

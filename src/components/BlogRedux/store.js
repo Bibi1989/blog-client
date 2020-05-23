@@ -55,9 +55,13 @@ export const getAllPosts = async (dispatch, text) => {
           return post.tags.toLowerCase().includes(text.toLowerCase());
         });
       } else {
+        if (text === "all") {
+          text = "";
+        }
         data = data.filter((post) =>
-          post.User.username.toLowerCase().includes(text.toLowerCase())
+          post.username.toLowerCase().includes(text.toLowerCase())
         );
+        console.log(data);
       }
     }
     dispatch({ type: LOADING, loading: false });

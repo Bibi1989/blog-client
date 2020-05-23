@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getAllPosts } from "../BlogRedux/store";
 import { UserContext } from "../userContext/UserProvider";
-import { Dropdown } from "semantic-ui-react";
+import { Dropdown, Menu } from "semantic-ui-react";
 
 const MobileSubNav = () => {
   let { getUser, getAllUsers, allUsers } = React.useContext(UserContext);
@@ -17,6 +17,16 @@ const MobileSubNav = () => {
     { tags: "question", color: "red" },
   ];
 
+  const [state, setState] = useState({ activeItem: "all" });
+
+  const handleItemClick = (e, { name }) => {
+    console.log(name);
+    setState({ activeItem: name });
+    getAllPosts(dispatch, name);
+  };
+
+  const { activeItem } = state;
+
   React.useEffect(() => {
     getAllUsers("");
 
@@ -24,14 +34,20 @@ const MobileSubNav = () => {
   }, []);
   return (
     <Nav>
-      <User>
+      {/* <Tag onClick={() => getAllPosts(dispatch, "post")}>Post</Tag>
+      <Tag onClick={() => getAllPosts(dispatch, "dev")}>Dev</Tag>
+      <Tag onClick={() => getAllPosts(dispatch, "article")}>Article</Tag>
+      <Tag onClick={() => getAllPosts(dispatch, "question")}>Question</Tag>
+      <Tag onClick={() => getAllPosts(dispatch, "")}>All</Tag> */}
+
+      <Menu secondary>
         <Drop
           icon=''
           text='Users'
+          style={{ padding: "0.6em 0.3em", background: "orange" }}
           floating
           labeled
           className='icon'
-          onClick={() => getAllPosts(dispatch, "")}
         >
           <Dropdown.Menu>
             {allUsers !== null &&
@@ -47,21 +63,32 @@ const MobileSubNav = () => {
               ))}
           </Dropdown.Menu>
         </Drop>
-      </User>
-      <Tag onClick={() => getAllPosts(dispatch, "post")}>Post</Tag>
-      <Tag onClick={() => getAllPosts(dispatch, "dev")}>Dev</Tag>
-      <Tag onClick={() => getAllPosts(dispatch, "article")}>Article</Tag>
-      <Tag onClick={() => getAllPosts(dispatch, "question")}>Question</Tag>
-      <Tag onClick={() => getAllPosts(dispatch, "")}>All</Tag>
-      {/* <Tags>
-        <Drop icon='' text='Tags' floating labeled className='icon'>
-          <Dropdown.Menu>
-            {available_tags.map((tag) => (
-              <Dropdown.Item>{tag.tags}</Dropdown.Item>
-            ))}
-          </Dropdown.Menu>
-        </Drop>
-      </Tags> */}
+        <Menu.Item
+          name='all'
+          active={activeItem === "all"}
+          onClick={handleItemClick}
+        />
+        <Menu.Item
+          name='post'
+          active={activeItem === "post"}
+          onClick={handleItemClick}
+        />
+        <Menu.Item
+          name='dev'
+          active={activeItem === "dev"}
+          onClick={handleItemClick}
+        />
+        <Menu.Item
+          name='article'
+          active={activeItem === "article"}
+          onClick={handleItemClick}
+        />
+        <Menu.Item
+          name='question'
+          active={activeItem === "question"}
+          onClick={handleItemClick}
+        />
+      </Menu>
     </Nav>
   );
 };
@@ -71,9 +98,19 @@ export default MobileSubNav;
 const Nav = styled.nav`
   width: 100vw;
   display: flex;
-  padding: 0.3em 1em;
+  padding: 0em 1em;
   background: #1e90aa;
   color: white;
+
+  .menu {
+    .active {
+      border-bottom: 4px solid white !important;
+    }
+
+    .item {
+      color: #fff;
+    }
+  }
 `;
 const User = styled.div`
   .icon {
@@ -88,5 +125,10 @@ const Tag = styled.div`
   border-right: 1px solid #ccc;
 `;
 const Drop = styled(Dropdown)`
-  margin-right: 1em;
+  margin: 0;
+  padding: 0;
+
+  .icon {
+    display: none;
+  }
 `;

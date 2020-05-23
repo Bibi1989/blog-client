@@ -8,6 +8,7 @@ import PostForm from "./PostForm";
 import { Spinner } from "react-bootstrap";
 import { useState } from "react";
 import MobileSubNav from "../NavBar/MobileSubNav";
+import { Icon } from "semantic-ui-react";
 
 const Post = () => {
   const dispatch = useDispatch();
@@ -53,8 +54,13 @@ const Post = () => {
         </Loader>
       )}
       <Grid>
-        {posts !== null &&
-          posts.map((post) => <PostCard key={post.id} post={post} />)}
+        {posts.length === 0 ? (
+          <Loader padding='5em'>
+            <Icon name='edit outline' /> <p>No posts...</p>
+          </Loader>
+        ) : (
+          posts.map((post) => <PostCard key={post.id} post={post} />)
+        )}
       </Grid>
     </Container>
   );

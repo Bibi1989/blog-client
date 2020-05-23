@@ -5,18 +5,6 @@ import { Logo, Image } from "../home/PostBody";
 export const Profile = ({ users, history, handleLogout, image }) => (
   <Dropdown
     text={
-      // <Logo
-      //   width='30px'
-      //   style={{
-      //     background: "white",
-      //     color: "#777",
-      //     fontSize: "0.8em",
-      //     margin: "0",
-      //     cursor: "pointer",
-      //   }}
-      // >
-      //   {users.username.toUpperCase().slice(0, 2)}
-      // </Logo>
       <Logo
         width='30px'
         style={{

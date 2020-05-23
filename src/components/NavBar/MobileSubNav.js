@@ -41,7 +41,7 @@ const MobileSubNav = () => {
       <Tag onClick={() => getAllPosts(dispatch, "")}>All</Tag> */}
 
       <Menu secondary>
-        <Drop
+        {/* <Drop
           icon=''
           text='Users'
           style={{ padding: "0.6em 0.3em", background: "orange" }}
@@ -62,7 +62,7 @@ const MobileSubNav = () => {
                 </Dropdown.Item>
               ))}
           </Dropdown.Menu>
-        </Drop>
+        </Drop> */}
         <Menu.Item
           name='all'
           active={activeItem === "all"}

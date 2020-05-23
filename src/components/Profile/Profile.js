@@ -1,20 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import moment from "moment";
 import { Logo, Image } from "../home/PostBody";
 import { UserContext } from "../userContext/UserProvider";
 import ProfileCard from "./ProfileCard";
 import ProfileComment from "./ProfileComment";
-import { Icon } from "semantic-ui-react";
+import { Icon, Label } from "semantic-ui-react";
 import { Spinner, Alert } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { createNotification } from "../BlogRedux/store";
 
 const Profile = () => {
-  let { getUser, user } = useContext(UserContext);
-  // const users = JSON.parse(sessionStorage.getItem("user"));
+  let { getUser, deleteUser, user } = useContext(UserContext);
+  const users = JSON.parse(sessionStorage.getItem("user"));
   const dispatch = useDispatch();
+  const history = useHistory();
   const [text, setText] = useState("post");
   const [show, setShow] = useState(true);
   const { userId } = useParams();
@@ -26,6 +27,13 @@ const Profile = () => {
 
     // eslint-disable-next-line
   }, [deleted_post]);
+
+  const deactivateAccount = () => {
+    deleteUser(users.id);
+    sessionStorage.removeItem("blog");
+    sessionStorage.removeItem("user");
+    history.push("/login");
+  };
 
   if (show && deleted_post) {
     createNotification(dispatch, "You deleted a post!!!", Number(userId));
@@ -58,6 +66,7 @@ const Profile = () => {
           ) : (
             <>
               <Username>{user !== null && user.username}</Username>
+              <Username>{user !== null && user.email}</Username>
               <Date>
                 Joined{" "}
                 {moment(user !== null && user.createdAt).format(
@@ -69,6 +78,11 @@ const Profile = () => {
           )}
         </Divide>
       </Flex>
+      {userId == users.id && (
+        <Label style={{ cursor: "pointer" }} onClick={deactivateAccount}>
+          Deactivate Account
+        </Label>
+      )}
       <ProfileNav>
         <ul>
           <li

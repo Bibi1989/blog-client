@@ -31,7 +31,7 @@ function App() {
             <div className='sticky'>{token ? <Users /> : <div></div>}</div>
             <Switch>
               <PrivateRoute exact path='/' component={Post} />
-              <Route exact path='/home' component={Post} />
+              {/* <Route exact path='/home' component={Post} /> */}
               <PrivateRoute
                 exact
                 path='/comments/:commentId'
@@ -67,7 +67,6 @@ function App() {
                   onClick={() => alert("FAB Rocks!")}
                 />
               </Container> */}
-              )
             </div>
           </Layout>
         </UserProvider>

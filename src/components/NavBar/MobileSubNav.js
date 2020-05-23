@@ -25,11 +25,19 @@ const MobileSubNav = () => {
   return (
     <Nav>
       <User>
-        <Drop icon='' text='Users' floating labeled className='icon'>
+        <Drop
+          icon=''
+          text='Users'
+          floating
+          labeled
+          className='icon'
+          onClick={() => getAllPosts(dispatch, "")}
+        >
           <Dropdown.Menu>
             {allUsers !== null &&
               allUsers.map((all) => (
                 <Dropdown.Item
+                  key={all.username}
                   onClick={() =>
                     getAllPosts(dispatch, all.username.toLowerCase())
                   }
@@ -44,6 +52,7 @@ const MobileSubNav = () => {
       <Tag onClick={() => getAllPosts(dispatch, "dev")}>Dev</Tag>
       <Tag onClick={() => getAllPosts(dispatch, "article")}>Article</Tag>
       <Tag onClick={() => getAllPosts(dispatch, "question")}>Question</Tag>
+      <Tag onClick={() => getAllPosts(dispatch, "")}>All</Tag>
       {/* <Tags>
         <Drop icon='' text='Tags' floating labeled className='icon'>
           <Dropdown.Menu>
@@ -75,6 +84,8 @@ const User = styled.div`
 `;
 const Tag = styled.div`
   padding-left: 0.7em;
+  padding-right: 0.7em;
+  border-right: 1px solid #ccc;
 `;
 const Drop = styled(Dropdown)`
   margin-right: 1em;

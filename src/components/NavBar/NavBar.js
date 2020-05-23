@@ -18,7 +18,7 @@ const NavBar = () => {
   const history = useHistory();
   const token = sessionStorage.getItem("blog");
   const users = JSON.parse(sessionStorage.getItem("user"));
-  let image = token ? JSON.parse(users.image_url)[0] : "";
+  let image = token ? JSON.parse(users.image_url) : "";
   const userDetails = [];
   userDetails.push(users);
 
@@ -88,13 +88,9 @@ const NavBar = () => {
               <span className='bibi'>Bibi</span> <i>Blog</i>
             </Link>
           ) : (
-            <Link
-              to='/home'
-              className='links'
-              style={active.home ? activeBorder : {}}
-            >
+            <div className='links' style={{ margin: "0", padding: "0" }}>
               <span className='bibi'>Bibi</span> <i>Blog</i>
-            </Link>
+            </div>
           )}
         </li>
 

@@ -28,7 +28,10 @@ export const Profile = ({ users, history, handleLogout, image }) => (
         }}
       >
         {image ? (
-          <Image width='30px'>
+          <Image
+            width='30px'
+            title='Click to to see links of profile and logout'
+          >
             <img src={image} alt='logo' />
           </Image>
         ) : (

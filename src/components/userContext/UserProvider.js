@@ -59,6 +59,11 @@ const reducer = (state, action) => {
         ...state,
         login_errors: action.payload,
       };
+    case LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
     default:
       return state;
   }
@@ -70,6 +75,7 @@ const USER_URL = "https://new-blog-api.herokuapp.com/auth/v1";
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const register = async (body, history) => {
+    dispatch({ type: LOADING, payload: true });
     const response = await axios.post(`${USER_URL}/register`, body, {
       headers: {
         "Content-Type": "application/json",
@@ -81,6 +87,7 @@ export const UserProvider = ({ children }) => {
       sessionStorage.setItem("blog", response.data.data.token);
       sessionStorage.setItem("user", JSON.stringify(data.data));
       history.push("/login");
+      dispatch({ type: LOADING, payload: null });
       dispatch({
         type: REGISTER,
         payload: response.data.data,
@@ -89,6 +96,7 @@ export const UserProvider = ({ children }) => {
       });
       getUser();
     } else {
+      dispatch({ type: LOADING, payload: null });
       dispatch({
         type: REGISTER_ERROR,
         payload: response.data.data.error,
@@ -100,6 +108,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const login = async (body, history) => {
+    dispatch({ type: LOADING, payload: true });
     const response = await axios.post(`${USER_URL}/login`, body, {
       headers: {
         "Content-Type": "application/json",
@@ -110,14 +119,16 @@ export const UserProvider = ({ children }) => {
       sessionStorage.setItem("blog", response.data.data.token);
       sessionStorage.setItem("user", JSON.stringify(data.data));
       history.push("/");
+      dispatch({ type: LOADING, payload: null });
       dispatch({
         type: LOGIN,
         payload: response.data.data.data,
-        isAuth: true,
+        isAuth: false,
         user: data.data,
       });
       getUser();
     } else {
+      dispatch({ type: LOADING, payload: null });
       dispatch({
         type: LOGIN_ERROR,
         payload: response.data.data.error,
@@ -164,6 +175,24 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const deleteUser = async (id) => {
+    dispatch({ type: LOADING, payload: true });
+    try {
+      const response = await axios.delete(`${USER_URL}/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      let data = response.data.data.data;
+      dispatch({ type: LOADING, payload: false });
+      dispatch({ type: USERS, payload: data });
+    } catch (error) {
+      dispatch({ type: LOADING, payload: false });
+      console.log(error.response);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -171,11 +200,13 @@ export const UserProvider = ({ children }) => {
         login,
         getUser,
         getAllUsers,
+        deleteUser,
         isAuth: state.isAuth,
         user: state.user,
         allUsers: state.allUsers,
         register_errors: state.register_errors,
         login_errors: state.login_errors,
+        loading: state.loading,
       }}
     >
       {children}

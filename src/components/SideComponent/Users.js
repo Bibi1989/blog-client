@@ -58,29 +58,31 @@ const Users = () => {
         {allUsers !== null &&
           [...allUsers]
             .slice(0, 10)
-            .map(({ email, username, image_url, Posts }) => (
-              <Menu.Item
-                key={email}
-                onClick={() => getAllPosts(dispatch, username.toLowerCase())}
-                title={`View ${username} posts`}
-              >
-                <Flex justify='flex-start'>
-                  <Logo>
-                    {
-                      <Image>
-                        <img src={JSON.parse(image_url)[0]} alt='logo' />
-                      </Image>
-                    }
-                  </Logo>
-                  <Flex flexDirection='column'>
-                    <span>{username}</span>
-                    <p className='user_post'>
-                      Post <span className='num'>{Posts.length}</span>
-                    </p>
+            .map(({ email, username, image_url, Posts }) => {
+              return (
+                <Menu.Item
+                  key={email}
+                  onClick={() => getAllPosts(dispatch, username.toLowerCase())}
+                  title={`View ${username} posts`}
+                >
+                  <Flex justify='flex-start'>
+                    <Logo>
+                      {
+                        <Image>
+                          <img src={JSON.parse(image_url)} alt='logo' />
+                        </Image>
+                      }
+                    </Logo>
+                    <Flex flexDirection='column'>
+                      <span>{username}</span>
+                      <p className='user_post'>
+                        Post <span className='num'>{Posts.length}</span>
+                      </p>
+                    </Flex>
                   </Flex>
-                </Flex>
-              </Menu.Item>
-            ))}
+                </Menu.Item>
+              );
+            })}
       </Menu>
       <Menu secondary vertical>
         <Menu.Item
@@ -94,6 +96,7 @@ const Users = () => {
         />
         {available_tags.map((tag) => (
           <Menu.Item
+            key={tag.tags}
             onClick={() => getAllPosts(dispatch, tag.tags)}
             title={`Filter by ${tag.tags}`}
           >

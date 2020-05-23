@@ -15,3 +15,5 @@ export const COMMENT_LOADING = "COMMENT_LOADING";
 export const ERROR = "ERROR";
 export const POST_ERROR = "POST_ERROR";
 export const CURRENT = "CURRENT";
+export const CLEAR_PROFILE = "CLEAR_PROFILE";
+export const CLEAR_POST = "CLEAR_POST";

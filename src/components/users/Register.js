@@ -4,13 +4,14 @@ import { useHistory } from "react-router-dom";
 import { publics } from "../utils/session";
 import { UserContext } from "../userContext/UserProvider";
 import { Container } from "./Login";
-import { getFiles } from "./GetImageFile";
+import { getFile } from "./GetImageFile";
 import { Spinner } from "react-bootstrap";
 
 const Register = () => {
   const history = useHistory();
   const [imageUrl, setImageUrl] = useState([]);
   const [showBtn, setShowBtn] = useState(true);
+  const [errorCheck, setErrorCheck] = useState();
   publics(history);
   const { register, register_errors } = useContext(UserContext);
   const [error, setErrors] = useState("");
@@ -29,9 +30,11 @@ const Register = () => {
 
   const handleFile = async ({ target: { files } }) => {
     setShowBtn(false);
-    await getFiles(files, setImageUrl, form);
+    await getFile(files, setImageUrl, form);
     setShowBtn(true);
   };
+
+  console.log(imageUrl);
 
   const handleRegister = (event) => {
     event.preventDefault();
@@ -134,7 +137,17 @@ const Register = () => {
           </div>
           <div>
             <i className='fa fa-folder-open'></i>
-            <input type='file' name='file' onChange={handleFile} multiple />
+            <input
+              style={
+                error
+                  ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
+                  : {}
+              }
+              type='file'
+              name='file'
+              onChange={handleFile}
+              multiple
+            />
           </div>
           {showBtn ? (
             <button type='submit'>

@@ -53,13 +53,15 @@ const Post = () => {
         </Loader>
       )}
       <Grid>
-        {posts.map((post) => (
-          <PostCard key={post._id} post={post} />
-        ))}
+        {posts !== null &&
+          posts.map((post) => <PostCard key={post.id} post={post} />)}
       </Grid>
     </Container>
   );
 };
+{
+  /* <PostCard key={post._id} post={post} /> */
+}
 
 export default Post;
 

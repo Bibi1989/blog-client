@@ -15,6 +15,8 @@ import {
   CURRENT,
   USER_POSTS,
   POST_ERROR,
+  CLEAR_POST,
+  CLEAR_PROFILE,
 } from "./types";
 
 const initialState = {
@@ -118,6 +120,16 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         post_error: action.payload,
+      };
+    case CLEAR_POST:
+      return {
+        ...state,
+        posts: null,
+      };
+    case CLEAR_PROFILE:
+      return {
+        ...state,
+        posts: null,
       };
 
     default:

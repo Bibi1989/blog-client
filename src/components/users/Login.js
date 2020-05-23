@@ -4,13 +4,13 @@ import { useHistory } from "react-router-dom";
 import { Button } from "semantic-ui-react";
 import { UserContext } from "../userContext/UserProvider";
 import { publics } from "../utils/session";
+import { Spinner } from "react-bootstrap";
 
 const Login = () => {
   const history = useHistory();
   const port = window.location.port;
-  console.log(port);
   publics(history);
-  const { login, login_errors } = useContext(UserContext);
+  const { login, login_errors, loading } = useContext(UserContext);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -26,7 +26,7 @@ const Login = () => {
     event.preventDefault();
     login(form, history);
   };
-  console.log(login_errors);
+  console.log(loading);
 
   if (sessionStorage.getItem("blog")) {
     history.push("/");
@@ -88,7 +88,20 @@ const Login = () => {
           />
         </div>
         <Button type='submit' className='button'>
-          <i className='fa fa-share-square'></i> Login
+          {loading ? (
+            <div style={{ display: "flex" }}>
+              <Spinner
+                animation='border'
+                variant='info'
+                style={{ width: "16px", height: "16px" }}
+              />{" "}
+              Login
+            </div>
+          ) : (
+            <>
+              <i className='fa fa-share-square'></i> Login
+            </>
+          )}
         </Button>
       </Form>
     </Container>

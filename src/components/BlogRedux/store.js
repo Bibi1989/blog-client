@@ -1,5 +1,12 @@
 import axios from "axios";
-import { LOADING, COMMENT_LOADING, CURRENT, POST_ERROR } from "./types";
+import {
+  LOADING,
+  COMMENT_LOADING,
+  CURRENT,
+  POST_ERROR,
+  CLEAR_PROFILE,
+  CLEAR_POST,
+} from "./types";
 // import jwtJsDecode from "jwt-js-decode";
 import {
   getAction,
@@ -19,6 +26,14 @@ import {
 // const POST_URL = `http://localhost:7000/api/v1`;
 // const POST_URL = `https://bibiblog-api.herokuapp.com/api`;
 const POST_URL = `https://new-blog-api.herokuapp.com/api/v1`;
+
+export const clearProfile = (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
+};
+
+export const clearPosts = (dispatch) => {
+  dispatch({ type: CLEAR_POST });
+};
 
 export const getAllPosts = async (dispatch, text) => {
   try {

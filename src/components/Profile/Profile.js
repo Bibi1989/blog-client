@@ -49,12 +49,14 @@ const Profile = () => {
     <Container>
       <Flex>
         <Logo style={{ cursor: "pointer" }}>
-          {user !== null && user.image_url ? (
+          {user !== null && user !== undefined && JSON.parse(user.image_url) ? (
             <Image>
               <img src={JSON.parse(user.image_url)} alt='logo' />
             </Image>
           ) : (
-            user !== null && user.username.slice(0, 2).toUpperCase()
+            user !== null &&
+            user !== undefined &&
+            user.username.slice(0, 2).toUpperCase()
           )}
         </Logo>
         <Divide>
@@ -62,13 +64,26 @@ const Profile = () => {
             <Spinner animation='border' className='loading' />
           ) : (
             <>
-              <Username>{user !== null && user.username}</Username>
-              <Username>{user !== null && user.email}</Username>
+              <Username>
+                {user !== null &&
+                  user !== undefined &&
+                  user !== undefined &&
+                  user.username}
+              </Username>
+              <Username>
+                {user !== null &&
+                  user !== undefined &&
+                  user !== undefined &&
+                  user.email}
+              </Username>
               <Date>
                 Joined{" "}
-                {moment(user !== null && user.createdAt).format(
-                  "MMMM Do YYYY h:mm a"
-                )}
+                {moment(
+                  user !== null &&
+                    user !== undefined &&
+                    user !== undefined &&
+                    user.createdAt
+                ).format("MMMM Do YYYY h:mm a")}
               </Date>
               <p>online</p>
             </>
@@ -87,14 +102,14 @@ const Profile = () => {
             className={text === "post" && "active"}
           >
             <Icon name='comment' color='blue' /> Posts{" "}
-            {user !== null && user.Posts.length}
+            {user !== null && user !== undefined && user.Posts.length}
           </li>
           <li
             onClick={() => setText("comment")}
             className={text === "comment" && "active"}
           >
             <Icon name='comment' color='blue' /> Comments{" "}
-            {user !== null && user.Comments.length}
+            {user !== null && user !== undefined && user.Comments.length}
           </li>
           <li
             onClick={() => setText("setting")}
@@ -109,11 +124,13 @@ const Profile = () => {
           <Spinner animation='border' className='loading_content' />
         ) : (
           text === "post" &&
+          user !== undefined &&
           user.Posts.map((post) => (
             <ProfileCard user={user} post={post} allPost={post} key={post.id} />
           ))
         )}
         {user !== null &&
+          user !== undefined &&
           text === "comment" &&
           user.Comments.map((post) => (
             <ProfileComment user={user} post={post} key={post.id} />

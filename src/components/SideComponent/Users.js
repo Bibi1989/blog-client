@@ -76,11 +76,13 @@ const Users = () => {
                 >
                   <Flex justify='flex-start'>
                     <Logo>
-                      {
+                      {JSON.parse(image_url) ? (
                         <Image>
                           <img src={JSON.parse(image_url)} alt='logo' />
                         </Image>
-                      }
+                      ) : (
+                        username.toUpperCase().slice(0, 2)
+                      )}
                     </Logo>
                     <Flex flexDirection='column'>
                       <span>{username}</span>

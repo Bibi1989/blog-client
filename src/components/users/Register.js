@@ -151,8 +151,14 @@ const Register = () => {
               type='file'
               name='file'
               onChange={handleFile}
-              multiple
             />
+          </div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            {imageUrl ? (
+              <img src={imageUrl} width='150px' height='150px' />
+            ) : (
+              <p>Register with a desktop</p>
+            )}
           </div>
           {showBtn ? (
             <button type='submit'>

@@ -91,7 +91,10 @@ const Profile = () => {
         </Divide>
       </Flex>
       {userId == users.id && (
-        <Label style={{ cursor: "pointer" }} onClick={deactivateAccount}>
+        <Label
+          style={{ cursor: "pointer", background: "orangered", color: "white" }}
+          onClick={deactivateAccount}
+        >
           Deactivate Account
         </Label>
       )}
@@ -158,7 +161,7 @@ const Container = styled.div`
 const Flex = styled.div`
   padding: 2em;
   display: flex;
-  background: burlywood;
+  background: #1e90aa;
   color: white;
 `;
 const Username = styled.div`

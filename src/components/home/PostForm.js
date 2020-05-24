@@ -94,9 +94,9 @@ const PostForm = () => {
                 {user !== null ? user.username.slice(0, 2).toUpperCase() : "OO"}
               </Logo> */}
               <Logo style={{ cursor: "pointer" }}>
-                {user !== null ? (
+                {user !== null && JSON.parse(user.image_url) ? (
                   <Image>
-                    <img src={JSON.parse(user.image_url)[0]} alt='logo' />
+                    <img src={JSON.parse(user.image_url)} alt='logo' />
                   </Image>
                 ) : user !== null ? (
                   user.username.slice(0, 2).toUpperCase()

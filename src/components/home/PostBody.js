@@ -61,7 +61,7 @@ const PostCard = ({ post }) => {
               onClick={() => history.push(`/profile/${post.userId}`)}
               title={`View ${post.username} Profile`}
             >
-              {post.image_url ? (
+              {JSON.parse(post.image_url) ? (
                 <Image>
                   <img src={JSON.parse(post.image_url)} alt='logo' />
                 </Image>

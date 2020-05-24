@@ -46,11 +46,7 @@ const Register = () => {
       ...form,
       image_url: JSON.stringify(imageUrl),
     };
-    if (imageUrl) {
-      register(data, history);
-    } else {
-      alert("Image not uploaded!!!");
-    }
+    register(data, history);
     setForm({
       username: "",
       email: "",
@@ -157,7 +153,7 @@ const Register = () => {
             {imageUrl ? (
               <img src={imageUrl} width='150px' height='150px' />
             ) : (
-              <p>Register with a desktop</p>
+              <p>Register without a photo or Use Computer desktop for upload</p>
             )}
           </div>
           {showBtn ? (

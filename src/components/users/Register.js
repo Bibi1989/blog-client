@@ -9,7 +9,7 @@ import { Spinner } from "react-bootstrap";
 
 const Register = () => {
   const history = useHistory();
-  const [imageUrl, setImageUrl] = useState([]);
+  const [imageUrl, setImageUrl] = useState("");
   const [showBtn, setShowBtn] = useState(true);
   const [errorCheck, setErrorCheck] = useState();
   publics(history);
@@ -30,7 +30,8 @@ const Register = () => {
 
   const handleFile = async ({ target: { files } }) => {
     setShowBtn(false);
-    await getFile(files, setImageUrl, form);
+    const img = await getFile(files, setImageUrl, form);
+    setImageUrl(img);
     setShowBtn(true);
   };
 
@@ -45,7 +46,11 @@ const Register = () => {
       ...form,
       image_url: JSON.stringify(imageUrl),
     };
-    register(data, history);
+    if (imageUrl) {
+      register(data, history);
+    } else {
+      alert("Image not uploaded!!!");
+    }
     setForm({
       username: "",
       email: "",

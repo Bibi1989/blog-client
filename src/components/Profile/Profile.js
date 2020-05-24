@@ -26,7 +26,7 @@ const Profile = () => {
     getUser(Number(userId));
 
     // eslint-disable-next-line
-  }, [deleted_post]);
+  }, [deleted_post, user]);
 
   const deactivateAccount = () => {
     deleteUser(users.id);
@@ -48,9 +48,6 @@ const Profile = () => {
   return (
     <Container>
       <Flex>
-        {/* <Logo width='60px'>
-          {user !== null && user.username.slice(0, 2).toUpperCase()}
-        </Logo> */}
         <Logo style={{ cursor: "pointer" }}>
           {user !== null && user.image_url ? (
             <Image>

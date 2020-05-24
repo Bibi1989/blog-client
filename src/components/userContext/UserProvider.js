@@ -75,8 +75,12 @@ const USER_URL = "https://new-blog-api.herokuapp.com/auth/v1";
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const register = async (body, history) => {
+    const new_body = {
+      ...body,
+      image_url: body.image_url === "" ? null : body.image_url,
+    };
     dispatch({ type: LOADING, payload: true });
-    const response = await axios.post(`${USER_URL}/register`, body, {
+    const response = await axios.post(`${USER_URL}/register`, new_body, {
       headers: {
         "Content-Type": "application/json",
       },

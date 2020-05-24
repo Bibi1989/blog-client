@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { Menu, Input } from "semantic-ui-react";
+import { Menu, Input, Icon } from "semantic-ui-react";
 import { getAllPosts } from "../BlogRedux/store";
 import { Flex, Logo, Image } from "../home/PostBody";
 import { UserContext } from "../userContext/UserProvider";
@@ -33,6 +33,8 @@ const Users = () => {
     setSearch(value.toLowerCase());
   };
 
+  console.log({ allUsers });
+
   return (
     <Container className='layout'>
       <Menu secondary vertical>
@@ -55,11 +57,17 @@ const Users = () => {
           value={search}
           onChange={handleSearch}
         />
+        <Loader padding='1em'>
+          {allUsers !== null && allUsers.length === 0 && (
+            <>
+              <Icon name='edit' /> <span>No User</span>
+            </>
+          )}
+        </Loader>
         {allUsers !== null &&
           [...allUsers]
             .slice(0, 10)
             .map(({ email, username, image_url, Posts }) => {
-              console.log(username);
               return (
                 <Menu.Item
                   key={email}

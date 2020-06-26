@@ -42,9 +42,9 @@ const SendEmailComponent = () => {
           <div>
             <i className='fa fa-envelope'></i>
             <input
-              type='password'
-              name='password'
-              placeholder='New Password'
+              type='email'
+              name='email'
+              placeholder='Send Email'
               value={form.email}
               onChange={handleInput}
             />
@@ -57,7 +57,7 @@ const SendEmailComponent = () => {
                   variant='info'
                   style={{ width: "16px", height: "16px" }}
                 />{" "}
-                Login
+                Send Email
               </div>
             ) : (
               <>

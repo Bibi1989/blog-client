@@ -95,7 +95,7 @@ const Profile = () => {
           )}
         </Divide>
       </Flex>
-      {userId === users.id && (
+      {Number(userId) === users.id && (
         <Label
           style={{ cursor: "pointer", background: "orangered", color: "white" }}
           onClick={deactivateAccount}

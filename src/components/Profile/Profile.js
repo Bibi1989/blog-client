@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams, useHistory } from "react-router-dom";
 import moment from "moment";
-import { Logo, Image } from "../home/PostBody";
 import { UserContext } from "../userContext/UserProvider";
 import ProfileCard from "./ProfileCard";
 import ProfileComment from "./ProfileComment";
@@ -10,9 +9,12 @@ import { Icon, Label } from "semantic-ui-react";
 import { Spinner, Alert } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { createNotification } from "../BlogRedux/store";
+import ProfileSettings from "./ProfileSettings";
 
 const Profile = () => {
-  let { getUser, deleteUser, user } = useContext(UserContext);
+  let { getUser, deleteUser, user, updateUser, update } = useContext(
+    UserContext
+  );
   const users = JSON.parse(sessionStorage.getItem("user"));
   const dispatch = useDispatch();
   const history = useHistory();
@@ -22,11 +24,12 @@ const Profile = () => {
   const deleted_post = useSelector(
     ({ posts: { deleted_post } }) => deleted_post
   );
+  console.log(userId);
   useEffect(() => {
     getUser(Number(userId));
 
     // eslint-disable-next-line
-  }, [deleted_post, user]);
+  }, [deleted_post, update]);
 
   const deactivateAccount = () => {
     deleteUser(users.id);
@@ -48,17 +51,19 @@ const Profile = () => {
   return (
     <Container>
       <Flex>
-        <Logo style={{ cursor: "pointer" }}>
-          {user !== null && user !== undefined && JSON.parse(user.image_url) ? (
-            <Image>
-              <img src={JSON.parse(user.image_url)} alt='logo' />
-            </Image>
+        {/* <Logo style={{ cursor: "pointer" }}>
+          {user !== null || user !== undefined ? (
+            user.image_url ? (
+              <Image>
+                <img src={user.image_url} alt='logo' />
+              </Image>
+            ) : (
+              user !== null && user.username.slice(0, 2).toUpperCase()
+            )
           ) : (
-            user !== null &&
-            user !== undefined &&
-            user.username.slice(0, 2).toUpperCase()
+            ""
           )}
-        </Logo>
+        </Logo> */}
         <Divide>
           {user === null ? (
             <Spinner animation='border' className='loading' />
@@ -90,7 +95,7 @@ const Profile = () => {
           )}
         </Divide>
       </Flex>
-      {userId == users.id && (
+      {userId === users.id && (
         <Label
           style={{ cursor: "pointer", background: "orangered", color: "white" }}
           onClick={deactivateAccount}
@@ -138,6 +143,9 @@ const Profile = () => {
           user.Comments.map((post) => (
             <ProfileComment user={user} post={post} key={post.id} />
           ))}
+        {user !== null && user !== undefined && text === "setting" && (
+          <ProfileSettings user={user} updateUser={updateUser} />
+        )}
       </ListFlex>
     </Container>
   );

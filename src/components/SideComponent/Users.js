@@ -9,7 +9,9 @@ import { Loader } from "../home/Post";
 import { Spinner } from "react-bootstrap";
 
 const Users = () => {
-  let { getUser, getAllUsers, allUsers } = React.useContext(UserContext);
+  let { getUser, getAllUsers, allUsers, update } = React.useContext(
+    UserContext
+  );
   let users = JSON.parse(sessionStorage.getItem("user"));
   const dispatch = useDispatch();
   const loading = useSelector(({ posts: { loading } }) => loading);
@@ -27,7 +29,7 @@ const Users = () => {
     getAllUsers(search);
 
     // eslint-disable-next-line
-  }, [search]);
+  }, [search, update]);
 
   const handleSearch = ({ target: { value } }) => {
     setSearch(value.toLowerCase());
@@ -76,9 +78,9 @@ const Users = () => {
                 >
                   <Flex justify='flex-start'>
                     <Logo>
-                      {JSON.parse(image_url) ? (
+                      {image_url ? (
                         <Image>
-                          <img src={JSON.parse(image_url)} alt='logo' />
+                          <img src={image_url} alt='logo' />
                         </Image>
                       ) : (
                         username.toUpperCase().slice(0, 2)

@@ -6,13 +6,13 @@ import { UserContext } from "../userContext/UserProvider";
 import { publics } from "../utils/session";
 import { Spinner } from "react-bootstrap";
 
-const Login = () => {
+const ForgotPassword = () => {
   const history = useHistory();
   publics(history);
   const { login, login_errors, loading } = useContext(UserContext);
   const [form, setForm] = useState({
-    email: "",
     password: "",
+    confirm_password: "",
   });
 
   const handleInput = (event) => {
@@ -35,7 +35,7 @@ const Login = () => {
     <Wrapper>
       <Container>
         <Form onSubmit={handleLogin}>
-          <h1>Login</h1>
+          <h1>Create Your Password</h1>
           <p style={{ color: "red" }}>
             {(login_errors === "password is invalid" ||
               login_errors === "Invalid email or your yet to register") &&
@@ -44,22 +44,9 @@ const Login = () => {
           <div>
             <i className='fa fa-envelope'></i>
             <input
-              className={login_errors === "Email is empty!!!" && "error"}
-              style={
-                login_errors === "Email is empty!!!"
-                  ? {
-                      border: "0.3px solid #ff00007a",
-                      boxShadow: "0 2px 15px #ff00007a",
-                    }
-                  : { border: "none" }
-              }
-              type='text'
-              name='email'
-              placeholder={
-                login_errors === "Email is empty!!!"
-                  ? login_errors
-                  : "Email Address..."
-              }
+              type='password'
+              name='password'
+              placeholder='New Password'
               value={form.email}
               onChange={handleInput}
             />
@@ -87,11 +74,6 @@ const Login = () => {
               onChange={handleInput}
             />
           </div>
-          <NotRegister>
-            <Link className='link' to='/resetpassword'>
-              Forgot password
-            </Link>
-          </NotRegister>
           <Button type='submit' className='button'>
             {loading ? (
               <div style={{ display: "flex" }}>
@@ -100,11 +82,11 @@ const Login = () => {
                   variant='info'
                   style={{ width: "16px", height: "16px" }}
                 />{" "}
-                Login
+                Create Password
               </div>
             ) : (
               <>
-                <i className='fa fa-share-square'></i> Login
+                <i className='fa fa-share-square'></i> Create Password
               </>
             )}
           </Button>
@@ -158,7 +140,6 @@ export const NotRegister = styled.div`
 
 export const Form = styled.form`
   width: 100%;
-  padding: 0 10%;
 
   @media (max-width: 1400px) {
     width: 90%;
@@ -221,4 +202,4 @@ export const Form = styled.form`
   }
 `;
 
-export default Login;
+export default ForgotPassword;

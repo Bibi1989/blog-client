@@ -7,9 +7,12 @@ const REGISTER = "REGISTER";
 const LOGIN = "LOGIN";
 const REGISTER_ERROR = "REGISTER_ERROR";
 const LOGIN_ERROR = "LOGIN_ERROR";
+const UPDATE = "UPDATE";
+const DELETE = "DELETE";
 const LOADING = "LOADING";
 const USERS = "USERS";
 const USER = "USER";
+const USERNOFILTER = "USERNOFILTER";
 
 const initialState = {
   token: localStorage.getItem("blog"),
@@ -17,7 +20,10 @@ const initialState = {
   login_data: {},
   isAuth: null,
   register_errors: {},
+  update: {},
+  delete_user: {},
   user: null,
+  users: null,
   allUsers: null,
   login_errors: {},
   loading: null,
@@ -54,6 +60,21 @@ const reducer = (state, action) => {
         ...state,
         allUsers: action.payload,
       };
+    case USERNOFILTER:
+      return {
+        ...state,
+        users: action.payload,
+      };
+    case UPDATE:
+      return {
+        ...state,
+        update: action.payload,
+      };
+    case DELETE:
+      return {
+        ...state,
+        delete_user: action.payload,
+      };
     case LOGIN_ERROR:
       return {
         ...state,
@@ -77,7 +98,6 @@ export const UserProvider = ({ children }) => {
   const register = async (body, history) => {
     const new_body = {
       ...body,
-      image_url: body.image_url === "" ? null : body.image_url,
     };
     dispatch({ type: LOADING, payload: true });
     const response = await axios.post(`${USER_URL}/register`, new_body, {
@@ -178,6 +198,41 @@ export const UserProvider = ({ children }) => {
       console.log(error.response);
     }
   };
+  const getAllUsersNotFilter = async () => {
+    dispatch({ type: LOADING, payload: true });
+    try {
+      const response = await axios.get(`${USER_URL}/users`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      let data = response.data.data.data;
+      dispatch({ type: LOADING, payload: false });
+      dispatch({ type: USERNOFILTER, payload: data });
+    } catch (error) {
+      dispatch({ type: LOADING, payload: false });
+      console.log(error.response);
+    }
+  };
+
+  const updateUser = async (id, body) => {
+    dispatch({ type: LOADING, payload: true });
+    try {
+      const response = await axios.patch(`${USER_URL}/${id}`, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      let data = response.data.data.data;
+      dispatch({ type: LOADING, payload: false });
+      dispatch({ type: UPDATE, payload: data });
+    } catch (error) {
+      dispatch({ type: LOADING, payload: false });
+      console.log(error.response);
+    }
+  };
 
   const deleteUser = async (id) => {
     dispatch({ type: LOADING, payload: true });
@@ -190,7 +245,7 @@ export const UserProvider = ({ children }) => {
 
       let data = response.data.data.data;
       dispatch({ type: LOADING, payload: false });
-      dispatch({ type: USERS, payload: data });
+      dispatch({ type: DELETE, payload: data });
     } catch (error) {
       dispatch({ type: LOADING, payload: false });
       console.log(error.response);
@@ -204,9 +259,14 @@ export const UserProvider = ({ children }) => {
         login,
         getUser,
         getAllUsers,
+        getAllUsersNotFilter,
+        updateUser,
         deleteUser,
         isAuth: state.isAuth,
         user: state.user,
+        users: state.users,
+        update: state.update,
+        delete_user: state.delete_user,
         allUsers: state.allUsers,
         register_errors: state.register_errors,
         login_errors: state.login_errors,

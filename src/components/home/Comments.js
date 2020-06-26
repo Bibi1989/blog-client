@@ -16,13 +16,19 @@ import { Spinner } from "react-bootstrap";
 import CommentCard from "./CommentCard";
 import { Loader } from "./Post";
 import { styleFunc } from "./tagStyle";
+import { useContext } from "react";
+import { UserContext } from "../userContext/UserProvider";
 
 const Comments = () => {
   const user = JSON.parse(sessionStorage.getItem("user"));
+  let { getAllUsersNotFilter, users } = useContext(UserContext);
+  users = users !== null && [...users];
+
   const { commentId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
   const [comment, setComment] = useState("");
+  const [show, setShow] = useState(false);
   // const [notice, setNotice] = useState("");
   const post = useSelector(({ posts: { post } }) => post);
   const comments = useSelector(({ posts: { comments } }) => comments);
@@ -33,9 +39,11 @@ const Comments = () => {
   const comment_loading = useSelector(
     ({ posts: { comment_loading } }) => comment_loading
   );
+  // console.log(comments);
   useEffect(() => {
     getComments(dispatch, commentId);
     getAPost(dispatch, commentId);
+    getAllUsersNotFilter();
 
     // eslint-disable-next-line
   }, [added_comment, likes]);
@@ -43,6 +51,12 @@ const Comments = () => {
 
   const handleComment = ({ target: { value } }) => {
     setComment(value);
+    if (value === "@") {
+      setShow(true);
+    }
+    if (value === "@Bibi") {
+      setShow(false);
+    }
   };
 
   const handleLikes = (id) => {
@@ -92,9 +106,9 @@ const Comments = () => {
               </Logo> */}
 
               <Logo style={{ cursor: "pointer" }}>
-                {post !== null && JSON.parse(post.User.image_url) ? (
+                {post !== null && post.User.image_url ? (
                   <Image>
-                    <img src={JSON.parse(post.User.image_url)} alt='logo' />
+                    <img src={post.User.image_url} alt='logo' />
                   </Image>
                 ) : (
                   post !== null && post.User.username.slice(0, 2).toUpperCase()
@@ -155,6 +169,23 @@ const Comments = () => {
             placeholder='Write your comment here!!!'
             value={comment}
           />
+          {show && (
+            <OverlayPopup>
+              {users !== null &&
+                users.map((user) => (
+                  <Flex
+                    flex='row'
+                    onClick={() => {
+                      setComment(`@${user.username}`);
+                      setShow(false);
+                    }}
+                  >
+                    <Logo>{user.username.slice(0, 2).toUpperCase()}</Logo>
+                    <p>{user.username}</p>
+                  </Flex>
+                ))}
+            </OverlayPopup>
+          )}
           <Button type='submit' color='blue'>
             Comment
           </Button>
@@ -166,7 +197,7 @@ const Comments = () => {
         </Loader>
       ) : (
         <Flex>
-          {comments !== null &&
+          {(comments !== null || comments.length !== 0) &&
             comments.map((comment) => (
               <CommentCard key={comment.id} comment={comment} />
             ))}
@@ -183,5 +214,28 @@ const Container = styled.div`
   min-height: 93vh;
 `;
 const Flex = styled.div`
-  padding-top: 1em;
+  padding: ${({ flex }) => (flex ? "0.5em" : "1em 0 0 0")};
+  position: relative;
+  display: ${({ flex }) => flex && "flex"};
+  border-bottom: ${({ flex }) => flex && "1px solid #cccccc"};
+`;
+const OverlayPopup = styled.div`
+  width: 30%;
+  background: #f1f1f1;
+  position: absolute;
+  top: 1em;
+  left: 3em;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 10;
+
+  &::-webkit-scrollbar {
+    /* display: none; */
+    width: 3px;
+  }
+
+  p {
+    margin: 0;
+    padding: 0.5em;
+  }
 `;

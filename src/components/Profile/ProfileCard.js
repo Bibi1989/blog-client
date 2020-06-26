@@ -24,6 +24,8 @@ const ProfileCard = ({ user, post, allPost }) => {
     );
   }
 
+  console.log(user);
+
   return (
     <Comment.Group style={{ width: "100%" }} key={post.id}>
       <Comment
@@ -36,14 +38,15 @@ const ProfileCard = ({ user, post, allPost }) => {
       >
         <Comment.Content>
           <Logo style={{ cursor: "pointer" }}>
-            {user !== null && user.image_url ? (
+            {(user !== null || user !== undefined) && user.image_url ? (
               <Image>
-                <img src={JSON.parse(user.image_url)[0]} alt='logo' />
+                <img src={user.image_url} alt='logo' />
               </Image>
             ) : (
-              post !== null && post.User.username.slice(0, 2).toUpperCase()
+              post !== null && post.username.slice(0, 2).toUpperCase()
             )}
           </Logo>
+          {/* <Logo>{user.username.slice(0, 2).toUpperCase()}</Logo> */}
         </Comment.Content>
         <Comment.Content>
           <Comment.Author>{user !== null && user.username}</Comment.Author>

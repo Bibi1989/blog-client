@@ -1,21 +1,19 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getAllPosts } from "../BlogRedux/store";
 import { UserContext } from "../userContext/UserProvider";
-import { Dropdown, Menu } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 
 const MobileSubNav = () => {
-  let { getUser, getAllUsers, allUsers } = React.useContext(UserContext);
-  let users = JSON.parse(sessionStorage.getItem("user"));
+  let { getAllUsers } = React.useContext(UserContext);
   const dispatch = useDispatch();
-  const loading = useSelector(({ posts: { loading } }) => loading);
-  const available_tags = [
-    { tags: "post", color: "orangered" },
-    { tags: "dev", color: "lime" },
-    { tags: "article", color: "teal" },
-    { tags: "question", color: "red" },
-  ];
+  // const available_tags = [
+  //   { tags: "post", color: "orangered" },
+  //   { tags: "dev", color: "lime" },
+  //   { tags: "article", color: "teal" },
+  //   { tags: "question", color: "red" },
+  // ];
 
   const [state, setState] = useState({ activeItem: "all" });
 
@@ -110,25 +108,5 @@ const Nav = styled.nav`
     .item {
       color: #fff;
     }
-  }
-`;
-const User = styled.div`
-  .icon {
-    &:first-child {
-      border-right: 1px solid #ccc;
-    }
-  }
-`;
-const Tag = styled.div`
-  padding-left: 0.7em;
-  padding-right: 0.7em;
-  border-right: 1px solid #ccc;
-`;
-const Drop = styled(Dropdown)`
-  margin: 0;
-  padding: 0;
-
-  .icon {
-    display: none;
   }
 `;

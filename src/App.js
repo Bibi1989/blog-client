@@ -18,6 +18,8 @@ import Post from "./components/home/Post";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Users from "./components/SideComponent/Users";
 import Profile from "./components/Profile/Profile";
+import ForgotPassword from "./components/users/ForgotPassword";
+import SendEmailComponent from "./components/users/SendEmail";
 
 function App() {
   const token = sessionStorage.getItem("blog");
@@ -43,6 +45,12 @@ function App() {
               </Route>
               <Route exact path='/register'>
                 <Register />
+              </Route>
+              <Route exact path='/forgotpassword'>
+                <ForgotPassword />
+              </Route>
+              <Route exact path='/resetpassword'>
+                <SendEmailComponent />
               </Route>
               <Route to='/abc'>
                 <NotFound />
@@ -82,7 +90,6 @@ export const Layout = styled.div`
   grid-template-columns: 80% 20%;
   padding-left: 25%;
   padding-right: 7%;
-  background: #f9fbfc;
 
   .sticky {
     position: fixed;

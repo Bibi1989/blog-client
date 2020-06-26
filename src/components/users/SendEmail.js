@@ -1,18 +1,18 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Button } from "semantic-ui-react";
 import { UserContext } from "../userContext/UserProvider";
 import { publics } from "../utils/session";
 import { Spinner } from "react-bootstrap";
 
-const Login = () => {
+const SendEmailComponent = () => {
   const history = useHistory();
   publics(history);
-  const { login, login_errors, loading } = useContext(UserContext);
+  const { login, loading } = useContext(UserContext);
   const [form, setForm] = useState({
-    email: "",
     password: "",
+    confirm_password: "",
   });
 
   const handleInput = (event) => {
@@ -35,63 +35,20 @@ const Login = () => {
     <Wrapper>
       <Container>
         <Form onSubmit={handleLogin}>
-          <h1>Login</h1>
-          <p style={{ color: "red" }}>
-            {(login_errors === "password is invalid" ||
-              login_errors === "Invalid email or your yet to register") &&
-              "Invalid email or password!!!"}
+          <h1>Reset Password</h1>
+          <p style={{ textAlign: "center" }}>
+            Enter your email to receive reset code
           </p>
           <div>
             <i className='fa fa-envelope'></i>
             <input
-              className={login_errors === "Email is empty!!!" && "error"}
-              style={
-                login_errors === "Email is empty!!!"
-                  ? {
-                      border: "0.3px solid #ff00007a",
-                      boxShadow: "0 2px 15px #ff00007a",
-                    }
-                  : { border: "none" }
-              }
-              type='text'
-              name='email'
-              placeholder={
-                login_errors === "Email is empty!!!"
-                  ? login_errors
-                  : "Email Address..."
-              }
+              type='password'
+              name='password'
+              placeholder='New Password'
               value={form.email}
               onChange={handleInput}
             />
           </div>
-          <div>
-            <i className='fa fa-unlock'></i>
-            <input
-              className={login_errors === "Password is empty!!!" && "error"}
-              style={
-                login_errors === "Password is empty!!!"
-                  ? {
-                      border: "0.3px solid #ff00007a",
-                      boxShadow: "0 2px 10px #ff00007a",
-                    }
-                  : {}
-              }
-              type='text'
-              name='password'
-              placeholder={
-                login_errors === "Password is empty!!!"
-                  ? login_errors
-                  : "Password..."
-              }
-              value={form.password}
-              onChange={handleInput}
-            />
-          </div>
-          <NotRegister>
-            <Link className='link' to='/resetpassword'>
-              Forgot password
-            </Link>
-          </NotRegister>
           <Button type='submit' className='button'>
             {loading ? (
               <div style={{ display: "flex" }}>
@@ -109,13 +66,6 @@ const Login = () => {
             )}
           </Button>
         </Form>
-
-        <NotRegister>
-          <p>If you have not register yet click</p>
-          <Link className='link' to='/register'>
-            Register
-          </Link>
-        </NotRegister>
       </Container>
     </Wrapper>
   );
@@ -221,4 +171,4 @@ export const Form = styled.form`
   }
 `;
 
-export default Login;
+export default SendEmailComponent;

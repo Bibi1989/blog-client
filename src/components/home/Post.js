@@ -16,7 +16,6 @@ const Post = () => {
   const [render, setRender] = useState(false);
   const posts = useSelector(({ posts: { posts } }) => posts) || [];
   const added_post = useSelector(({ posts: { added_post } }) => added_post);
-  const likes = useSelector(({ posts: { likes } }) => likes);
   const deleted_post = useSelector(
     ({ posts: { deleted_post } }) => deleted_post
   );
@@ -65,9 +64,6 @@ const Post = () => {
     </Container>
   );
 };
-{
-  /* <PostCard key={post._id} post={post} /> */
-}
 
 export default Post;
 

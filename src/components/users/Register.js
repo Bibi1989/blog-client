@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { publics } from "../utils/session";
 import { UserContext } from "../userContext/UserProvider";
-import { Container } from "./Login";
+import { Container, NotRegister } from "./Login";
 import { getFile } from "./GetImageFile";
 import { Spinner } from "react-bootstrap";
 
@@ -11,7 +11,6 @@ const Register = () => {
   const history = useHistory();
   const [imageUrl, setImageUrl] = useState("");
   const [showBtn, setShowBtn] = useState(true);
-  const [errorCheck, setErrorCheck] = useState();
   publics(history);
   const { register, register_errors } = useContext(UserContext);
   const [error, setErrors] = useState("");
@@ -30,7 +29,7 @@ const Register = () => {
 
   const handleFile = async ({ target: { files } }) => {
     setShowBtn(false);
-    const img = await getFile(files, setImageUrl, form);
+    const img = await getFile(files);
     setImageUrl(img);
     setShowBtn(true);
   };
@@ -44,7 +43,7 @@ const Register = () => {
     }
     let data = {
       ...form,
-      image_url: JSON.stringify(imageUrl),
+      image_url: imageUrl ? JSON.stringify(imageUrl) : null,
     };
     register(data, history);
     setForm({
@@ -151,7 +150,12 @@ const Register = () => {
           </div>
           <div style={{ display: "flex", justifyContent: "center" }}>
             {imageUrl ? (
-              <img src={imageUrl} width='150px' height='150px' />
+              <img
+                src={imageUrl}
+                width='150px'
+                height='150px'
+                alt='load uploaded'
+              />
             ) : (
               <p>Register without a photo or Use Computer desktop for upload</p>
             )}
@@ -171,19 +175,18 @@ const Register = () => {
           )}
         </form>
       </Form>
+      <NotRegister>
+        <p>If you have an account click</p>
+        <Link className='link' to='/login'>
+          Login
+        </Link>
+      </NotRegister>
     </Container>
   );
 };
 
 const Form = styled.div`
-  width: 70%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-shadow: 0 3px 15px #ccc;
-  border-radius: 1em;
-  margin-top: 5%;
+  width: 100%;
 
   @media (max-width: 1400px) {
     width: 90%;
@@ -210,7 +213,7 @@ const Form = styled.div`
     width: 100%;
     display: block;
     div {
-      width: 80%;
+      width: 90%;
       margin: auto;
       position: relative;
       top: 0;

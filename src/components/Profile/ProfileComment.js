@@ -4,6 +4,7 @@ import { Logo, Image } from "../home/PostBody";
 import { Comment } from "semantic-ui-react";
 
 const ProfileComment = ({ user, post }) => {
+  console.log({ post, user });
   return (
     <Comment.Group style={{ width: "100%" }} key={post.id}>
       <Comment
@@ -15,13 +16,22 @@ const ProfileComment = ({ user, post }) => {
         }}
       >
         <Comment.Content>
-          <Logo style={{ cursor: "pointer" }}>
+          {/* <Logo style={{ cursor: "pointer" }}>
             {user !== null && user.image_url ? (
               <Image>
-                <img src={JSON.parse(user.image_url)[0]} alt='logo' />
+                <img src={user.image_url} alt='logo' />
               </Image>
             ) : (
               post !== null && post.User.username.slice(0, 2).toUpperCase()
+            )}
+          </Logo> */}
+          <Logo style={{ cursor: "pointer" }}>
+            {(user !== null || user !== undefined) && user.image_url ? (
+              <Image>
+                <img src={user.image_url} alt='logo' />
+              </Image>
+            ) : (
+              post !== null && post.username.slice(0, 2).toUpperCase()
             )}
           </Logo>
         </Comment.Content>

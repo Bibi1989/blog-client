@@ -6,6 +6,7 @@ import { Loader } from "./Post";
 import { Spinner } from "react-bootstrap";
 
 const CommentCard = ({ comment, loading }) => {
+  console.log({ comment: comment.User.image_url });
   return (
     <Comment.Group style={{ width: "100%" }}>
       {loading && (
@@ -24,9 +25,9 @@ const CommentCard = ({ comment, loading }) => {
         <Comment.Content>
           {/* <Logo>{comment.User.username.slice(0, 2).toUpperCase()}</Logo> */}
           <Logo>
-            {JSON.parse(comment.User.image_url) ? (
+            {comment.User.image_url ? (
               <Image>
-                <img src={JSON.parse(comment.User.image_url)} alt='logo' />
+                <img src={comment.User.image_url} alt='logo' />
               </Image>
             ) : (
               comment.User.username.slice(0, 2).toUpperCase()

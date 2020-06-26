@@ -4,13 +4,12 @@ const cloud_base_name = process.env.REACT_APP_CLOUDINARY_BASE_URL;
 
 dotenv.config();
 
-export const getFile = async (files, setImageUrl, form) => {
+export const getFile = async (files) => {
   let getImage = "";
   try {
     const Data = new FormData();
     Data.append("file", files[0]);
     Data.append("Content", "");
-    Data.append("tags", form.email);
     Data.append("upload_preset", upload_preset);
 
     const response = await fetch(cloud_base_name, {

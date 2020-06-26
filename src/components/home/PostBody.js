@@ -44,6 +44,7 @@ const PostCard = ({ post }) => {
       history.push(`/comments/${post.id}`);
     }
   };
+  console.log(post);
   return (
     <Container>
       <Comment.Group style={{ width: "100%" }}>
@@ -61,9 +62,9 @@ const PostCard = ({ post }) => {
               onClick={() => history.push(`/profile/${post.userId}`)}
               title={`View ${post.username} Profile`}
             >
-              {JSON.parse(post.image_url) ? (
+              {post.User.image_url ? (
                 <Image>
-                  <img src={JSON.parse(post.image_url)} alt='logo' />
+                  <img src={post.User.image_url} alt='logo' />
                 </Image>
               ) : (
                 post.username.slice(0, 2).toUpperCase()

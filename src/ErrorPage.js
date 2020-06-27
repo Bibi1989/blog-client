@@ -8,7 +8,9 @@ const ErrorPage = () => {
     <Error>
       <h2>Expired token or invalid link try again</h2>
       <Link to='/login'>
-        <Button>Go Back to Site</Button>
+        <Button color='twitter' style={{ marginTop: "10px" }}>
+          Go Back to Site
+        </Button>
       </Link>
     </Error>
   );
@@ -20,6 +22,7 @@ const Error = styled.div`
   min-height: 100vh;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;

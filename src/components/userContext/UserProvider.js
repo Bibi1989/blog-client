@@ -34,7 +34,7 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case REGISTER:
-      sessionStorage.setItem("blog", action.payload.token);
+      sessionStorage.setItem("blog", JSON.stringify(action.payload.token));
       sessionStorage.setItem("user", JSON.stringify(action.payload.data));
       return {
         ...state,
@@ -42,7 +42,7 @@ const reducer = (state, action) => {
         user: action.user,
       };
     case LOGIN:
-      sessionStorage.setItem("blog", action.payload.token);
+      sessionStorage.setItem("blog", JSON.stringify(action.payload.token));
       sessionStorage.setItem("user", JSON.stringify(action.payload.data));
       return {
         ...state,
@@ -161,7 +161,7 @@ export const UserProvider = ({ children }) => {
       dispatch({ type: LOADING, payload: null });
       dispatch({
         type: LOGIN_ERROR,
-        payload: error.response.data.error,
+        payload: error.response.data && error.response.data.error,
         isAuth: null,
         user: null,
       });

@@ -18,7 +18,8 @@ const NavBar = () => {
   const history = useHistory();
   const token = sessionStorage.getItem("blog");
   const users = JSON.parse(sessionStorage.getItem("user"));
-  let image = token ? JSON.parse(users.image_url) : "";
+  let image = "";
+  // let image = token ? JSON.parse(users.image_url) : "";
   const userDetails = [];
   userDetails.push(users);
 

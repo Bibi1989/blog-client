@@ -190,7 +190,7 @@ const Register = () => {
               onChange={handleFile}
             />
           </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          {/* <div style={{ display: "flex", justifyContent: "center" }}>
             {imageUrl ? (
               <img
                 src={imageUrl}
@@ -201,7 +201,7 @@ const Register = () => {
             ) : (
               <p>Register without a photo or Use Computer desktop for upload</p>
             )}
-          </div>
+          </div> */}
           {showBtn ? (
             <button type='submit'>
               <i className='fa fa-share-square'></i> Register

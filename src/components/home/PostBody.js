@@ -69,14 +69,12 @@ const PostCard = ({ post }) => {
               onClick={() => history.push(`/profile/${post.userId}`)}
               title={`View ${post.username} Profile`}
             >
-              {(post.User.image_url !== undefined ||
-                post.User.image_url !== null) &&
-              post.User.image_url ? (
+              {post.User.image_url ? (
                 <Image>
                   <img src={post.User.image_url} alt='logo' />
                 </Image>
               ) : (
-                post.username.slice(0, 2).toUpperCase()
+                post.User.username.slice(0, 2).toUpperCase()
               )}
             </Logo>
           </Comment.Content>
@@ -167,6 +165,7 @@ const Container = styled.div`
 const ImageLoad = styled.div``;
 const InnerDiv = styled.div`
   width: 90%;
+  max-height: 300px;
   margin-right: auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   border-radius: 0.3em;

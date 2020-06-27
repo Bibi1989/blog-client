@@ -47,6 +47,13 @@ const PostCard = ({ post }) => {
   console.log(post);
   return (
     <Container>
+      {/* <ImageLoad>
+        {post.image_url && (
+          <InnerDiv>
+            <img src={post.image_url} alt='' />
+          </InnerDiv>
+        )}
+      </ImageLoad> */}
       <Comment.Group style={{ width: "100%" }}>
         <Comment
           style={{
@@ -71,150 +78,77 @@ const PostCard = ({ post }) => {
               )}
             </Logo>
           </Comment.Content>
-          <Comment.Content>
-            <Comment.Author
-              style={{ cursor: "pointer" }}
-              onClick={() => history.push(`/profile/${post.userId}`)}
-              title={`View ${post.username} Profile`}
-            >
-              {post.username}
-            </Comment.Author>
-            <Comment.Text
-              onClick={handleComment}
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-                cursor: "pointer",
-              }}
-              title={`View ${post.username} Comments`}
-            >
-              <span>{post.title}</span>
-            </Comment.Text>
-            <Comment.Actions>
-              <Comment.Action>
-                <span style={styleFunc(post.tags)}>{post.tags}</span>
-              </Comment.Action>
-              <Comment.Action
-                onClick={() => handleLikes(post.id)}
-                title={`Like ${post.username} Post`}
+          <Flex flexDirection='column'>
+            <Comment.Content>
+              <ImageLoad>
+                {post.image_url && (
+                  <InnerDiv>
+                    <img src={post.image_url} alt='' />
+                  </InnerDiv>
+                )}
+              </ImageLoad>
+            </Comment.Content>
+            <Comment.Content>
+              <Comment.Author
+                style={{ cursor: "pointer" }}
+                onClick={() => history.push(`/profile/${post.userId}`)}
+                title={`View ${post.username} Profile`}
               >
-                <Icon
-                  name='heart'
-                  color={
-                    user !== null && user.email && post.Likes.length
-                      ? "red"
-                      : "black"
-                  }
-                />
-                Like {post.Likes.length}
-              </Comment.Action>
-              <Comment.Action
+                {post.username}
+              </Comment.Author>
+              <Comment.Text
                 onClick={handleComment}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  cursor: "pointer",
+                }}
                 title={`View ${post.username} Comments`}
               >
-                <Icon name='envelope open' />
-                Comment {post.Comments.length}
-              </Comment.Action>
-              <Comment.Action>
-                {moment(post.createdAt).fromNow(true)} ago
-              </Comment.Action>
-              {token && user.id === post.userId && (
-                <Comment.Action
-                  onClick={() => setCurrentValue(dispatch, post)}
-                  title={`Edit Your Post`}
-                >
-                  <Icon name='edit outline' /> Edit Post
+                <span>{post.title}</span>
+              </Comment.Text>
+              <Comment.Actions>
+                <Comment.Action>
+                  <span style={styleFunc(post.tags)}>{post.tags}</span>
                 </Comment.Action>
-              )}
-            </Comment.Actions>
-          </Comment.Content>
+                <Comment.Action
+                  onClick={() => handleLikes(post.id)}
+                  title={`Like ${post.username} Post`}
+                >
+                  <Icon
+                    name='heart'
+                    color={
+                      user !== null && user.email && post.Likes.length
+                        ? "red"
+                        : "black"
+                    }
+                  />
+                  Like {post.Likes.length}
+                </Comment.Action>
+                <Comment.Action
+                  onClick={handleComment}
+                  title={`View ${post.username} Comments`}
+                >
+                  <Icon name='envelope open' />
+                  Comment {post.Comments.length}
+                </Comment.Action>
+                <Comment.Action>
+                  {moment(post.createdAt).fromNow(true)} ago
+                </Comment.Action>
+                {token && user.id === post.userId && (
+                  <Comment.Action
+                    onClick={() => setCurrentValue(dispatch, post)}
+                    title={`Edit Your Post`}
+                  >
+                    <Icon name='edit outline' /> Edit Post
+                  </Comment.Action>
+                )}
+              </Comment.Actions>
+            </Comment.Content>
+          </Flex>
         </Comment>
       </Comment.Group>
-      {/* <Comment.Group style={{ width: "100%" }}>
-        <Comment
-          style={{
-            width: "100%",
-            display: "flex",
-            margin: "0 !important",
-            padding: "0 !important",
-          }}
-        >
-          <Comment.Content>
-            <Logo
-              style={{ cursor: "pointer" }}
-              onClick={() => history.push(`/profile/${post.User.id}`)}
-              title={`View ${post.User.username} Profile`}
-            >
-              {post.User.image_url ? (
-                <Image>
-                  <img src={JSON.parse(post.User.image_url)[0]} alt='logo' />
-                </Image>
-              ) : (
-                post.User.username.slice(0, 2).toUpperCase()
-              )}
-            </Logo>
-          </Comment.Content>
-          <Comment.Content>
-            <Comment.Author
-              style={{ cursor: "pointer" }}
-              onClick={() => history.push(`/profile/${post.User.id}`)}
-              title={`View ${post.User.username} Profile`}
-            >
-              {post.User.username}
-            </Comment.Author>
-            <Comment.Text
-              onClick={handleComment}
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-                cursor: "pointer",
-              }}
-              title={`View ${post.User.username} Comments`}
-            >
-              <span>{post.title}</span>
-            </Comment.Text>
-            <Comment.Actions>
-              <Comment.Action>
-                <span style={styleFunc(post.tags)}>{post.tags}</span>
-              </Comment.Action>
-              <Comment.Action
-                onClick={() => handleLikes(post.id)}
-                title={`Like ${post.User.username} Post`}
-              >
-                <Icon
-                  name='heart'
-                  color={
-                    user !== null && user.email && post.Likes.length
-                      ? "red"
-                      : "gray"
-                  }
-                />
-                Like {post.Likes.length}
-              </Comment.Action>
-              <Comment.Action
-                onClick={handleComment}
-                title={`View ${post.User.username} Comments`}
-              >
-                <Icon name='envelope open' />
-                Comment {post.Comments.length}
-              </Comment.Action>
-              <Comment.Action>
-                {moment(post.createdAt).fromNow(true)} ago
-              </Comment.Action>
-              {token && user.id === post.User.id && (
-                <Comment.Action
-                  onClick={() => setCurrentValue(dispatch, post)}
-                  title={`Edit Your Post`}
-                >
-                  <Icon name='edit outline' /> Edit Post
-                </Comment.Action>
-              )}
-            </Comment.Actions>
-          </Comment.Content>
-        </Comment>
-      </Comment.Group> */}
     </Container>
   );
 };
@@ -226,6 +160,18 @@ const Container = styled.div`
 
   @media (max-width: 769px) {
     padding: 1em;
+  }
+`;
+const ImageLoad = styled.div``;
+const InnerDiv = styled.div`
+  width: 90%;
+  margin-right: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 0.3em;
+  overflow: hidden;
+
+  img {
+    width: 100%;
   }
 `;
 export const Buttons = styled.div`

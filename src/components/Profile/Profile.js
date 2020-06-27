@@ -12,9 +12,14 @@ import { createNotification } from "../BlogRedux/store";
 import ProfileSettings from "./ProfileSettings";
 
 const Profile = () => {
-  let { getUser, deleteUser, user, updateUser, update } = useContext(
-    UserContext
-  );
+  let {
+    getUser,
+    deleteUser,
+    user,
+    updateUser,
+    updateUserImage,
+    update,
+  } = useContext(UserContext);
   const users = JSON.parse(sessionStorage.getItem("user"));
   const dispatch = useDispatch();
   const history = useHistory();
@@ -110,7 +115,10 @@ const Profile = () => {
             className={text === "post" && "active"}
           >
             <Icon name='comment' color='blue' /> Posts{" "}
-            {user !== null && user !== undefined && user.Posts.length}
+            {user !== null &&
+              user !== undefined &&
+              user.Posts.length !== undefined &&
+              user.Posts.length}
           </li>
           <li
             onClick={() => setText("comment")}
@@ -144,7 +152,11 @@ const Profile = () => {
             <ProfileComment user={user} post={post} key={post.id} />
           ))}
         {user !== null && user !== undefined && text === "setting" && (
-          <ProfileSettings user={user} updateUser={updateUser} />
+          <ProfileSettings
+            user={user}
+            updateUser={updateUser}
+            updateUserImage={updateUserImage}
+          />
         )}
       </ListFlex>
     </Container>

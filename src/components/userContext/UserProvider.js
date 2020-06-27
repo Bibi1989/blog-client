@@ -34,12 +34,16 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case REGISTER:
+      sessionStorage.setItem("blog", action.payload.token);
+      sessionStorage.setItem("user", JSON.stringify(action.payload.data));
       return {
         ...state,
         register_data: action.payload,
         user: action.user,
       };
     case LOGIN:
+      sessionStorage.setItem("blog", action.payload.token);
+      sessionStorage.setItem("user", JSON.stringify(action.payload.data));
       return {
         ...state,
         login_data: action.payload,
@@ -97,72 +101,67 @@ const reducer = (state, action) => {
   }
 };
 
-const USER_URL = "https://new-blog-api.herokuapp.com/auth/v1";
-// const USER_URL = "http://localhost:7000/auth/v1";
+// const USER_URL = "https://new-blog-api.herokuapp.com/auth/v1";
+const USER_URL = "http://localhost:7000/auth/v1";
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const register = async (body, history) => {
-    const new_body = {
-      ...body,
-    };
-    dispatch({ type: LOADING, payload: true });
-    const response = await axios.post(`${USER_URL}/register`, new_body, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
 
-    const data = response.data.data;
-    if (data.status === "success") {
-      sessionStorage.setItem("blog", response.data.data.token);
-      sessionStorage.setItem("user", JSON.stringify(data.data));
-      history.push("/login");
+  // register user
+  const register = async (body, history) => {
+    try {
+      const new_body = {
+        ...body,
+      };
+      dispatch({ type: LOADING, payload: true });
+      const response = await axios.post(`${USER_URL}/register`, new_body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       dispatch({ type: LOADING, payload: null });
       dispatch({
         type: REGISTER,
-        payload: response.data.data,
-        isAuth: true,
-        user: data.data,
+        payload: response.data,
+        isAuth: false,
+        user: response.data.data,
       });
-      getUser();
-    } else {
+      history.push("/");
+    } catch (error) {
       dispatch({ type: LOADING, payload: null });
       dispatch({
         type: REGISTER_ERROR,
-        payload: response.data.data.error,
+        payload: error.response.data.error,
         isAuth: null,
         user: null,
       });
-      history.push("/register");
     }
   };
 
+  // login user
   const login = async (body, history) => {
-    dispatch({ type: LOADING, payload: true });
-    const response = await axios.post(`${USER_URL}/login`, body, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = response.data.data;
-    if (data.status === "success") {
-      sessionStorage.setItem("blog", response.data.data.token);
-      sessionStorage.setItem("user", JSON.stringify(data.data));
-      history.push("/");
+    try {
+      dispatch({ type: LOADING, payload: true });
+      const response = await axios.post(`${USER_URL}/login`, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response.data.data);
       dispatch({ type: LOADING, payload: null });
       dispatch({
         type: LOGIN,
-        payload: response.data.data.data,
+        payload: response.data,
         isAuth: false,
-        user: data.data,
+        user: response.data.data,
       });
       getUser();
-    } else {
+      history.push("/");
+    } catch (error) {
       dispatch({ type: LOADING, payload: null });
       dispatch({
         type: LOGIN_ERROR,
-        payload: response.data.data.error,
+        payload: error.response.data.error,
         isAuth: null,
         user: null,
       });
@@ -179,7 +178,7 @@ export const UserProvider = ({ children }) => {
         },
       });
 
-      const data = response.data.data.data;
+      const data = response.data.data;
       dispatch({ type: LOADING, payload: false });
       dispatch({ type: USER, payload: data, auth: true });
     } catch (error) {
@@ -196,7 +195,7 @@ export const UserProvider = ({ children }) => {
         },
       });
 
-      let data = response.data.data.data;
+      let data = response.data.data;
       data = data.filter((d) => d.username.toLowerCase().includes(text));
       dispatch({ type: LOADING, payload: false });
       dispatch({ type: USERS, payload: data });
@@ -226,9 +225,29 @@ export const UserProvider = ({ children }) => {
   const updateUser = async (id, body) => {
     dispatch({ type: LOADING, payload: true });
     try {
-      const response = await axios.patch(`${USER_URL}/${id}`, body, {
+      const response = await axios.patch(`${USER_URL}`, body, {
         headers: {
           "Content-Type": "application/json",
+          auth: sessionStorage.getItem("blog"),
+        },
+      });
+
+      let data = response.data.data.data;
+      dispatch({ type: LOADING, payload: false });
+      dispatch({ type: UPDATE, payload: data });
+    } catch (error) {
+      dispatch({ type: LOADING, payload: false });
+      console.log(error.response);
+    }
+  };
+
+  const updateUserImage = async (body) => {
+    dispatch({ type: LOADING, payload: true });
+    try {
+      const response = await axios.patch(`${USER_URL}`, body, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          auth: sessionStorage.getItem("blog"),
         },
       });
 
@@ -293,6 +312,7 @@ export const UserProvider = ({ children }) => {
         getAllUsers,
         getAllUsersNotFilter,
         updateUser,
+        updateUserImage,
         deleteUser,
         resetPassword,
         changePassword,

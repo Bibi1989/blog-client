@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { addPost, updatePost, setCurrentValue } from "../BlogRedux/store";
+import {
+  addPost,
+  updatePost,
+  setCurrentValue,
+  postPhoto,
+} from "../BlogRedux/store";
 import { Icon, Button, TextArea, FormGroup, Form } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -17,12 +22,19 @@ const PostForm = () => {
   const [message, setMessage] = useState("");
   const [select, setSelect] = useState("Post");
 
+  // photo upload
+  const [titlePhoto, setTitlePhoto] = useState("");
+  const [messagePhoto, setMessagePhoto] = useState("");
+  const [selectPhoto, setSelectPhoto] = useState("Post");
+  const [file, setFile] = useState("Post");
+
   const history = useHistory();
   const dispatch = useDispatch();
   const current = useSelector(({ posts: { current } }) => current);
   const update = useSelector(({ posts: { update } }) => update);
   const post_error = useSelector(({ posts: { post_error } }) => post_error);
   const [show, setShow] = useState(true);
+  const [showForm, setShowForm] = useState("Post");
   useEffect(() => {
     if (current !== null) {
       setTitle(current.title);
@@ -37,6 +49,15 @@ const PostForm = () => {
   const handleSelect = (e) => {
     const { value } = e.target;
     setSelect(value);
+  };
+  const handleInputPhoto = (e) => {
+    const { value } = e.target;
+    setTitlePhoto(value);
+  };
+
+  const handleSelectPhoto = (e) => {
+    const { value } = e.target;
+    setSelectPhoto(value);
   };
 
   const form = {
@@ -63,7 +84,30 @@ const PostForm = () => {
   };
   const onupdate = (e) => {
     e.preventDefault();
-    const data = { ...current, title, message };
+    const data = { ...current, title, message, tags: select };
+    updatePost(dispatch, data);
+    setCurrentValue(dispatch, null);
+    setTitle("");
+    setMessage("");
+  };
+
+  const onsubmitPhoto = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("title", titlePhoto);
+    formData.append("message", messagePhoto);
+    formData.append("tags", selectPhoto);
+
+    postPhoto(dispatch, formData, history);
+    setShow(true);
+    setTitle("");
+    setMessage("");
+  };
+  const onupdatePhoto = (e) => {
+    e.preventDefault();
+    const data = { ...current, title, message, tags: select };
     updatePost(dispatch, data);
     setCurrentValue(dispatch, null);
     setTitle("");
@@ -87,78 +131,162 @@ const PostForm = () => {
         closeOnDocumentClick
         style={{ width: "96%" }}
       >
-        <Forms onSubmit={current ? onupdate : onsubmit}>
-          <Grid>
-            <div style={{ paddingLeft: "0.5em" }}>
-              {/* <Logo>
-                {user !== null ? user.username.slice(0, 2).toUpperCase() : "OO"}
-              </Logo> */}
-              <Logo style={{ cursor: "pointer" }}>
-                {user !== null && JSON.parse(user.image_url) ? (
-                  <Image>
-                    <img src={JSON.parse(user.image_url)} alt='logo' />
-                  </Image>
-                ) : user !== null ? (
-                  user.username.slice(0, 2).toUpperCase()
-                ) : (
-                  "OO"
-                )}
-              </Logo>
-            </div>
-            <div>
-              <FormGroup
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: "0.5em",
-                }}
-              >
-                <select className='select' onChange={handleSelect}>
-                  <option value='Post'>Post</option>
-                  <option value='Dev'>Dev</option>
-                  <option value='Article'>Article</option>
-                  <option value='Question'>Question</option>
-                </select>
-                <input
-                  type='text'
-                  name='title'
-                  className='input'
-                  placeholder='Your Post Title!!!'
-                  onChange={handleInput}
-                  value={title}
-                />
-              </FormGroup>
-              {/* <Editor tag='textarea' onModelChange={setMessage} /> */}
-              <Form.Field
-                style={{ marginBottom: "0 !important" }}
-                control={TextArea}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder='Write your Post here!!!'
-                value={message}
-              />
-              <Button
-                className='btn'
-                type='submit'
-                color='blue'
-                style={{ marginTop: "0.8em" }}
-              >
-                <Icon name='comment' /> {current ? "Update Post" : "Post"}
-              </Button>
-              {current && (
-                <Button
-                  onClick={() => {
-                    setCurrentValue(dispatch, null);
-                    setTitle("");
-                    setMessage("");
+        <Flex>
+          <Button onClick={() => setShowForm("Post")}>Post Something</Button>
+          <Button onClick={() => setShowForm("Pic")}>Upload Photo Post</Button>
+        </Flex>
+        {showForm === "Post" && (
+          <Forms onSubmit={current ? onupdate : onsubmit}>
+            <Grid>
+              <div style={{ paddingLeft: "0.5em" }}>
+                <Logo style={{ cursor: "pointer" }}>
+                  {user !== null && user.image_url ? (
+                    <Image>
+                      <img src={user.image_url} alt='logo' />
+                    </Image>
+                  ) : user !== null ? (
+                    user.username.slice(0, 2).toUpperCase()
+                  ) : (
+                    "OO"
+                  )}
+                </Logo>
+              </div>
+              <div>
+                <FormGroup
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: "0.5em",
                   }}
                 >
-                  Clear Fields
+                  <select className='select' onChange={handleSelect}>
+                    <option value='Post'>Post</option>
+                    <option value='Dev'>Dev</option>
+                    <option value='Article'>Article</option>
+                    <option value='Question'>Question</option>
+                  </select>
+                  <input
+                    type='text'
+                    name='title'
+                    className='input'
+                    placeholder='Your Post Title!!!'
+                    onChange={handleInput}
+                    value={title}
+                  />
+                </FormGroup>
+                {/* <Editor tag='textarea' onModelChange={setMessage} /> */}
+                <Form.Field
+                  style={{ marginBottom: "0 !important" }}
+                  control={TextArea}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder='Write your Post here!!!'
+                  value={message}
+                />
+                <Button
+                  className='btn'
+                  type='submit'
+                  color='blue'
+                  style={{ marginTop: "0.8em" }}
+                >
+                  <Icon name='comment' /> {current ? "Update Post" : "Post"}
                 </Button>
-              )}
-            </div>
-          </Grid>
-        </Forms>
+                {current && (
+                  <Button
+                    onClick={() => {
+                      setCurrentValue(dispatch, null);
+                      setTitle("");
+                      setMessage("");
+                    }}
+                  >
+                    Clear Fields
+                  </Button>
+                )}
+              </div>
+            </Grid>
+          </Forms>
+        )}
+        {showForm === "Pic" && (
+          <Forms onSubmit={current ? onupdatePhoto : onsubmitPhoto}>
+            <Grid>
+              <div style={{ paddingLeft: "0.5em" }}>
+                <Logo style={{ cursor: "pointer" }}>
+                  {user !== null && user.image_url ? (
+                    <Image>
+                      <img src={user.image_url} alt='logo' />
+                    </Image>
+                  ) : user !== null ? (
+                    user.username.slice(0, 2).toUpperCase()
+                  ) : (
+                    "OO"
+                  )}
+                </Logo>
+              </div>
+              <div>
+                <FormGroup
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: "0.5em",
+                  }}
+                >
+                  <select className='select' onChange={handleSelectPhoto}>
+                    <option value='Post'>Post</option>
+                    <option value='Dev'>Dev</option>
+                    <option value='Article'>Article</option>
+                    <option value='Question'>Question</option>
+                  </select>
+                  <input
+                    type='text'
+                    name='titlePhoto'
+                    className='input'
+                    placeholder='Your Post Title!!!'
+                    onChange={handleInputPhoto}
+                    value={titlePhoto}
+                  />
+                </FormGroup>
+                {/* <Editor tag='textarea' onModelChange={setMessage} /> */}
+                <FormGroup style={{ margin: "10px 0" }}>
+                  <input
+                    type='file'
+                    name='file'
+                    className='input'
+                    placeholder='Post a photo'
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                </FormGroup>
+                <Form.Field
+                  style={{ marginBottom: "0 !important" }}
+                  control={TextArea}
+                  onChange={(e) => setMessagePhoto(e.target.value)}
+                  placeholder='Write your Post here!!!'
+                  value={messagePhoto}
+                />
+                <Button
+                  className='btn'
+                  type='submit'
+                  color='blue'
+                  style={{ marginTop: "0.8em" }}
+                >
+                  <Icon name='comment' />{" "}
+                  {current ? "Update Post Photo" : "Post Photo"}
+                </Button>
+                {current && (
+                  <Button
+                    onClick={() => {
+                      setCurrentValue(dispatch, null);
+                      setTitle("");
+                      setMessage("");
+                    }}
+                  >
+                    Clear Fields
+                  </Button>
+                )}
+              </div>
+            </Grid>
+          </Forms>
+        )}
       </StyledPopup>
       <Icon
         name='sync'
@@ -236,6 +364,13 @@ export const Forms = styled(Form)`
   @media (max-width: 769px) {
     padding: 1em;
   }
+`;
+
+const Flex = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
 `;
 
 const Grid = styled.div`

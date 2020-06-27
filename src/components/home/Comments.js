@@ -22,7 +22,7 @@ import { UserContext } from "../userContext/UserProvider";
 const Comments = () => {
   const user = JSON.parse(sessionStorage.getItem("user"));
   let { getAllUsersNotFilter, users } = useContext(UserContext);
-  users = users !== null && [...users];
+  // users = users !== null && [...users];
 
   const { commentId } = useParams();
   const history = useHistory();

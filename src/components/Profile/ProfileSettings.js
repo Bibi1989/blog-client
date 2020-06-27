@@ -2,28 +2,31 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import { Button } from "semantic-ui-react";
-import { getFile } from "../users/GetImageFile";
 
-const ProfileSettings = ({ user, updateUser }) => {
+const ProfileSettings = ({ user, updateUser, updateUserImage }) => {
   console.log(user);
   const [username, setUsername] = useState("");
   const [image, setImage] = useState("");
 
   const handleFile = async ({ target: { files } }) => {
-    const img = await getFile(files);
-    console.log(img);
-    setImage(img);
+    // const img = await getFile(files);
+    // console.log(img);
+    setImage(files[0]);
   };
+
+  console.log({ image });
 
   const onsubmit = (e) => {
     e.preventDefault();
 
     if (username) {
       updateUser(user.id, { username });
-      return setUsername("");
+      setUsername("");
     }
     if (image) {
-      updateUser(user.id, { image_url: image });
+      const formDate = new FormData();
+      formDate.append("file", image);
+      updateUserImage(formDate);
       return setImage("");
     }
   };
@@ -41,6 +44,7 @@ const ProfileSettings = ({ user, updateUser }) => {
               type='text'
               name='username'
               id='username'
+              value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder='Change Username'
             />

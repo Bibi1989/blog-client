@@ -15,6 +15,8 @@ const Register = () => {
   const { register, register_errors } = useContext(UserContext);
   const [error, setErrors] = useState("");
   const [form, setForm] = useState({
+    firstname: "",
+    lastname: "",
     username: "",
     email: "",
     password: "",
@@ -59,6 +61,46 @@ const Register = () => {
       <Form>
         <h1>Register</h1>
         <form onSubmit={handleRegister}>
+          <div>
+            <i className='fa fa-user'></i>
+            <input
+              className={register_errors === "firstname is empty!!!" && "error"}
+              style={
+                register_errors === "firstname is empty!!!"
+                  ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
+                  : {}
+              }
+              type='text'
+              name='firstname'
+              placeholder={
+                register_errors === "firstname is empty!!!"
+                  ? register_errors
+                  : "firstname..."
+              }
+              value={form.firstname}
+              onChange={handleInput}
+            />
+          </div>
+          <div>
+            <i className='fa fa-user'></i>
+            <input
+              className={register_errors === "lastname is empty!!!" && "error"}
+              style={
+                register_errors === "lastname is empty!!!"
+                  ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
+                  : {}
+              }
+              type='text'
+              name='lastname'
+              placeholder={
+                register_errors === "lastname is empty!!!"
+                  ? register_errors
+                  : "lastname..."
+              }
+              value={form.lastname}
+              onChange={handleInput}
+            />
+          </div>
           <div>
             <i className='fa fa-user'></i>
             <input

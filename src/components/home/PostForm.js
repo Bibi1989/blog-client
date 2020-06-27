@@ -102,8 +102,8 @@ const PostForm = () => {
 
     postPhoto(dispatch, formData, history);
     setShow(true);
-    setTitle("");
-    setMessage("");
+    setTitlePhoto("");
+    setMessagePhoto("");
   };
   const onupdatePhoto = (e) => {
     e.preventDefault();

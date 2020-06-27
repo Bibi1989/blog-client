@@ -246,7 +246,7 @@ export const UserProvider = ({ children }) => {
   const updateUserImage = async (body) => {
     dispatch({ type: LOADING, payload: true });
     try {
-      const response = await axios.patch(`${USER_URL}`, body, {
+      const response = await axios.patch(`${USER_URL}/photo`, body, {
         headers: {
           "Content-Type": "multipart/form-data",
           auth: sessionStorage.getItem("blog"),

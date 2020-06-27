@@ -69,7 +69,9 @@ const PostCard = ({ post }) => {
               onClick={() => history.push(`/profile/${post.userId}`)}
               title={`View ${post.username} Profile`}
             >
-              {post.User.image_url ? (
+              {(post.User.image_url !== undefined ||
+                post.User.image_url !== null) &&
+              post.User.image_url ? (
                 <Image>
                   <img src={post.User.image_url} alt='logo' />
                 </Image>

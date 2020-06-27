@@ -23,6 +23,8 @@ import {
   deleteNotificationAction,
 } from "./actions";
 
+const token = JSON.parse(sessionStorage.getItem("blog"));
+
 // const POST_URL = `http://localhost:7000/api/v1`;
 // const POST_URL = `https://bibiblog-api.herokuapp.com/api`;
 const POST_URL = `https://new-blog-api.herokuapp.com/api/v1`;
@@ -71,7 +73,7 @@ export const getAllPosts = async (dispatch, text) => {
   }
 };
 export const getAPost = async (dispatch, id) => {
-  const token = sessionStorage.getItem("blog");
+  // const token = sessionStorage.getItem("blog");
   try {
     dispatch({ type: LOADING, loading: true });
     const response = await axios.get(`${POST_URL}/posts/${id}`, {
@@ -87,7 +89,7 @@ export const getAPost = async (dispatch, id) => {
   }
 };
 export const getUsersPosts = async (dispatch) => {
-  const token = sessionStorage.getItem("blog");
+  // const token = sessionStorage.getItem("blog");
   try {
     dispatch({ type: LOADING, loading: true });
     const response = await axios.get(`${POST_URL}/posts/post/users`, {
@@ -103,7 +105,7 @@ export const getUsersPosts = async (dispatch) => {
   }
 };
 export const addPost = async (dispatch, data, history) => {
-  const token = sessionStorage.getItem("blog");
+  // const token = sessionStorage.getItem("blog");
   try {
     const response = await axios.post(`${POST_URL}/posts`, data, {
       headers: {
@@ -125,7 +127,8 @@ export const addPost = async (dispatch, data, history) => {
 
 // add photo
 export const postPhoto = async (dispatch, data, history) => {
-  const token = sessionStorage.getItem("blog");
+  // const token = JSON.parse(sessionStorage.getItem("blog"));
+  console.log({ token });
   try {
     const response = await axios.post(`${POST_URL}/posts/photo`, data, {
       headers: {
@@ -146,7 +149,7 @@ export const postPhoto = async (dispatch, data, history) => {
 };
 
 export const updatePost = async (dispatch, data) => {
-  const token = sessionStorage.getItem("blog");
+  // const token = sessionStorage.getItem("blog");
   try {
     const response = await axios.patch(`${POST_URL}/posts`, data, {
       headers: {
@@ -159,7 +162,7 @@ export const updatePost = async (dispatch, data) => {
 };
 
 export const getComments = async (dispatch, id) => {
-  const token = sessionStorage.getItem("blog");
+  // const token = sessionStorage.getItem("blog");
   dispatch({ type: COMMENT_LOADING, payload: true });
   try {
     const response = await axios.get(`${POST_URL}/comments/${id}`, {
@@ -178,7 +181,7 @@ export const getComments = async (dispatch, id) => {
 };
 
 export const createComment = async (dispatch, message, id) => {
-  const token = sessionStorage.getItem("blog");
+  // const token = sessionStorage.getItem("blog");
   console.log({ message });
   try {
     const response = await axios.post(
@@ -198,7 +201,7 @@ export const createComment = async (dispatch, message, id) => {
 };
 
 export const likePost = async (dispatch, id) => {
-  const token = sessionStorage.getItem("blog");
+  // const token = sessionStorage.getItem("blog");
   try {
     const response = await axios.post(
       `${POST_URL}/likes`,
@@ -217,7 +220,7 @@ export const likePost = async (dispatch, id) => {
 };
 
 export const deletePost = async (dispatch, id) => {
-  const token = sessionStorage.getItem("blog");
+  // const token = sessionStorage.getItem("blog");
   dispatch({ type: LOADING, loading: true });
   try {
     const response = await axios.delete(`${POST_URL}/posts/${id}`, {
@@ -235,7 +238,7 @@ export const createNotification = async (dispatch, message, userId) => {
     message,
     userId,
   };
-  const token = sessionStorage.getItem("blog");
+  // const token = sessionStorage.getItem("blog");
   try {
     const response = await axios.post(`${POST_URL}/notices`, obj, {
       headers: {
@@ -248,7 +251,7 @@ export const createNotification = async (dispatch, message, userId) => {
 };
 
 export const getNotifications = async (dispatch) => {
-  const token = sessionStorage.getItem("blog");
+  // const token = sessionStorage.getItem("blog");
   try {
     const response = await axios.get(`${POST_URL}/notices`, {
       headers: {
@@ -260,7 +263,7 @@ export const getNotifications = async (dispatch) => {
   } catch (error) {}
 };
 export const deleteNotification = async (dispatch, id) => {
-  const token = sessionStorage.getItem("blog");
+  // const token = sessionStorage.getItem("blog");
   try {
     const response = await axios.delete(`${POST_URL}/notices/${id}`, {
       headers: {

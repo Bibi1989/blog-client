@@ -4,13 +4,9 @@ import { useHistory, Link } from "react-router-dom";
 import { publics } from "../utils/session";
 import { UserContext } from "../userContext/UserProvider";
 import { Container, NotRegister } from "./Login";
-import { getFile } from "./GetImageFile";
-import { Spinner } from "react-bootstrap";
 
 const Register = () => {
   const history = useHistory();
-  const [imageUrl, setImageUrl] = useState("");
-  const [showBtn, setShowBtn] = useState(true);
   publics(history);
   const { register, register_errors } = useContext(UserContext);
   const [error, setErrors] = useState("");
@@ -29,15 +25,6 @@ const Register = () => {
     setForm({ ...form, [name]: value });
   };
 
-  const handleFile = async ({ target: { files } }) => {
-    setShowBtn(false);
-    const img = await getFile(files);
-    setImageUrl(img);
-    setShowBtn(true);
-  };
-
-  console.log(imageUrl);
-
   const handleRegister = (event) => {
     event.preventDefault();
     if (form.password !== form.confirmPassword) {
@@ -45,7 +32,6 @@ const Register = () => {
     }
     let data = {
       ...form,
-      image_url: imageUrl ? JSON.stringify(imageUrl) : null,
     };
     register(data, history);
     setForm({
@@ -177,44 +163,10 @@ const Register = () => {
               onChange={handleInput}
             />
           </div>
-          {/* <div>
-            <i className='fa fa-folder-open'></i>
-            <input
-              style={
-                error
-                  ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
-                  : {}
-              }
-              type='file'
-              name='file'
-              onChange={handleFile}
-            />
-          </div> */}
-          {/* <div style={{ display: "flex", justifyContent: "center" }}>
-            {imageUrl ? (
-              <img
-                src={imageUrl}
-                width='150px'
-                height='150px'
-                alt='load uploaded'
-              />
-            ) : (
-              <p>Register without a photo or Use Computer desktop for upload</p>
-            )}
-          </div> */}
-          {showBtn ? (
-            <button type='submit'>
-              <i className='fa fa-share-square'></i> Register
-            </button>
-          ) : (
-            <button disabled>
-              <Spinner
-                animation='border'
-                style={{ width: "1em", height: "1em" }}
-              />{" "}
-              Uploading...
-            </button>
-          )}
+
+          <button type='submit'>
+            <i className='fa fa-share-square'></i> Register
+          </button>
         </form>
       </Form>
       <NotRegister>

@@ -9,23 +9,13 @@ import { Spinner } from "react-bootstrap";
 const SendEmailComponent = () => {
   const history = useHistory();
   publics(history);
-  const { login, loading } = useContext(UserContext);
-  const [form, setForm] = useState({
-    password: "",
-    confirm_password: "",
-  });
+  const { resetPassword, loading } = useContext(UserContext);
+  const [email, setEmail] = useState("");
 
-  const handleInput = (event) => {
-    const { value } = event.target;
-    const { name } = event.target;
-    setForm({ ...form, [name]: value });
-  };
-
-  const handleLogin = (event) => {
+  const sendEmail = (event) => {
     event.preventDefault();
-    login(form, history);
+    resetPassword({ email });
   };
-  console.log(loading);
 
   if (sessionStorage.getItem("blog")) {
     history.push("/");
@@ -34,7 +24,7 @@ const SendEmailComponent = () => {
   return (
     <Wrapper>
       <Container>
-        <Form onSubmit={handleLogin}>
+        <Form onSubmit={sendEmail}>
           <h1>Reset Password</h1>
           <p style={{ textAlign: "center" }}>
             Enter your email to receive reset code
@@ -45,8 +35,8 @@ const SendEmailComponent = () => {
               type='email'
               name='email'
               placeholder='Send Email'
-              value={form.email}
-              onChange={handleInput}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <Button type='submit' className='button'>
@@ -61,7 +51,7 @@ const SendEmailComponent = () => {
               </div>
             ) : (
               <>
-                <i className='fa fa-share-square'></i> Login
+                <i className='fa fa-share-square'></i> Send Email
               </>
             )}
           </Button>

@@ -46,7 +46,7 @@ function App() {
               <Route exact path='/register'>
                 <Register />
               </Route>
-              <Route exact path='/forgotpassword'>
+              <Route exact path='/forgotpassword/:id'>
                 <ForgotPassword />
               </Route>
               <Route exact path='/resetpassword'>

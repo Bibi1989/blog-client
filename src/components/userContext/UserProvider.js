@@ -13,6 +13,7 @@ const LOADING = "LOADING";
 const USERS = "USERS";
 const USER = "USER";
 const USERNOFILTER = "USERNOFILTER";
+const FORGOT = "FORGOT";
 
 const initialState = {
   token: localStorage.getItem("blog"),
@@ -27,6 +28,7 @@ const initialState = {
   allUsers: null,
   login_errors: {},
   loading: null,
+  forgot: null,
 };
 
 const reducer = (state, action) => {
@@ -85,13 +87,18 @@ const reducer = (state, action) => {
         ...state,
         loading: action.payload,
       };
+    case FORGOT:
+      return {
+        ...state,
+        forgot: action.payload,
+      };
     default:
       return state;
   }
 };
 
-const USER_URL = "https://new-blog-api.herokuapp.com/auth/v1";
-// const USER_URL = "http://localhost:7000/auth/v1";
+// const USER_URL = "https://new-blog-api.herokuapp.com/auth/v1";
+const USER_URL = "http://localhost:7000/auth/v1";
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -252,6 +259,31 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const resetPassword = async (email) => {
+    try {
+      const response = await axios.post(`${USER_URL}/forgot`, email, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      dispatch({ type: FORGOT, payload: response });
+    } catch (error) {}
+  };
+  const changePassword = async (password, id) => {
+    try {
+      const response = await axios.patch(
+        `${USER_URL}/resetpassword/${id}`,
+        password,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      dispatch({ type: FORGOT, payload: response });
+    } catch (error) {}
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -262,6 +294,8 @@ export const UserProvider = ({ children }) => {
         getAllUsersNotFilter,
         updateUser,
         deleteUser,
+        resetPassword,
+        changePassword,
         isAuth: state.isAuth,
         user: state.user,
         users: state.users,

@@ -23,9 +23,9 @@ import {
   deleteNotificationAction,
 } from "./actions";
 
-// const POST_URL = `http://localhost:7000/api/v1`;
+const POST_URL = `http://localhost:7000/api/v1`;
 // const POST_URL = `https://bibiblog-api.herokuapp.com/api`;
-const POST_URL = `https://new-blog-api.herokuapp.com/api/v1`;
+// const POST_URL = `https://new-blog-api.herokuapp.com/api/v1`;
 
 export const clearProfile = (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });

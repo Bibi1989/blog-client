@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, useParams } from "react-router-dom";
 import { Button } from "semantic-ui-react";
 import { UserContext } from "../userContext/UserProvider";
 import { publics } from "../utils/session";
@@ -9,23 +9,23 @@ import { Spinner } from "react-bootstrap";
 const ForgotPassword = () => {
   const history = useHistory();
   publics(history);
-  const { login, login_errors, loading } = useContext(UserContext);
-  const [form, setForm] = useState({
-    password: "",
-    confirm_password: "",
-  });
+  const { id } = useParams();
+  const { changePassword, loading } = useContext(UserContext);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleInput = (event) => {
-    const { value } = event.target;
-    const { name } = event.target;
-    setForm({ ...form, [name]: value });
-  };
+  const [error, setError] = useState("");
 
-  const handleLogin = (event) => {
+  const handlePassword = (event) => {
     event.preventDefault();
-    login(form, history);
+    if (password === confirmPassword) {
+      changePassword({ password }, id);
+      setPassword("");
+      setConfirmPassword("");
+    } else {
+      setError("Password not match");
+    }
   };
-  console.log(loading);
 
   if (sessionStorage.getItem("blog")) {
     history.push("/");
@@ -34,44 +34,27 @@ const ForgotPassword = () => {
   return (
     <Wrapper>
       <Container>
-        <Form onSubmit={handleLogin}>
+        <Form onSubmit={handlePassword}>
           <h1>Create Your Password</h1>
-          <p style={{ color: "red" }}>
-            {(login_errors === "password is invalid" ||
-              login_errors === "Invalid email or your yet to register") &&
-              "Invalid email or password!!!"}
-          </p>
+          <p style={{ textAlign: "center", color: "red" }}>{error && error}</p>
           <div>
             <i className='fa fa-envelope'></i>
             <input
               type='password'
               name='password'
               placeholder='New Password'
-              value={form.email}
-              onChange={handleInput}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div>
             <i className='fa fa-unlock'></i>
             <input
-              className={login_errors === "Password is empty!!!" && "error"}
-              style={
-                login_errors === "Password is empty!!!"
-                  ? {
-                      border: "0.3px solid #ff00007a",
-                      boxShadow: "0 2px 10px #ff00007a",
-                    }
-                  : {}
-              }
               type='text'
               name='password'
-              placeholder={
-                login_errors === "Password is empty!!!"
-                  ? login_errors
-                  : "Password..."
-              }
-              value={form.password}
-              onChange={handleInput}
+              placeholder='Confirm password'
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
           <Button type='submit' className='button'>

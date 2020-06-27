@@ -20,6 +20,7 @@ import Users from "./components/SideComponent/Users";
 import Profile from "./components/Profile/Profile";
 import ForgotPassword from "./components/users/ForgotPassword";
 import SendEmailComponent from "./components/users/SendEmail";
+import ErrorPage from "./ErrorPage";
 
 function App() {
   const token = sessionStorage.getItem("blog");
@@ -51,6 +52,9 @@ function App() {
               </Route>
               <Route exact path='/resetpassword'>
                 <SendEmailComponent />
+              </Route>
+              <Route exact path='/error'>
+                <ErrorPage />
               </Route>
               <Route to='/abc'>
                 <NotFound />

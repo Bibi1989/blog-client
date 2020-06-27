@@ -8,7 +8,7 @@ const ProfileSettings = ({ user, updateUser, updateUserImage }) => {
   const [username, setUsername] = useState("");
   const [image, setImage] = useState("");
 
-  const handleFile = async ({ target: { files } }) => {
+  const handleFile = async ({ currentTarget: { files } }) => {
     // const img = await getFile(files);
     // console.log(img);
     setImage(files[0]);
@@ -65,6 +65,7 @@ const ProfileSettings = ({ user, updateUser, updateUserImage }) => {
               id='file'
               onChange={handleFile}
               placeholder='Change Profile Image'
+              accept='image/*'
             />
           </div>
           <Button type='submit' style={{ marginTop: "0.8em" }}>

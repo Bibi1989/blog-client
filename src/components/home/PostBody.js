@@ -79,6 +79,13 @@ const PostCard = ({ post }) => {
             </Logo>
           </Comment.Content>
           <Flex flexDirection='column'>
+            <Comment.Author
+              style={{ cursor: "pointer", paddingBottom: "1.5em" }}
+              onClick={() => history.push(`/profile/${post.userId}`)}
+              title={`View ${post.username} Profile`}
+            >
+              {post.username}
+            </Comment.Author>
             <Comment.Content>
               <ImageLoad>
                 {post.image_url && (
@@ -89,13 +96,6 @@ const PostCard = ({ post }) => {
               </ImageLoad>
             </Comment.Content>
             <Comment.Content>
-              <Comment.Author
-                style={{ cursor: "pointer" }}
-                onClick={() => history.push(`/profile/${post.userId}`)}
-                title={`View ${post.username} Profile`}
-              >
-                {post.username}
-              </Comment.Author>
               <Comment.Text
                 onClick={handleComment}
                 style={{
@@ -103,6 +103,7 @@ const PostCard = ({ post }) => {
                   display: "flex",
                   justifyContent: "space-between",
                   cursor: "pointer",
+                  paddingTop: "1.3em",
                 }}
                 title={`View ${post.username} Comments`}
               >

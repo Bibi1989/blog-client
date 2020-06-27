@@ -30,7 +30,9 @@ const CommentCard = ({ comment, loading }) => {
                 <img src={comment.User.image_url} alt='logo' />
               </Image>
             ) : (
-              comment.User.username.slice(0, 2).toUpperCase()
+              <Image>
+                <img src='../../../avatar.png' alt='profile logo' />
+              </Image>
             )}
           </Logo>
         </Comment.Content>

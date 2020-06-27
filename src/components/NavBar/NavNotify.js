@@ -31,7 +31,14 @@ export const Notify = ({ notices, deleteNotification, dispatch }) => {
       className='icon'
       style={{ marginRight: "0.7em", color: "white", fontSize: "1.3em" }}
     >
-      <Dropdown.Menu style={{ Width: "220px", marginLeft: "-140px" }}>
+      <Dropdown.Menu
+        style={{
+          Width: "220px",
+          marginLeft: "-140px",
+          maxHeight: "500px",
+          overflowY: "auto",
+        }}
+      >
         {notices.map((notice) => (
           <>
             <Dropdown.Item

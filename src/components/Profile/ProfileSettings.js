@@ -4,17 +4,12 @@ import { useState } from "react";
 import { Button } from "semantic-ui-react";
 
 const ProfileSettings = ({ user, updateUser, updateUserImage }) => {
-  console.log(user);
   const [username, setUsername] = useState("");
   const [image, setImage] = useState("");
 
   const handleFile = async ({ currentTarget: { files } }) => {
-    // const img = await getFile(files);
-    // console.log(img);
     setImage(files[0]);
   };
-
-  console.log({ image });
 
   const onsubmit = (e) => {
     e.preventDefault();

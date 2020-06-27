@@ -254,6 +254,7 @@ const PostForm = () => {
                     className='input'
                     placeholder='Post a photo'
                     onChange={(e) => setFile(e.target.files[0])}
+                    accept='image/*'
                   />
                 </FormGroup>
                 <Form.Field

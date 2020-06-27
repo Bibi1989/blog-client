@@ -23,7 +23,9 @@ export const Profile = ({ users, history, handleLogout, image }) => (
             <img src={image} alt='logo' />
           </Image>
         ) : (
-          users.username.toUpperCase().slice(0, 2)
+          <Image width='30px'>
+            <img src='../../../avatar.png' alt='profile logo' />
+          </Image>
         )}
       </Logo>
     }

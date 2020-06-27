@@ -136,7 +136,7 @@ const Register = () => {
                   ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
                   : {}
               }
-              type='text'
+              type='password'
               name='password'
               placeholder={
                 register_errors === "Password is empty!!!"
@@ -155,7 +155,7 @@ const Register = () => {
                   ? { border: "#ff00007a", boxShadow: "0px 2px 15px #ff00007a" }
                   : {}
               }
-              type='text'
+              type='password'
               name='confirmPassword'
               placeholder={
                 error ? "Password do not match" : "Confirm Password..."

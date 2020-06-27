@@ -82,6 +82,7 @@ const Comments = () => {
     createNotification(dispatch, notice, Number(post !== null && post.User.id));
     setComment("");
   };
+  console.log(post);
 
   return (
     <Container>
@@ -101,17 +102,15 @@ const Comments = () => {
               }
               style={{ cursor: "pointer" }}
             >
-              {/* <Logo>
-                {post !== null && post.User.username.slice(0, 2).toUpperCase()}
-              </Logo> */}
-
               <Logo style={{ cursor: "pointer" }}>
                 {post !== null && post.User.image_url ? (
                   <Image>
                     <img src={post.User.image_url} alt='logo' />
                   </Image>
                 ) : (
-                  post !== null && post.User.username.slice(0, 2).toUpperCase()
+                  <Image>
+                    <img src='../../../avatar.png' alt='profile logo' />
+                  </Image>
                 )}
               </Logo>
             </Comment.Content>
@@ -123,6 +122,22 @@ const Comments = () => {
               >
                 {post !== null && post.User.username}
               </Comment.Author>
+              <Comment.Text
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  // justifyContent: "space-between",
+                }}
+              >
+                <ImageLoad>
+                  {post !== null && post.image_url && (
+                    <InnerDiv>
+                      <img src={post !== null && post.image_url} alt='' />
+                    </InnerDiv>
+                  )}
+                </ImageLoad>
+              </Comment.Text>
               <Comment.Text
                 style={{
                   width: "100%",
@@ -237,5 +252,23 @@ const OverlayPopup = styled.div`
   p {
     margin: 0;
     padding: 0.5em;
+  }
+`;
+
+const ImageLoad = styled.div``;
+const InnerDiv = styled.div`
+  width: 90%;
+  max-height: 300px;
+  margin-right: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 0.3em;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+  }
+
+  @media (max-width: 769px) {
+    width: 100%;
   }
 `;

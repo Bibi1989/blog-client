@@ -10,6 +10,7 @@ import { Spinner, Alert } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { createNotification } from "../BlogRedux/store";
 import ProfileSettings from "./ProfileSettings";
+import { Logo, Image } from "../home/PostBody";
 
 const Profile = () => {
   let {
@@ -29,7 +30,6 @@ const Profile = () => {
   const deleted_post = useSelector(
     ({ posts: { deleted_post } }) => deleted_post
   );
-  console.log(userId);
   useEffect(() => {
     getUser(Number(userId));
 
@@ -56,53 +56,43 @@ const Profile = () => {
   return (
     <Container>
       <Flex>
-        {/* <Logo style={{ cursor: "pointer" }}>
-          {user !== null || user !== undefined ? (
-            user.image_url ? (
-              <Image>
-                <img src={user.image_url} alt='logo' />
-              </Image>
-            ) : (
-              user !== null && user.username.slice(0, 2).toUpperCase()
-            )
+        <Logo>
+          {user !== null && user.image_url !== null ? (
+            <Image>
+              <img src={user.image_url} alt='profile logo' />
+            </Image>
           ) : (
-            ""
+            <Image>
+              <img src='../../../avatar.png' alt='profile logo' />
+            </Image>
           )}
-        </Logo> */}
+        </Logo>
         <Divide>
           {user === null ? (
             <Spinner animation='border' className='loading' />
           ) : (
             <>
-              <Username>
-                {user !== null &&
-                  user !== undefined &&
-                  user !== undefined &&
-                  user.username}
-              </Username>
-              <Username>
-                {user !== null &&
-                  user !== undefined &&
-                  user !== undefined &&
-                  user.email}
-              </Username>
+              <Username>{user !== null && user.fullname}</Username>
+              <Username>{user !== null && user.email}</Username>
               <Date>
-                Joined{" "}
-                {moment(
-                  user !== null &&
-                    user !== undefined &&
-                    user !== undefined &&
-                    user.createdAt
-                ).format("MMMM Do YYYY h:mm a")}
+                Joined since{" "}
+                {moment(user !== null && user.createdAt).format(
+                  "MMMM Do YYYY h:mm a"
+                )}
               </Date>
-              <p>online</p>
+              <p>Your Online</p>
             </>
           )}
         </Divide>
       </Flex>
       {Number(userId) === users.id && (
         <Label
-          style={{ cursor: "pointer", background: "orangered", color: "white" }}
+          style={{
+            cursor: "pointer",
+            background: "orangered",
+            color: "white",
+            marginBottom: "2em",
+          }}
           onClick={deactivateAccount}
         >
           Deactivate Account
@@ -185,7 +175,7 @@ const Flex = styled.div`
   color: white;
 `;
 const Username = styled.div`
-  text-transform: capitalize;
+  padding-bottom: 0.5em;
 `;
 const Divide = styled.div`
   padding-left: 1em;

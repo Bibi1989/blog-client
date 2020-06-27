@@ -16,22 +16,15 @@ const ProfileComment = ({ user, post }) => {
         }}
       >
         <Comment.Content>
-          {/* <Logo style={{ cursor: "pointer" }}>
-            {user !== null && user.image_url ? (
-              <Image>
-                <img src={user.image_url} alt='logo' />
-              </Image>
-            ) : (
-              post !== null && post.User.username.slice(0, 2).toUpperCase()
-            )}
-          </Logo> */}
           <Logo style={{ cursor: "pointer" }}>
             {(user !== null || user !== undefined) && user.image_url ? (
               <Image>
                 <img src={user.image_url} alt='logo' />
               </Image>
             ) : (
-              post !== null && post.username.slice(0, 2).toUpperCase()
+              <Image>
+                <img src='../../../avatar.png' alt='profile logo' />
+              </Image>
             )}
           </Logo>
         </Comment.Content>

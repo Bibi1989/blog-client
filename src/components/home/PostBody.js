@@ -44,16 +44,9 @@ const PostCard = ({ post }) => {
       history.push(`/comments/${post.id}`);
     }
   };
-  console.log(post);
+
   return (
     <Container>
-      {/* <ImageLoad>
-        {post.image_url && (
-          <InnerDiv>
-            <img src={post.image_url} alt='' />
-          </InnerDiv>
-        )}
-      </ImageLoad> */}
       <Comment.Group style={{ width: "100%" }}>
         <Comment
           style={{
@@ -116,13 +109,24 @@ const PostCard = ({ post }) => {
                 <Comment.Action
                   onClick={() => handleLikes(post.id)}
                   title={`Like ${post.username} Post`}
+                  style={{
+                    color: `${
+                      user !== null &&
+                      post.Comments.some(
+                        (comment) => comment.userId === user.id
+                      )
+                        ? "orangered"
+                        : "#999999"
+                    }`,
+                  }}
                 >
                   <Icon
                     name='heart'
                     color={
-                      user !== null && user.email && post.Likes.length
+                      user !== null &&
+                      post.Likes.some((like) => like.userId === user.id)
                         ? "red"
-                        : "black"
+                        : "#999999"
                     }
                   />
                   Like {post.Likes.length}
@@ -130,8 +134,28 @@ const PostCard = ({ post }) => {
                 <Comment.Action
                   onClick={handleComment}
                   title={`View ${post.username} Comments`}
+                  style={{
+                    color: `${
+                      user !== null &&
+                      post.Comments.some(
+                        (comment) => comment.userId === user.id
+                      )
+                        ? "dodgerblue"
+                        : "#999999"
+                    }`,
+                  }}
                 >
-                  <Icon name='envelope open' />
+                  <Icon
+                    name='envelope open'
+                    color={
+                      user !== null &&
+                      post.Comments.some(
+                        (comment) => comment.userId === user.id
+                      )
+                        ? "blue"
+                        : "#999999"
+                    }
+                  />
                   Comment {post.Comments.length}
                 </Comment.Action>
                 <Comment.Action>
@@ -141,8 +165,9 @@ const PostCard = ({ post }) => {
                   <Comment.Action
                     onClick={() => setCurrentValue(dispatch, post)}
                     title={`Edit Your Post`}
+                    style={{ color: "teal" }}
                   >
-                    <Icon name='edit outline' /> Edit Post
+                    <Icon name='edit outline' color='teal' /> Edit Post
                   </Comment.Action>
                 )}
               </Comment.Actions>

@@ -76,7 +76,7 @@ const Login = () => {
                     }
                   : {}
               }
-              type='text'
+              type='password'
               name='password'
               placeholder={
                 login_errors === "Password is empty!!!"

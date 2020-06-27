@@ -38,12 +38,14 @@ const ProfileCard = ({ user, post, allPost }) => {
       >
         <Comment.Content>
           <Logo style={{ cursor: "pointer" }}>
-            {(user !== null || user !== undefined) && user.image_url ? (
+            {user !== null && user.image_url ? (
               <Image>
                 <img src={user.image_url} alt='logo' />
               </Image>
             ) : (
-              post !== null && post.username.slice(0, 2).toUpperCase()
+              <Image>
+                <img src='../../../avatar.png' alt='profile logo' />
+              </Image>
             )}
           </Logo>
           {/* <Logo>{user.username.slice(0, 2).toUpperCase()}</Logo> */}

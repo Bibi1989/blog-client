@@ -35,8 +35,6 @@ const Users = () => {
     setSearch(value.toLowerCase());
   };
 
-  console.log({ allUsers });
-
   return (
     <Container className='layout'>
       <Menu secondary vertical>
@@ -83,7 +81,9 @@ const Users = () => {
                           <img src={image_url} alt='logo' />
                         </Image>
                       ) : (
-                        username.toUpperCase().slice(0, 2)
+                        <Image>
+                          <img src='../../../avatar.png' alt='profile logo' />
+                        </Image>
                       )}
                     </Logo>
                     <Flex flexDirection='column'>

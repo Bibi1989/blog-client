@@ -101,6 +101,8 @@ const reducer = (state, action) => {
   }
 };
 
+const token = JSON.parse(sessionStorage.getItem("blog"));
+
 const USER_URL = "https://new-blog-api.herokuapp.com/auth/v1";
 // const USER_URL = "http://localhost:7000/auth/v1";
 
@@ -230,7 +232,7 @@ export const UserProvider = ({ children }) => {
       const response = await axios.patch(`${USER_URL}`, body, {
         headers: {
           "Content-Type": "application/json",
-          auth: sessionStorage.getItem("blog"),
+          auth: token,
         },
       });
 
@@ -249,7 +251,7 @@ export const UserProvider = ({ children }) => {
       const response = await axios.patch(`${USER_URL}/photo`, body, {
         headers: {
           "Content-Type": "multipart/form-data",
-          auth: sessionStorage.getItem("blog"),
+          auth: token,
         },
       });
 

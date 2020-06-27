@@ -136,6 +136,10 @@ export const Container = styled.div`
   box-shadow: 0 3px 15px #ccc;
   border-radius: 1em;
   margin-top: 5%;
+
+  @media (max-width: 769px) {
+    width: 94%;
+  }
 `;
 
 export const NotRegister = styled.div`
@@ -167,7 +171,8 @@ export const Form = styled.form`
     width: 90%;
   }
   @media (max-width: 769px) {
-    width: 96%;
+    width: 100%;
+    padding: 0;
   }
 
   .error {

@@ -189,7 +189,8 @@ const Form = styled.div`
     width: 90%;
   }
   @media (max-width: 769px) {
-    width: 96%;
+    width: 100%;
+    padding: 0;
   }
 
   .error {
@@ -207,7 +208,7 @@ const Form = styled.div`
     width: 100%;
     display: block;
     div {
-      width: 90%;
+      width: 100%;
       margin: auto;
       position: relative;
       top: 0;

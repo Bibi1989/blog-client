@@ -177,7 +177,7 @@ const Register = () => {
               onChange={handleInput}
             />
           </div>
-          <div>
+          {/* <div>
             <i className='fa fa-folder-open'></i>
             <input
               style={
@@ -189,7 +189,7 @@ const Register = () => {
               name='file'
               onChange={handleFile}
             />
-          </div>
+          </div> */}
           {/* <div style={{ display: "flex", justifyContent: "center" }}>
             {imageUrl ? (
               <img

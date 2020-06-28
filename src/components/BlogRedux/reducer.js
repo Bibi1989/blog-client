@@ -17,6 +17,7 @@ import {
   POST_ERROR,
   CLEAR_POST,
   CLEAR_PROFILE,
+  PAGINATION,
 } from "./types";
 
 const initialState = {
@@ -37,6 +38,7 @@ const initialState = {
   error: null,
   current: null,
   post_error: null,
+  pagination: null,
 };
 
 export const postReducer = (state = initialState, action) => {
@@ -45,6 +47,11 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: [...action.post],
+      };
+    case PAGINATION:
+      return {
+        ...state,
+        pagination: action.pagination,
       };
     case GET_SINGLE:
       return {

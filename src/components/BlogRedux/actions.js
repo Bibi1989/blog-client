@@ -11,12 +11,19 @@ import {
   ADD_NOTICE,
   NOTICE,
   DELETE_NOTIFICATION,
+  PAGINATION,
 } from "./types";
 
 export const getAction = (post) => {
   return {
     type: GET,
     post,
+  };
+};
+export const getPagination = (pagination) => {
+  return {
+    type: PAGINATION,
+    pagination,
   };
 };
 export const addAction = (post) => {

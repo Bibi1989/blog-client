@@ -21,13 +21,14 @@ import {
   notificationAction,
   getNotificationAction,
   deleteNotificationAction,
+  getPagination,
 } from "./actions";
 
 const token = JSON.parse(sessionStorage.getItem("blog"));
 
-const POST_URL = `http://localhost:7000/api/v1`;
+// const POST_URL = `http://localhost:7000/api/v1`;
 // const POST_URL = `https://bibiblog-api.herokuapp.com/api`;
-// const POST_URL = `https://new-blog-api.herokuapp.com/api/v1`;
+const POST_URL = `https://new-blog-api.herokuapp.com/api/v1`;
 
 export const clearProfile = (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
@@ -37,15 +38,22 @@ export const clearPosts = (dispatch) => {
   dispatch({ type: CLEAR_POST });
 };
 
-export const getAllPosts = async (dispatch, text) => {
+export const getAllPosts = async (dispatch, text, page, limit) => {
   try {
     dispatch({ type: LOADING, loading: true });
-    const response = await axios.get(`${POST_URL}/posts`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    console.log({ page, limit });
+    const response = await axios.get(
+      `${POST_URL}/posts?page=${page}&limit=${limit}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
     let data = [...response.data.data.data];
+    let pagination = { ...response.data.data.paginate };
+
     if (text) {
       if (
         text === "post" ||
@@ -63,15 +71,27 @@ export const getAllPosts = async (dispatch, text) => {
         data = data.filter((post) =>
           post.username.toLowerCase().includes(text.toLowerCase())
         );
-        console.log(data);
       }
     }
+    console.log({ response: response.data });
     dispatch({ type: LOADING, loading: false });
     dispatch(getAction(data));
+    dispatch(getPagination(pagination));
   } catch (error) {
     console.log(error.response);
   }
 };
+
+export const paginatePost = async (dispatch) => {
+  try {
+    const response = await axios.get(`${POST_URL}/posts`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {}
+};
+
 export const getAPost = async (dispatch, id) => {
   // const token = sessionStorage.getItem("blog");
   try {

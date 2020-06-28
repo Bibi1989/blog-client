@@ -8,13 +8,23 @@ import PostForm from "./PostForm";
 import { Spinner } from "react-bootstrap";
 import { useState } from "react";
 import MobileSubNav from "../NavBar/MobileSubNav";
-import { Icon } from "semantic-ui-react";
+import { Icon, Button } from "semantic-ui-react";
 
 const Post = () => {
   const dispatch = useDispatch();
+
+  // filter state
   const [text] = useState("");
+
+  // rendering state
   const [render, setRender] = useState(false);
   const [reload, setReload] = useState(false);
+
+  // paginating state
+  const [page, setPage] = useState(1);
+  const [limit] = useState(1);
+
+  // redux states
   const posts = useSelector(({ posts: { posts } }) => posts) || [];
   const added_post = useSelector(({ posts: { added_post } }) => added_post);
   const deleted_post = useSelector(
@@ -26,11 +36,24 @@ const Post = () => {
   const loading = useSelector(({ posts: { loading } }) => loading);
 
   useEffect(() => {
-    getAllPosts(dispatch, text);
+    getAllPosts(dispatch, text, page, limit);
     setRender(!render);
 
+    // if (page > posts.length - 2) {
+    //   setPage(1);
+    // }
+
     // eslint-disable-next-line
-  }, [added_post, added_comment, deleted_post, reload]);
+  }, [added_post, added_comment, deleted_post, reload, page]);
+
+  console.log(posts);
+
+  const paginatePost = () => {
+    setPage(page + 1);
+    if (page > posts.length - 2) {
+      setPage(1);
+    }
+  };
 
   if (posts === null && loading) {
     return (
@@ -41,6 +64,8 @@ const Post = () => {
       </>
     );
   }
+
+  console.log({ page });
 
   return (
     <Container>
@@ -61,12 +86,21 @@ const Post = () => {
         ) : (
           posts.map((post) => <PostCard key={post.id} post={post} />)
         )}
+        <PaginateDiv>
+          <Button onClick={() => setPage(page + 1)}>Load More</Button>
+        </PaginateDiv>
       </Grid>
     </Container>
   );
 };
 
 export default Post;
+
+const PaginateDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 2em 0;
+`;
 
 export const Container = styled.div`
   min-height: 93vh;

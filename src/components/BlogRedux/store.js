@@ -41,7 +41,6 @@ export const clearPosts = (dispatch) => {
 export const getAllPosts = async (dispatch, text, page, limit) => {
   try {
     dispatch({ type: LOADING, loading: true });
-    console.log({ page, limit });
     const response = await axios.get(
       `${POST_URL}/posts?page=${page}&limit=${limit}`,
       {
@@ -73,7 +72,6 @@ export const getAllPosts = async (dispatch, text, page, limit) => {
         );
       }
     }
-    console.log({ response: response.data });
     dispatch({ type: LOADING, loading: false });
     dispatch(getAction(data));
     dispatch(getPagination(pagination));

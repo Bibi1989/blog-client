@@ -22,7 +22,7 @@ const Post = () => {
 
   // paginating state
   const [page, setPage] = useState(1);
-  const [limit] = useState(100);
+  const [limit] = useState(4);
 
   // redux states
   const posts = useSelector(({ posts: { posts } }) => posts) || [];
@@ -34,17 +34,18 @@ const Post = () => {
     ({ posts: { added_comment } }) => added_comment
   );
   const loading = useSelector(({ posts: { loading } }) => loading);
+  let pagination = useSelector(({ posts: { pagination } }) => pagination);
+
+  pagination = { ...pagination };
 
   useEffect(() => {
     getAllPosts(dispatch, text, page, limit);
     setRender(!render);
 
-    // if (page > posts.length - 2) {
-    //   setPage(1);
-    // }
-
     // eslint-disable-next-line
   }, [added_post, added_comment, deleted_post, reload, page]);
+
+  console.log(pagination.count);
 
   if (posts === null && loading) {
     return (
@@ -64,11 +65,11 @@ const Post = () => {
         <MobileSubNav />
       </div>
       <PostForm reload={reload} setReload={setReload} />
-      {loading && (
+      {/* {loading && (
         <Loader padding='5em'>
           <Spinner animation='border' variant='success' />
         </Loader>
-      )}
+      )} */}
       <Grid>
         {posts.length === 0 ? (
           <Loader padding='5em'>
@@ -77,9 +78,32 @@ const Post = () => {
         ) : (
           posts.map((post) => <PostCard key={post.id} post={post} />)
         )}
-        <PaginateDiv>
-          <Button onClick={() => setPage(page + 1)}>Load More</Button>
-        </PaginateDiv>
+        {loading ? (
+          <PaginateDiv padding='1em 0'>
+            <Loader padding='1em'>
+              <Spinner animation='border' variant='success' />
+            </Loader>
+          </PaginateDiv>
+        ) : (
+          <PaginateDiv>
+            {pagination.prev && (
+              <Icon
+                name='arrow left'
+                color='blue'
+                size='big'
+                onClick={() => setPage(pagination.prev)}
+              ></Icon>
+            )}
+            {pagination.next && (
+              <Icon
+                name='arrow right'
+                color='blue'
+                size='big'
+                onClick={() => setPage(pagination.next)}
+              ></Icon>
+            )}
+          </PaginateDiv>
+        )}
       </Grid>
     </Container>
   );
@@ -90,7 +114,11 @@ export default Post;
 const PaginateDiv = styled.div`
   display: flex;
   justify-content: center;
-  padding: 2em 0;
+  padding: ${({ padding }) => (padding ? padding : "1em 0")};
+
+  i {
+    cursor: pointer;
+  }
 `;
 
 export const Container = styled.div`
@@ -114,7 +142,6 @@ export const Container = styled.div`
 `;
 export const Grid = styled.div`
   height: 80vh;
-  padding-bottom: 3em;
   overflow: auto;
 
   &::-webkit-scrollbar {

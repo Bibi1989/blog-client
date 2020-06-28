@@ -47,15 +47,6 @@ const Post = () => {
     // eslint-disable-next-line
   }, [added_post, added_comment, deleted_post, reload, page]);
 
-  console.log({ pagination });
-
-  const paginatePost = () => {
-    setPage(page + 1);
-    if (page > posts.length - 2) {
-      setPage(1);
-    }
-  };
-
   if (posts === null && loading) {
     return (
       <>

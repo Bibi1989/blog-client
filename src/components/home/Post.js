@@ -34,7 +34,6 @@ const Post = () => {
     ({ posts: { added_comment } }) => added_comment
   );
   const loading = useSelector(({ posts: { loading } }) => loading);
-  const pagination = useSelector(({ posts: { pagination } }) => pagination);
 
   useEffect(() => {
     getAllPosts(dispatch, text, page, limit);

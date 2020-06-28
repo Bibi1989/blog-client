@@ -82,16 +82,6 @@ export const getAllPosts = async (dispatch, text, page, limit) => {
   }
 };
 
-export const paginatePost = async (dispatch) => {
-  try {
-    const response = await axios.get(`${POST_URL}/posts`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  } catch (error) {}
-};
-
 export const getAPost = async (dispatch, id) => {
   // const token = sessionStorage.getItem("blog");
   try {

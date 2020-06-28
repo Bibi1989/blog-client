@@ -22,7 +22,7 @@ const Post = () => {
 
   // paginating state
   const [page, setPage] = useState(1);
-  const [limit] = useState(100);
+  const [limit] = useState(10);
 
   // redux states
   const posts = useSelector(({ posts: { posts } }) => posts) || [];
@@ -34,6 +34,7 @@ const Post = () => {
     ({ posts: { added_comment } }) => added_comment
   );
   const loading = useSelector(({ posts: { loading } }) => loading);
+  const pagination = useSelector(({ posts: { pagination } }) => pagination);
 
   useEffect(() => {
     getAllPosts(dispatch, text, page, limit);
@@ -46,7 +47,7 @@ const Post = () => {
     // eslint-disable-next-line
   }, [added_post, added_comment, deleted_post, reload, page]);
 
-  console.log(posts);
+  console.log({ pagination });
 
   const paginatePost = () => {
     setPage(page + 1);

@@ -22,7 +22,7 @@ const Post = () => {
 
   // paginating state
   const [page, setPage] = useState(1);
-  const [limit] = useState(10);
+  const [limit] = useState(100);
 
   // redux states
   const posts = useSelector(({ posts: { posts } }) => posts) || [];

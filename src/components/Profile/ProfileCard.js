@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import { Logo, Image } from "../home/PostBody";
+import { Logo, Image } from "../home/PostCard";
 import { Comment, Icon, Button } from "semantic-ui-react";
 import { deletePost } from "../BlogRedux/store";
 import { useDispatch } from "react-redux";

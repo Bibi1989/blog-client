@@ -10,7 +10,7 @@ import { Spinner, Alert } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { createNotification } from "../BlogRedux/store";
 import ProfileSettings from "./ProfileSettings";
-import { Logo, Image } from "../home/PostBody";
+import { Logo, Image } from "../home/PostCard";
 
 const Profile = () => {
   let {

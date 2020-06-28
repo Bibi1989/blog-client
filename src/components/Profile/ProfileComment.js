@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import { Logo, Image } from "../home/PostBody";
+import { Logo, Image } from "../home/PostCard";
 import { Comment } from "semantic-ui-react";
 
 const ProfileComment = ({ user, post }) => {

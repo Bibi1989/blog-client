@@ -60,26 +60,18 @@ function App() {
                 <NotFound />
               </Route>
             </Switch>
-            <div>
-              {/* <Container>
-                <Link
-                  href='#'
-                  tooltip='Create note link'
-                  icon='far fa-sticky-note'
-                />
-                <Link
-                  href='#'
-                  tooltip='Add user link'
-                  icon='fas fa-user-plus'
-                />
+            {/* <div>
+              <Container>
+                <Link href='#' tooltip='Edit Post' icon='far fa-edit' />
+                <Link href='#' tooltip='Add Post' icon='fas fa-plus' />
                 <Button
                   tooltip='The big plus button!'
                   icon='fas fa-plus'
                   rotate={true}
                   onClick={() => alert("FAB Rocks!")}
                 />
-              </Container> */}
-            </div>
+              </Container>
+            </div> */}
           </Layout>
         </UserProvider>
       </Provider>

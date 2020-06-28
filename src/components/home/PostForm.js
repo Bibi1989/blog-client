@@ -12,10 +12,10 @@ import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 
 import Popup from "reactjs-popup";
-import { Logo, Image } from "./PostBody";
+import { Logo, Image } from "./PostCard";
 import { Alert } from "react-bootstrap";
 
-const PostForm = () => {
+const PostForm = ({ reload, setReload }) => {
   let user = sessionStorage.getItem("user");
   user = JSON.parse(user);
   const [title, setTitle] = useState("");
@@ -107,11 +107,11 @@ const PostForm = () => {
   };
   const onupdatePhoto = (e) => {
     e.preventDefault();
-    const data = { ...current, title, message, tags: select };
-    updatePost(dispatch, data);
-    setCurrentValue(dispatch, null);
-    setTitle("");
-    setMessage("");
+    // const data = { ...current, title, message, tags: select };
+    // updatePost(dispatch, data);
+    // setCurrentValue(dispatch, null);
+    // setTitle("");
+    // setMessage("");
   };
 
   return (
@@ -295,7 +295,8 @@ const PostForm = () => {
         color='grey'
         title='Reload page'
         style={{ cursor: "pointer" }}
-        onClick={() => window.location.reload()}
+        onClick={() => setReload(!reload)}
+        // onClick={() => window.location.reload()}
       />
     </Container>
   );

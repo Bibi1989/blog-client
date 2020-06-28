@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllPosts } from "../BlogRedux/store";
-import PostCard from "./PostBody";
+import PostCard from "./PostCard";
 import PostForm from "./PostForm";
 
 import { Spinner } from "react-bootstrap";
@@ -14,6 +14,7 @@ const Post = () => {
   const dispatch = useDispatch();
   const [text] = useState("");
   const [render, setRender] = useState(false);
+  const [reload, setReload] = useState(false);
   const posts = useSelector(({ posts: { posts } }) => posts) || [];
   const added_post = useSelector(({ posts: { added_post } }) => added_post);
   const deleted_post = useSelector(
@@ -29,7 +30,7 @@ const Post = () => {
     setRender(!render);
 
     // eslint-disable-next-line
-  }, [added_post, added_comment, deleted_post]);
+  }, [added_post, added_comment, deleted_post, reload]);
 
   if (posts === null && loading) {
     return (
@@ -46,7 +47,7 @@ const Post = () => {
       <div className='mobile'>
         <MobileSubNav />
       </div>
-      <PostForm />
+      <PostForm reload={reload} setReload={setReload} />
       {loading && (
         <Loader padding='5em'>
           <Spinner animation='border' variant='success' />

@@ -11,7 +11,7 @@ import {
   createNotification,
   likePost,
 } from "../BlogRedux/store";
-import { Logo, Image } from "./PostBody";
+import { Logo, Image } from "./PostCard";
 import { Spinner } from "react-bootstrap";
 import CommentCard from "./CommentCard";
 import { Loader } from "./Post";
@@ -82,7 +82,7 @@ const Comments = () => {
     createNotification(dispatch, notice, Number(post !== null && post.User.id));
     setComment("");
   };
-  console.log(post);
+  console.log(comments);
 
   return (
     <Container>

@@ -25,9 +25,9 @@ import {
 
 const token = JSON.parse(sessionStorage.getItem("blog"));
 
-// const POST_URL = `http://localhost:7000/api/v1`;
+const POST_URL = `http://localhost:7000/api/v1`;
 // const POST_URL = `https://bibiblog-api.herokuapp.com/api`;
-const POST_URL = `https://new-blog-api.herokuapp.com/api/v1`;
+// const POST_URL = `https://new-blog-api.herokuapp.com/api/v1`;
 
 export const clearProfile = (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
@@ -69,7 +69,7 @@ export const getAllPosts = async (dispatch, text) => {
     dispatch({ type: LOADING, loading: false });
     dispatch(getAction(data));
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 };
 export const getAPost = async (dispatch, id) => {
@@ -85,7 +85,7 @@ export const getAPost = async (dispatch, id) => {
     dispatch({ type: LOADING, loading: false });
     dispatch(singleAction(response.data.data.data));
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 };
 export const getUsersPosts = async (dispatch) => {
@@ -148,40 +148,39 @@ export const postPhoto = async (dispatch, data, history) => {
   }
 };
 
-export const updatePost = async (dispatch, data) => {
+export const updatePost = async (dispatch, updateData) => {
   // const token = sessionStorage.getItem("blog");
   try {
-    const response = await axios.patch(`${POST_URL}/posts`, data, {
+    const { data } = await axios.patch(`${POST_URL}/posts`, updateData, {
       headers: {
         "Content-Type": "application/json",
         auth: token,
       },
     });
-    dispatch(updateAction(response.data));
+    dispatch(updateAction(data));
   } catch (error) {}
 };
 
 export const getComments = async (dispatch, id) => {
-  // const token = sessionStorage.getItem("blog");
   dispatch({ type: COMMENT_LOADING, payload: true });
   try {
-    const response = await axios.get(`${POST_URL}/comments/${id}`, {
+    const {
+      data: { data },
+    } = await axios.get(`${POST_URL}/comments/${id}`, {
       headers: {
         "Content-Type": "application/json",
         auth: token,
       },
     });
     dispatch({ type: COMMENT_LOADING, payload: false });
-    // const comments = response.data.data.data;
-    const comments = response.data.data.comments;
-    // const likes = response.data.data.likes;
-    dispatch(commentsAction(comments));
-    // dispatch({ type: SINGLE_POST, payload: response.data.data });
-  } catch (error) {}
+    // const comments = response.data.data;
+    dispatch(commentsAction(data));
+  } catch (error) {
+    console.log(error.response);
+  }
 };
 
 export const createComment = async (dispatch, message, id) => {
-  // const token = sessionStorage.getItem("blog");
   console.log({ message });
   try {
     const response = await axios.post(
@@ -194,14 +193,13 @@ export const createComment = async (dispatch, message, id) => {
         },
       }
     );
-    dispatch(commentPostAction(response.data.data));
+    dispatch(commentPostAction(response.data));
   } catch (error) {
     console.log(error);
   }
 };
 
 export const likePost = async (dispatch, id) => {
-  // const token = sessionStorage.getItem("blog");
   try {
     const response = await axios.post(
       `${POST_URL}/likes`,
@@ -220,7 +218,6 @@ export const likePost = async (dispatch, id) => {
 };
 
 export const deletePost = async (dispatch, id) => {
-  // const token = sessionStorage.getItem("blog");
   dispatch({ type: LOADING, loading: true });
   try {
     const response = await axios.delete(`${POST_URL}/posts/${id}`, {

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Menu, Input, Icon } from "semantic-ui-react";
 import { getAllPosts } from "../BlogRedux/store";
-import { Flex, Logo, Image } from "../home/PostBody";
+import { Flex, Logo, Image } from "../home/PostCard";
 import { UserContext } from "../userContext/UserProvider";
 import { Loader } from "../home/Post";
 import { Spinner } from "react-bootstrap";

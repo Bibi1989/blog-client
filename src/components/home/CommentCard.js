@@ -1,12 +1,11 @@
 import React from "react";
 import { Comment, Icon } from "semantic-ui-react";
 import moment from "moment";
-import { Logo, Image } from "./PostBody";
+import { Logo, Image } from "./PostCard";
 import { Loader } from "./Post";
 import { Spinner } from "react-bootstrap";
 
 const CommentCard = ({ comment, loading }) => {
-  console.log({ comment: comment.User.image_url });
   return (
     <Comment.Group style={{ width: "100%" }}>
       {loading && (

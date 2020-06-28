@@ -22,7 +22,7 @@ const Post = () => {
 
   // paginating state
   const [page] = useState(1);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(4);
 
   // redux states
   const posts = useSelector(({ posts: { posts } }) => posts) || [];
@@ -45,8 +45,6 @@ const Post = () => {
     // eslint-disable-next-line
   }, [added_post, added_comment, deleted_post, reload, page, limit]);
 
-  console.log(pagination.count);
-
   if (posts === null && loading) {
     return (
       <>
@@ -56,8 +54,6 @@ const Post = () => {
       </>
     );
   }
-
-  console.log({ page });
 
   return (
     <Container>
@@ -87,7 +83,7 @@ const Post = () => {
         ) : (
           <PaginateDiv>
             {pagination.next && (
-              <Button onClick={() => setLimit(limit + 2)}>Load More</Button>
+              <Button onClick={() => setLimit(limit + limit)}>Load More</Button>
             )}
           </PaginateDiv>
         )}

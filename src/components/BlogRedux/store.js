@@ -243,7 +243,6 @@ export const createNotification = async (dispatch, message, userId) => {
     message,
     userId,
   };
-  // const token = sessionStorage.getItem("blog");
   try {
     const response = await axios.post(`${POST_URL}/notices`, obj, {
       headers: {
@@ -256,7 +255,6 @@ export const createNotification = async (dispatch, message, userId) => {
 };
 
 export const getNotifications = async (dispatch) => {
-  // const token = sessionStorage.getItem("blog");
   try {
     const response = await axios.get(`${POST_URL}/notices`, {
       headers: {
@@ -268,7 +266,6 @@ export const getNotifications = async (dispatch) => {
   } catch (error) {}
 };
 export const deleteNotification = async (dispatch, id) => {
-  // const token = sessionStorage.getItem("blog");
   try {
     const response = await axios.delete(`${POST_URL}/notices/${id}`, {
       headers: {

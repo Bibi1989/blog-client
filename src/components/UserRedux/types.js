@@ -1,0 +1,11 @@
+export const REGISTER = "REGISTER";
+export const LOGIN = "LOGIN";
+export const REGISTER_ERROR = "REGISTER_ERROR";
+export const LOGIN_ERROR = "LOGIN_ERROR";
+export const UPDATE = "UPDATE";
+export const DELETE = "DELETE";
+export const LOADING = "LOADING";
+export const USERS = "USERS";
+export const USER = "USER";
+export const USERNOFILTER = "USERNOFILTER";
+export const FORGOT = "FORGOT";

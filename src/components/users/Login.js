@@ -2,14 +2,24 @@ import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory, Link } from "react-router-dom";
 import { Button } from "semantic-ui-react";
+import { useDispatch, useSelector } from "react-redux";
 import { UserContext } from "../userContext/UserProvider";
 import { publics } from "../utils/session";
 import { Spinner } from "react-bootstrap";
+import { loginUser } from "../UserRedux/userStore";
 
 const Login = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  // redux state
+  const loginData = useSelector(({ users: { login_data } }) => login_data);
+  const loading = useSelector(({ users: { loading } }) => loading);
+
+  console.log({ loading, loginData });
+
   publics(history);
-  const { login, login_errors, loading } = useContext(UserContext);
+  // const { login, login_errors, loading } = useContext(UserContext);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -23,9 +33,9 @@ const Login = () => {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    login(form, history);
+    // login(form, history);
+    loginUser(dispatch, form, history);
   };
-  console.log(loading);
 
   if (sessionStorage.getItem("blog")) {
     history.push("/");
@@ -36,30 +46,13 @@ const Login = () => {
       <Container>
         <Form onSubmit={handleLogin}>
           <h1>Login</h1>
-          <p style={{ color: "red" }}>
-            {(login_errors === "password is invalid" ||
-              login_errors === "Invalid email or your yet to register") &&
-              "Invalid email or password!!!"}
-          </p>
+
           <div>
             <i className='fa fa-envelope'></i>
             <input
-              className={login_errors === "Email is empty!!!" && "error"}
-              style={
-                login_errors === "Email is empty!!!"
-                  ? {
-                      border: "0.3px solid #ff00007a",
-                      boxShadow: "0 2px 15px #ff00007a",
-                    }
-                  : { border: "none" }
-              }
               type='text'
               name='email'
-              placeholder={
-                login_errors === "Email is empty!!!"
-                  ? login_errors
-                  : "Email Address..."
-              }
+              placeholder='Email Address...'
               value={form.email}
               onChange={handleInput}
             />
@@ -67,22 +60,9 @@ const Login = () => {
           <div>
             <i className='fa fa-unlock'></i>
             <input
-              className={login_errors === "Password is empty!!!" && "error"}
-              style={
-                login_errors === "Password is empty!!!"
-                  ? {
-                      border: "0.3px solid #ff00007a",
-                      boxShadow: "0 2px 10px #ff00007a",
-                    }
-                  : {}
-              }
               type='password'
               name='password'
-              placeholder={
-                login_errors === "Password is empty!!!"
-                  ? login_errors
-                  : "Password..."
-              }
+              placeholder='Your Password...'
               value={form.password}
               onChange={handleInput}
             />
@@ -122,8 +102,15 @@ const Login = () => {
 };
 
 export const Wrapper = styled.div`
-  min-height: 100vh;
-  /* background: #f9fbfc; */
+  min-height: calc(100vh - 4em);
+  background: url('./city.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 4em;
+  left: 0;
+  right: 0;
 `;
 export const Container = styled.div`
   width: 70%;
@@ -136,6 +123,7 @@ export const Container = styled.div`
   box-shadow: 0 3px 15px #ccc;
   border-radius: 1em;
   margin-top: 5%;
+  background-color: rgba(255, 255, 255, 0.8);
 
   @media (max-width: 769px) {
     width: 94%;
@@ -204,13 +192,17 @@ export const Form = styled.form`
       width: 100%;
       padding: 15px 30px;
       margin: 15px 0;
-      border-radius: 5px;
       outline: none;
-      border: 0.4px solid #eee;
-      box-shadow: 0 3px 15px #eee;
+      border: none;
+      appearance: none;
+      border-radius: 0.7em 0 0.7em 0;
+      background: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      transition: 0.4s ease-in;
 
       &:focus {
-        background: #f1f1f1;
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: none;
       }
     }
   }

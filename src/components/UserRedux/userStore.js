@@ -28,7 +28,7 @@ const USER_URL = "https://new-blog-api.herokuapp.com/auth/v1";
 //   dispatch({ type: CLEAR_POST });
 // };
 
-export const registerUser = async (dispatch, body, history) => {
+export const registerUser = async (dispatch, body, path) => {
   try {
     const new_body = {
       ...body,
@@ -41,7 +41,7 @@ export const registerUser = async (dispatch, body, history) => {
     });
     dispatch(loaderAction(null));
     dispatch(registerUserAction(response.data));
-    history.push("/");
+    window.location.href = path
   } catch (error) {
     dispatch(loaderAction(null));
     dispatch(registerError(error.response.data.error))
@@ -50,7 +50,7 @@ export const registerUser = async (dispatch, body, history) => {
 };
 
 // login user
-export const loginUser = async (dispatch, body, history) => {
+export const loginUser = async (dispatch, body, path) => {
   try {
     dispatch(loaderAction(true));
     const response = await axios.post(`${USER_URL}/login`, body, {
@@ -62,7 +62,7 @@ export const loginUser = async (dispatch, body, history) => {
     dispatch(loaderAction(null));
     dispatch(loginUserAction(response.data));
     // getUser();
-    history.push("/");
+    window.location.href = path
   } catch (error) {
     console.log(error.response);
     dispatch(loginError(error.response.data.error))

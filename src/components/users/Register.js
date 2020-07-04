@@ -9,6 +9,8 @@ import { registerUser } from "../UserRedux/userStore";
 const Register = () => {
   const history = useHistory();
   const dispatch = useDispatch()
+  const path = window.location.origin
+
   publics(history);
   const [error, setErrors] = useState("");
   const [form, setForm] = useState({
@@ -36,7 +38,7 @@ const Register = () => {
     let data = {
       ...form,
     };
-    registerUser(dispatch, data, history);
+    registerUser(dispatch, data, path);
     setForm({
       username: "",
       email: "",

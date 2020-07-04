@@ -11,6 +11,8 @@ const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const path = window.location.origin
+
   // redux state
   const loading = useSelector(({ users: { loading } }) => loading);
   const login_errors = useSelector(({ users: { login_errors } }) => login_errors);
@@ -30,13 +32,12 @@ const Login = () => {
   const handleLogin = (event) => {
     event.preventDefault();
     // login(form, history);
-    loginUser(dispatch, form, history);
+    loginUser(dispatch, form, path);
   };
 
   if (sessionStorage.getItem("blog")) {
     history.push("/");
   }
-  console.log(login_errors);
   
 
   return (

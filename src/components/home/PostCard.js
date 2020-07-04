@@ -48,15 +48,9 @@ const PostCard = ({ post }) => {
   return (
     <Container>
       <Comment.Group style={{ width: "100%" }}>
-        <Comment
-          style={{
-            width: "100%",
-            display: "flex",
-            margin: "0 !important",
-            padding: "0 !important",
-          }}
+        <CommentStyle
         >
-          <Comment.Content>
+          <Comment.Content className='lgo'>
             <Logo
               style={{ cursor: "pointer" }}
               onClick={() => history.push(`/profile/${post.userId}`)}
@@ -173,7 +167,7 @@ const PostCard = ({ post }) => {
               </Comment.Actions>
             </Comment.Content>
           </Flex>
-        </Comment>
+        </CommentStyle>
       </Comment.Group>
     </Container>
   );
@@ -188,6 +182,15 @@ const Container = styled.div`
     padding: 1em;
   }
 `;
+const CommentStyle = styled(Comment)`
+  display: grid;
+  grid-template-columns: 10% 90%;
+  gap: 1em;
+  padding-right: 1em;
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
+  }
+`
 const ImageLoad = styled.div``;
 const InnerDiv = styled.div`
   width: 90%;
@@ -201,7 +204,7 @@ const InnerDiv = styled.div`
     width: 100%;
   }
 
-  @media (max-width: 769px) {
+  @media (max-width: 800px) {
     width: 100%;
   }
 `;

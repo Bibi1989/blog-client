@@ -117,7 +117,7 @@ export const Container = styled.div`
     display: none;
   }
 
-  @media (max-width: 769px) {
+  @media (max-width: 800px) {
     .mobile {
       display: inline-block;
     }

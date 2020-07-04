@@ -11,6 +11,8 @@ import {
   getAllUsersNotFilterAction,
   updateUserImageAction,
   loaderAction,
+  loginError,
+  registerError
 } from "./actions";
 
 const token = JSON.parse(sessionStorage.getItem("blog"));
@@ -42,6 +44,7 @@ export const registerUser = async (dispatch, body, history) => {
     history.push("/");
   } catch (error) {
     dispatch(loaderAction(null));
+    dispatch(registerError(error.response.data.error))
     console.log(error.response);
   }
 };
@@ -62,6 +65,7 @@ export const loginUser = async (dispatch, body, history) => {
     history.push("/");
   } catch (error) {
     console.log(error.response);
+    dispatch(loginError(error.response.data.error))
     dispatch(loaderAction(null));
   }
 };

@@ -1,14 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory, Link } from "react-router-dom";
 import { publics } from "../utils/session";
-import { UserContext } from "../userContext/UserProvider";
+import { useDispatch, useSelector } from "react-redux";
 import { Wrapper, Container, NotRegister } from "./Login";
+import { registerUser } from "../UserRedux/userStore";
 
 const Register = () => {
   const history = useHistory();
+  const dispatch = useDispatch()
   publics(history);
-  const { register, register_errors } = useContext(UserContext);
   const [error, setErrors] = useState("");
   const [form, setForm] = useState({
     firstname: "",
@@ -18,6 +19,8 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
+
+  const register_errors = useSelector(({ users: { register_errors } }) => register_errors);
 
   const handleInput = (event) => {
     const { value } = event.target;
@@ -33,7 +36,7 @@ const Register = () => {
     let data = {
       ...form,
     };
-    register(data, history);
+    registerUser(dispatch, data, history);
     setForm({
       username: "",
       email: "",
@@ -41,6 +44,7 @@ const Register = () => {
       confirmPassword: "",
     });
   };
+  
 
   return (
     <Wrapper>
@@ -57,6 +61,7 @@ const Register = () => {
                 value={form.firstname}
                 onChange={handleInput}
               />
+              {register_errors.firstname && <label>First Name is empty</label>}
             </div>
             <div>
               <i className='fa fa-user'></i>
@@ -67,6 +72,7 @@ const Register = () => {
                 value={form.lastname}
                 onChange={handleInput}
               />
+              {register_errors.lastname && <label>Last Name is empty</label>}
             </div>
             <div>
               <i className='fa fa-user'></i>
@@ -77,26 +83,29 @@ const Register = () => {
                 value={form.username}
                 onChange={handleInput}
               />
+              {register_errors.username && <label>Username is empty</label>}
             </div>
             <div>
               <i className='fa fa-envelope'></i>
               <input
                 type='text'
                 name='email'
-                placeholder='Password'
+                placeholder='Email Address'
                 value={form.email}
                 onChange={handleInput}
               />
+              {register_errors.email && <label>Email is empty</label>}
             </div>
             <div>
               <i className='fa fa-unlock'></i>
               <input
                 type='password'
                 name='password'
-                placeholder='Confirm Password'
+                placeholder='Password'
                 value={form.password}
                 onChange={handleInput}
               />
+              {register_errors.password && <label>Password is empty</label>}
             </div>
             <div>
               <i className='fa fa-unlock'></i>
@@ -106,6 +115,7 @@ const Register = () => {
                 placeholder='Confirm Password'
                 onChange={handleInput}
               />
+              {error && <label>Password do not match</label>}
             </div>
 
             <button type='submit'>
@@ -166,18 +176,27 @@ const Form = styled.div`
       }
       input {
         width: 100%;
-        padding: 8px 30px;
-        margin: 15px 0;
-        border-radius: 5px;
+        padding: 15px 30px;
+        margin: 8px 0;
         outline: none;
-        border: 0.4px solid #eee;
-        box-shadow: 0 3px 15px #eee;
+        border: none;
+        appearance: none;
+        border-radius: 0.7em 0 0.7em 0;
+        background: rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        transition: 0.4s ease-in;
 
-        &input:focus {
-          background: #f1f1f1;
+        &:focus {
+          background: rgba(255, 255, 255, 0.8);
+          box-shadow: none;
         }
       }
+        label{
+          color: orangered;
+          margin: 0;
+        }
     }
+    
     button {
       display: block;
       padding: 10px 25px;

@@ -1,9 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory, Link } from "react-router-dom";
 import { Button } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
-import { UserContext } from "../userContext/UserProvider";
 import { publics } from "../utils/session";
 import { Spinner } from "react-bootstrap";
 import { loginUser } from "../UserRedux/userStore";
@@ -13,13 +12,10 @@ const Login = () => {
   const dispatch = useDispatch();
 
   // redux state
-  const loginData = useSelector(({ users: { login_data } }) => login_data);
   const loading = useSelector(({ users: { loading } }) => loading);
-
-  console.log({ loading, loginData });
+  const login_errors = useSelector(({ users: { login_errors } }) => login_errors);
 
   publics(history);
-  // const { login, login_errors, loading } = useContext(UserContext);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -40,6 +36,8 @@ const Login = () => {
   if (sessionStorage.getItem("blog")) {
     history.push("/");
   }
+  console.log(login_errors);
+  
 
   return (
     <Wrapper>
@@ -56,6 +54,7 @@ const Login = () => {
               value={form.email}
               onChange={handleInput}
             />
+            {login_errors.email && <label>Email field is empty</label>}
           </div>
           <div>
             <i className='fa fa-unlock'></i>
@@ -66,6 +65,7 @@ const Login = () => {
               value={form.password}
               onChange={handleInput}
             />
+            {login_errors.password && <label>Password field is empty</label>}
           </div>
           <NotRegister>
             <Link className='link' to='/resetpassword'>
@@ -204,6 +204,10 @@ export const Form = styled.form`
         background: rgba(255, 255, 255, 0.8);
         box-shadow: none;
       }
+    }
+    label{
+      color: orangered;
+      margin: 0;
     }
   }
   .button {
